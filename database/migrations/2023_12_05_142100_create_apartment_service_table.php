@@ -12,7 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('apartment_service', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('apartment_id');
+            $table->foreign('apartment_id')
+                ->references('id')
+                ->on('apartments');
+
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')
+                ->references('id')
+                ->on('services');
+
+            # Per indicare che entrambi i campi sono chiavi primarie
+            $table->primary(['apartment_id', 'service_id']);
+
             $table->timestamps();
         });
     }
