@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
+use Illuminate\Support\Str;
+
 
 class ServiceController extends Controller
 {
@@ -14,7 +16,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $services = Service::all();
+
+        return view('admin.services.index', compact('services'));
     }
 
     /**
@@ -22,7 +26,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.services.index');
     }
 
     /**
@@ -30,7 +34,13 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        //
+        $val_data = $request->validated();
+
+        $val_data['slug'] = Str::slug($val_data['name'], '-');
+
+        Service::create($val_data);
+
+        return to_route('admin.services.index')->with('message', 'Service added!');
     }
 
     /**
@@ -46,7 +56,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        //
+        return view('admin.services.index', compact('service'));
     }
 
     /**
@@ -54,7 +64,13 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        //
+        if ($request->has('name')) {
+            $val_data['name'] = $request->name;
+        }
+
+        $service->update($val_data);
+
+        return to_route('admin.services.index')->with('message', 'service updated');
     }
 
     /**
@@ -62,6 +78,8 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        $service->forceDelete();
+
+        return to_route('admin.technologies.index')->with('message', 'service deleted');
     }
 }
