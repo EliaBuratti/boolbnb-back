@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('views', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('ip_adress', 15);
+            $table->timestamps('time');
         });
     }
 
