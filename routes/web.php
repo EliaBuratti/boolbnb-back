@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Guest\ApartmentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('services', ServiceController::class);
+});
+
+Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(function () {
+
+    Route::resource('apartments', ApartmentController::class);
 });
 
 require __DIR__ . '/auth.php';

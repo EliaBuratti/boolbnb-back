@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\Host;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
