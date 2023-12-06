@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
         $new_admin->thumb = 'img';
         $new_admin->email = 'admin@boolbnb.com';
         $new_admin->email_verified_at = null;
-        $new_admin->password = '5f4dcc3b5aa765d61d8327deb882cf99';
+        $new_admin->password = 'password';
         $new_admin->save();
     }
 }
