@@ -41,7 +41,7 @@
                 <div class="col">
                     <div>
                         <label for="price" class="form-label">Sponsorship price</label>
-                        <input type="number" step=".01" min=1 max=999.99 name="price" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="" aria-describedby="helpId" value=" {{old('price', $sponsorship->price)}}">
+                        <input type="number" step=".01" min=1 max=999.99 name="price" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="" aria-describedby="helpId" value="{{$sponsorship->price}}">
                         <small id="priceHelper" class="text-muted">Edit Price</small>
                         @error('price')
                             <div class="text-danger"> {{$message}} </div>
@@ -61,7 +61,7 @@
                 <div class="col">
                     <div>
                         <label for="duration" class="form-label">Sponsorship duration</label>
-                        <input type="time" name="duration" id="duration" class="form-control @error('duration') is-invalid @enderror" placeholder="" aria-describedby="helpId" value=" {{old('duration', $sponsorship->duration)}}">
+                        <input type="time" name="duration" id="duration" class="form-control @error('duration') is-invalid @enderror" placeholder="" aria-describedby="helpId" value="{{$sponsorship->duration}}">
                         <small id="durationHelper" class="text-muted">Edit Duration</small>
                         @error('duration')
                             <div class="text-danger"> {{$message}} </div>
