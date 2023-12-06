@@ -22,9 +22,9 @@ class UserSeeder extends Seeder
         $new_admin->date_of_birth = '1998/8/12';
         $new_admin->phone = 3485729660;
         $new_admin->host = true;
-        $new_admin->thumb = null;
+        $new_admin->thumb = 'img';
         $new_admin->email = 'admin@boolbnb.com';
-        $new_admin->email_verified_at = '';
+        $new_admin->email_verified_at = null;
         $new_admin->password = '5f4dcc3b5aa765d61d8327deb882cf99';
         $new_admin->save();
     }
