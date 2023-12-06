@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $new_admin->phone = 3485729660;
         $new_admin->host = true;
         $new_admin->thumb = null;
-        $new_admin->email = 'Admin@boolbnb.com';
+        $new_admin->email = 'admin@boolbnb.com';
         $new_admin->email_verified_at = '';
         $new_admin->password = 'password';
         $new_admin->save();
