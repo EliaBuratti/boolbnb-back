@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mt-4">
 
 
 
-            <div class="col-12 col-sm-5">
+            <div class="col-12 col-sm-5 ">
 
-                <div class="table-responsive">
+                <div class="table-responsive rounded-4">
                     <table
                         class="table table-striped
                     table-hover	
@@ -26,67 +26,66 @@
 
                             @forelse ($services as $service)
                                 <tr class="table-primary">
-                                    <td scope="row">{{ $service }}</td>
+                                    <td scope="row">{{ $service->name }}</td>
                                     <td>
 
                                         {{-- controllare poi se l'edit nella stess view del create da problemi --}}
 
-                                        <div class="actions">
+                                        <div class="actions d-flex">
                                             <div class="edit">
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#exampleModal">
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" id="btn-{{ $service->id }}">
                                                     Edit
                                                 </button>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
+                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true"
+                                                    id="modal-{{ $service->id }}">
+                                                    <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Edit
-                                                                    {{ $service }} name
-                                                                </h5>
-                                                                <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal
+                                                                    title</h1>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form action="{{ route('admin.services.edit', $service) }}"
+                                                                <form
+                                                                    action="{{ route('admin.services.update', $service) }}"
                                                                     method="post" id="form-{{ $service->id }}">
                                                                     @csrf
                                                                     @method('PUT')
-
                                                                     <div class="mb-3">
-                                                                        <label for="" class="form-label">Service
-                                                                            Name</label>
+                                                                        <label for="title"
+                                                                            class="form-label">title</label>
                                                                         <input type="text" class="form-control"
-                                                                            name="name" id="name"
-                                                                            aria-describedby="helpId"
-                                                                            placeholder="{{ $service->name }}">
+                                                                            name="title" id="title"
+                                                                            aria-describedby="helpId" placeholder="title">
                                                                         <small id="helpId"
-                                                                            class="form-text text-muted">Edit
-                                                                            {{ $service->name }}</small>
+                                                                            class="form-text text-muted">Help text</small>
                                                                     </div>
+
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Save
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    id="submit-{{ $service->id }}">Save
                                                                     changes</button>
-                                                                <button type="submit">Update</button>
-                                                                </form>
-
                                                             </div>
+                                                            </form>
+
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </div>
                                             <div class="delete">
 
-                                                <form action="{{ route('admin.services.destroy', $service->slug) }}"
+                                                <form action="{{ route('admin.services.destroy', $service->id) }}"
                                                     method="post">
                                                     @csrf
                                                     @method('DELETE')
@@ -108,11 +107,6 @@
                 </div>
 
 
-                <ul>
-                    @foreach ($services as $service)
-                        <li>{{ $service }}</li>
-                    @endforeach
-                </ul>
             </div>
             <div class="col-12 col-sm-7">
                 <h4>add new service</h4>
@@ -129,7 +123,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.services.store') }}" method="post">
+                <form action="{{ route('admin.services.store') }}" method="post" id="new-service">
                     @csrf
 
                     <div class="mb-3">
@@ -139,7 +133,7 @@
                         <small id="helpService" class="form-text text-muted">Add new service for the apartaments</small>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Add + </button>
+                    <button type="submit" class="btn btn-primary" id="new-service-btn">Add + </button>
                 </form>
             </div>
         </div>
