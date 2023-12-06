@@ -59,9 +59,13 @@
                     <div class="col">
                         <div>
                             <label for="duration" class="form-label">Sponsorship duration</label>
-                            <input type="time" name="duration" id="duration"
+                            {{--                             <input type="time" name="duration" id="duration"
                                 class="form-control @error('duration') is-invalid @enderror" placeholder=""
                                 aria-describedby="helpId"
+                                value="{{ old('duration') != '' ? old('duration') : $sponsorship->duration }}"> --}}
+                            <input type="text" pattern="^([0-9]+):([0-5][0-9]):([0-5][0-9])$"
+                                class="form-control @error('duration') is-invalid @enderror" name="duration" id="duration"
+                                aria-describedby="timeHelper" placeholder="Hour : Minute : Seceonds"
                                 value="{{ old('duration') != '' ? old('duration') : $sponsorship->duration }}">
                             <small id="durationHelper" class="text-muted">Edit Duration</small>
                             @error('duration')
