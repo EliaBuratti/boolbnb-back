@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Apartment;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -15,7 +16,7 @@ class ApartmentSeeder extends Seeder
      */
     public function run(): void
     {
-        $apartments = config('db_apartments');
+        $apartments = config('db_apartments.apartments');
 
         foreach ($apartments as $apartment) {
 
@@ -32,6 +33,8 @@ class ApartmentSeeder extends Seeder
                 $new_aparment->latitude  = $response->json()['results'][0]['position']['lat'];
                 $new_aparment->longitude  = $response->json()['results'][0]['position']['lon'];
             }
+
+            $new_aparment->user_id = rand(1, User::all()->count());
 
             $new_aparment->title = $apartment['title'];
             $new_aparment->slug = Str::slug($new_aparment->title, '-');
