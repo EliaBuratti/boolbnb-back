@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreSponsorshipRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreSponsorshipRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,9 @@ class StoreSponsorshipRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['bail', 'required', 'min:5', 'max:100', 'unique:sponsorships'],
+            'price' => ['bail', 'required', 'decimal:2', 'min:1', 'max:999.99'],
+            'duration' => ['bail', 'required'],
         ];
     }
 }

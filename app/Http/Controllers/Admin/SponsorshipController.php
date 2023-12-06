@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Sponsorship;
 use App\Http\Requests\StoreSponsorshipRequest;
 use App\Http\Requests\UpdateSponsorshipRequest;
+use Termwind\Components\Dd;
 
 class SponsorshipController extends Controller
 {
@@ -14,7 +15,9 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        //
+        $sponsorships = Sponsorship::all();
+
+        return view('admin.sponsorships.index', compact('sponsorships'));
     }
 
     /**
@@ -22,7 +25,7 @@ class SponsorshipController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.sponsorships.index');
     }
 
     /**
@@ -30,7 +33,11 @@ class SponsorshipController extends Controller
      */
     public function store(StoreSponsorshipRequest $request)
     {
-        //
+        $val_data = $request->validated();
+
+        Sponsorship::create($val_data);
+
+        return to_route('admin.sponsorships.index')->with('message', 'Sponsorship added!');
     }
 
     /**
@@ -46,7 +53,7 @@ class SponsorshipController extends Controller
      */
     public function edit(Sponsorship $sponsorship)
     {
-        //
+        return view('admin.sponsorships.edit', compact('sponsorship'));
     }
 
     /**
@@ -54,7 +61,19 @@ class SponsorshipController extends Controller
      */
     public function update(UpdateSponsorshipRequest $request, Sponsorship $sponsorship)
     {
-        //
+        if ($request->has('name')) {
+            $val_data['name'] = $request->name;
+        }
+        if ($request->has('price')) {
+            $val_data['price'] = $request->price;
+        }
+        if ($request->has('duration')) {
+            $val_data['duration'] = $request->duration;
+        }
+
+        $sponsorship->update($val_data);
+
+        return to_route('admin.sponsorships.index')->with('message', 'Sponsorship updated');
     }
 
     /**
@@ -62,6 +81,8 @@ class SponsorshipController extends Controller
      */
     public function destroy(Sponsorship $sponsorship)
     {
-        //
+        $sponsorship->forceDelete();
+
+        return to_route('admin.sponsorships.index')->with('message', 'Sponsorship deleted');
     }
 }
