@@ -13,19 +13,23 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $new_admin = new User();
-        $new_admin->name = 'Super';
-        $new_admin->last_name = 'Admin';
-        $new_admin->city = 'nessuna';
-        $new_admin->postal_code = '42866';
-        $new_admin->address = 'via garibaldi';
-        $new_admin->date_of_birth = '1998/8/12';
-        $new_admin->phone = 3485729660;
-        $new_admin->host = true;
-        $new_admin->thumb = 'img';
-        $new_admin->email = 'admin@boolbnb.com';
-        $new_admin->email_verified_at = null;
-        $new_admin->password = 'password';
-        $new_admin->save();
+        $users = config('db_users.users');
+
+        foreach ($users as $user) {
+            $new_users = new User();
+            $new_users->name = $user['name'];
+            $new_users->last_name = $user['last_name'];
+            $new_users->city = $user['city'];
+            $new_users->postal_code = $user['postal_code'];
+            $new_users->address = $user['address'];
+            $new_users->date_of_birth = $user['date_of_birth'];
+            $new_users->phone = $user['phone'];
+            $new_users->host = $user['host'];
+            $new_users->thumb = $user['thumb'];
+            $new_users->email = $user['email'];
+            $new_users->email_verified_at = $user['email_verified_at'];
+            $new_users->password = $user['password'];
+            $new_users->save();
+        }
     }
 }

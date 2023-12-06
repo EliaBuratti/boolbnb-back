@@ -13,12 +13,28 @@ class SponsorshipSeeder extends Seeder
      */
     public function run(): void
     {
-        $sponsorships = config('db_sponsorships');
+        $sponsorships = [
+            [
+                "name" => 'Base',
+                "price" => 2.99,
+                "duration" => '24:00'
+            ],
+            [
+                "name" => 'Advanced',
+                "price" => 5.99,
+                "duration" => "72:00"
+            ],
+            [
+                "name" => 'Premium',
+                "price" => 9.99,
+                "duration" => "144:00"
+            ],
+        ];
 
         foreach ($sponsorships as $sponsorship) {
 
             $new_sponsorship = new Sponsorship();
-            $new_sponsorship->title = $sponsorship['name'];
+            $new_sponsorship->name = $sponsorship['name'];
             $new_sponsorship->price = $sponsorship['price'];
             $new_sponsorship->duration = $sponsorship['duration'];
             $new_sponsorship->save();
