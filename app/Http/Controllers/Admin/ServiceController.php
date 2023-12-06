@@ -78,8 +78,10 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+        $service->apartments()->detach();
+
         $service->forceDelete();
 
-        return to_route('admin.technologies.index')->with('message', 'service deleted');
+        return to_route('admin.services.index')->with('message', 'service deleted');
     }
 }
