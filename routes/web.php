@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SponsorshipController;
 use App\Http\Controllers\Host\ApartmentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('services', ServiceController::class);
+    Route::resource('sponsorships', SponsorshipController::class);
 });
 
 Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(function () {
