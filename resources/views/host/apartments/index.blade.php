@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @forelse ($aparments as $apartment)
+            @forelse ($apartments as $apartment)
                 <div class="col-4">
                     <div class="card shadow">
                         <div class="card-header">

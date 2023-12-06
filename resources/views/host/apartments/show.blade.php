@@ -8,7 +8,7 @@
                     <h1 class="display-5 fw-bold">{{ $apartment->title }}</h1>
                     <p class="col-md-8 fs-4">{{ $apartment->description }}
                     </p>
-                    <img class="img-fluid" src="{{ asset('storage/thumbnails/' . $aparment->thumbnail) }}" alt="">
+                    <img class="img-fluid" src="{{ asset('storage/thumbnails/' . $apartment->thumbnail) }}" alt="">
                     <button class="btn btn-primary btn-lg" type="button">Example button</button>
                 </div>
             </div>

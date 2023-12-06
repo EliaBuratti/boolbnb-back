@@ -29,7 +29,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('host.apartments.create');
+        $countries = config('countries');
+
+        return view('host.apartments.create', compact('countries'));
     }
 
     /**
@@ -56,7 +58,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('host.apartment.show', compact('apartment'));
+        return view('host.apartments.show', compact('apartment'));
     }
 
     /**
