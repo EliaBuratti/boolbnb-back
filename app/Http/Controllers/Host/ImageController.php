@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\Host;
 
 use App\Http\Controllers\Controller;
-use App\Models\Apartment;
-use App\Http\Requests\StoreApartmentRequest;
-use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Image;
+use App\Http\Requests\StoreImageRequest;
+use App\Http\Requests\UpdateImageRequest;
 
-class ApartmentController extends Controller
+class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class ApartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreApartmentRequest $request)
+    public function store(StoreImageRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class ApartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment)
+    public function show(Image $image)
     {
         //
     }
@@ -44,7 +44,7 @@ class ApartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Apartment $apartment)
+    public function edit(Image $image)
     {
         //
     }
@@ -52,7 +52,7 @@ class ApartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateApartmentRequest $request, Apartment $apartment)
+    public function update(UpdateImageRequest $request, Image $image)
     {
         //
     }
@@ -60,7 +60,7 @@ class ApartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Apartment $apartment)
+    public function destroy(Image $image)
     {
         //
     }
