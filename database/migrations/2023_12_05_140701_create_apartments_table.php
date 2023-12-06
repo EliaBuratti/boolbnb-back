@@ -21,13 +21,13 @@ return new class extends Migration
             $table->string('address', 100);
             $table->float('latitude', 9, 7);
             $table->float('longitude', 10, 7);
-            $table->tinyInteger('rooms', false , true);
-            $table->tinyInteger('bathrooms', false , true);
-            $table->tinyInteger('beds', false , true);
-            $table->smallInteger('m_square', false , true);
+            $table->tinyInteger('rooms', false, true);
+            $table->tinyInteger('bathrooms', false, true);
+            $table->tinyInteger('beds', false, true);
+            $table->smallInteger('m_square', false, true);
             $table->text('description');
             $table->string('thumbnail', 255);
-            $table->binary('visible');
+            $table->boolean('visible')->default(true);
             $table->timestamps();
         });
     }
