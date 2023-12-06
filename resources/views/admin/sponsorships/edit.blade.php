@@ -56,14 +56,6 @@
                     </div>
                     <!-- /.col -->
 
-
-
-
-                    {{-- L'OLD DI PRICE E DI DURATION NON FUNZIONANO --}}
-
-
-
-
                     <div class="col">
                         <div>
                             <label for="duration" class="form-label">Sponsorship duration</label>
