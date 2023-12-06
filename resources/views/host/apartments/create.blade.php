@@ -22,7 +22,7 @@
                         <select class="form-select form-select-lg" name="nation" id="nation">
                             <option disabled selected>Select your country</option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country->name }}">{{ $country->name }} - {{ $country->code }}</option>
+                                <option value="{{ $country['name'] }}">{{ $country['name'] }} - {{ $country['code'] }}</option>
                             @endforeach
                         </select>
                     </div>

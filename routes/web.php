@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Guest\ApartmentController;
+use App\Http\Controllers\Host\ApartmentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
