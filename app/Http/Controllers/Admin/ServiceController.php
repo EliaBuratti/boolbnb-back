@@ -64,6 +64,8 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
+        dd($request, $service);
+
         if ($request->has('name')) {
             $val_data['name'] = $request->name;
         }
