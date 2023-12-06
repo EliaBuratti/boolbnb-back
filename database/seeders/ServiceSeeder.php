@@ -14,13 +14,33 @@ class ServiceSeeder extends Seeder
      */
     public function run(): void
     {
-        $services = config('db_services');
+        $services = [
+            'WiFi',
+            'Parcheggio',
+            'TV',
+            'Cucina',
+            'Lavatrice',
+            'Asciugatrice',
+            'Aria condizionata',
+            'Riscaldamento',
+            'Piscina',
+            'Palestra',
+            'Animali ammessi',
+            'Accesso per disabili',
+            'Ascensore',
+            'Portineria',
+            'Vista panoramica',
+            'Balcone o terrazza',
+            'Giardino',
+            'Vicinanza ai mezzi pubblici',
+            'Vicinanza a negozi e ristoranti',
+        ];
 
         foreach ($services as $service) {
 
             $new_service = new Service();
-            $new_service->title = $service['name'];
-            $new_service->slug = Str::slug($new_service->title, '-');
+            $new_service->name = $service;
+            $new_service->slug = Str::slug($new_service->name, '-');
             $new_service->save();
         }
     }

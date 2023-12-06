@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ApartmentSeeder::class,
-            //ImageSeeder::class,
+            ImageSeeder::class,
             //MessageSeeder::class,
-            //ServiceSeeder::class,
-            //SponsorshipSeeder::class,
+            ServiceSeeder::class,
+            SponsorshipSeeder::class,
             //ViewSeeder::class,
         ]);
     }
