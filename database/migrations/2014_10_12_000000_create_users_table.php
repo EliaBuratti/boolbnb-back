@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address', 100);
             $table->date('date_of_birth');
             $table->string('phone', 15);
-            $table->binary('host')->default(0);
+            $table->boolean('host')->default(false);
             $table->string('thumb');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
