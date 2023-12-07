@@ -18,7 +18,7 @@
                         <thead class="table-light">
                             <caption>Sponsorships</caption>
                             <tr>
-                                <th>Sponsorship Name</th>
+                                <th>Apartment Name</th>
                                 <th>Deleted</th>
                                 <th>Actions</th>
                             </tr>
