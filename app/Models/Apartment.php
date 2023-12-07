@@ -12,7 +12,7 @@ class Apartment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'nation', 'city', 'postal_code', 'address', 'latitude', 'longitude', 'rooms', 'bathrooms', 'beds', 'm_square', 'description', 'thumbnail', 'visible'];
+    protected $fillable = ['title', 'slug', 'nation', 'city', 'postal_code', 'address', 'latitude', 'longitude', 'rooms', 'bathrooms', 'beds', 'm_square', 'description', 'thumbnail', 'visible', 'user_id'];
 
     public function generateSlug($title){
         return Str::slug($title, '-');
