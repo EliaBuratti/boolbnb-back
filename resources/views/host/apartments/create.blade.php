@@ -22,7 +22,8 @@
                         <select class="form-select form-select-lg" name="nation" id="nation">
                             <option disabled selected>Select your country</option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country['name'] }}">{{ $country['name'] }} - {{ $country['code'] }}</option>
+                                <option value="{{ $country['name'] }}">{{ $country['name'] }} - {{ $country['code'] }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -83,11 +84,18 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="thumbnail" class="form-label">Select a picture for the thumb</label>
+                        <label for="thumbnail" class="form-label">Select a picture for the cover image</label>
                         <input type="file" class="form-control" name="thumbnail" id="thumbnail"
                             placeholder="insert a thumbnail" aria-describedby="thumbHelpID">
                         <div id="thumbHelpID" class="form-text">insert a picture for your apartment thumbnail</div>
                     </div>
+                    <div class="mb-3">
+                        <label for="gallery" class="form-label">Select a pictures for the gallery</label>
+                        <input type="file" class="form-control" name="gallery[]" id="gallery"
+                            placeholder="Select multiple images" aria-describedby="thumbHelpID" multiple>
+                        <div id="thumbHelpID" class="form-text">insert a pictures for your apartment!</div>
+                    </div>
+
 
                     <button type="submit" class="btn btn-success">Insert</button>
 
