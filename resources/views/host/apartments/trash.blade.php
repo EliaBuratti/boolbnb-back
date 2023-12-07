@@ -35,7 +35,7 @@
 
                                             <div class="restore">
                                                 <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalId-restore-{{$apartment->id}}">
-                                                    <i class="fa-solid fa-recycle"></i>
+                                                    Restore
                                                 </button>
                                             
                                              
@@ -62,7 +62,7 @@
                             
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             
-                                                                <form action="{{ route('host.restore', ['apartment' => $apartment->id]) }}" method="POST">
+                                                                <form action="{{ route('host.restore', ['apartments' => $apartment->id]) }}" method="POST">
                                                                     @csrf
                                                                     @method('PUT')
                                             
@@ -84,7 +84,7 @@
                                             <div class="delete">
 
                                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalId-delete-{{$apartment->id}}">
-                                                    <i class="fa-solid fa-trash-can"></i>
+                                                    Elimina
                                                 </button>
                                             
                                              
@@ -112,7 +112,7 @@
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             
                                                                 <form
-                                                                    action="{{ route('host.forceDelete', ['apartment' => $apartment->id]) }}"
+                                                                    action="{{ route('host.forceDelete', ['apartments' => $apartment->id]) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
