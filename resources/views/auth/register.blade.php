@@ -130,6 +130,10 @@
     </div>
 @endsection
 
+@section('scripts')
+    @vite(['resources/js/registrationForm.js'])
+@endsection
+
 {{-- CAMPI NON UTILIZZATI --}}
 
 {{-- Phone --}}

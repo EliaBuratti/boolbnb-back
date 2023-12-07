@@ -17,6 +17,8 @@
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
+
+    @yield('scripts')
 </head>
 
 <body>
@@ -89,6 +91,7 @@
             @yield('content')
         </main>
     </div>
+
 </body>
 
 </html>
