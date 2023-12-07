@@ -6,7 +6,7 @@
             <div class="col-12">
 
 
-                <form action="{{ route('host.apartments.store') }}" method="post" enctype="multipart/form-data">
+                <form autocomplete="off" action="{{ route('host.apartments.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -28,7 +28,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="city" class="form-label">City</label>
                         <input type="text" class="form-control" name="city" id="city" aria-describedby="helpCity"
                             placeholder="city">
@@ -40,7 +40,7 @@
                         <input type="number" class="form-control" name="postal_code" id="postal_code"
                             aria-describedby="helpPostalCode" placeholder="postal code">
                         <small id="helpPostalCode" class="form-text text-muted">insert postal code</small>
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="address" class="form-label">Address</label>
@@ -97,7 +97,9 @@
                     </div>
 
 
-                    <button type="submit" class="btn btn-success">Insert</button>
+                    {{-- <button type="submit" class="btn btn-success">Insert</button> --}}
+
+                    
 
                 </form>
 
@@ -105,4 +107,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    @vite(['resources/js/fetchDataTomTom.js'])
 @endsection
