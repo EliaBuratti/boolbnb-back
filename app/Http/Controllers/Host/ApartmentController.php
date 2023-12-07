@@ -19,7 +19,10 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::paginate(6);
+        $user_id = auth()->user()->id;
+        //dd($user_id);
+        //$apartments = Apartment::paginate(6);
+        $apartments = Apartment::where('user_id', '=', $user_id)->get();
         $countries = config('countries');
 
         return view('host.apartments.index', compact(['apartments', 'countries']));
