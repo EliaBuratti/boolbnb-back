@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container">
+        @if (session('message'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <strong>Attention!</strong> {{ session('message') }}
+            </div>
+        @endif
         <div class="row mt-3">
             @forelse ($apartments as $apartment)
                 <div class="col-4 g-3">
@@ -16,6 +22,15 @@
                         <div class="card-footer">
                             <h6>{{ $apartment->city }} - {{ $apartment->address }}</h6>
                             <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="btn btn-primary">show</a>
+                            <a href=" {{ route('host.apartments.edit', $apartment->slug) }} "
+                                class="btn btn-warning">Edit</a>
+                            <form action="{{ route('host.apartments.destroy', $apartment->slug) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+
+                            </form>
+
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +19,10 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::paginate(6);
+        $user_id = auth()->user()->id;
+        //dd($user_id);
+        //$apartments = Apartment::paginate(6);
+        $apartments = Apartment::where('user_id', '=', $user_id)->get();
         $countries = config('countries');
 
         return view('host.apartments.index', compact(['apartments', 'countries']));
@@ -58,7 +62,11 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('host.apartments.show', compact('apartment'));
+        $gallery = Image::where('apartment_id', '=', $apartment->id)->get();
+
+        //dd($gallery);
+
+        return view('host.apartments.show', compact(['apartment', 'gallery']));
     }
 
     /**
@@ -68,8 +76,13 @@ class ApartmentController extends Controller
     {
 
         $countries = config('countries');
+        $user_id = auth()->user()->id;
 
-        return view('host.apartments.edit', compact(['apartment', 'countries']));
+        if ($apartment->user_id == $user_id) {
+            return view('host.apartments.edit', compact(['apartment', 'countries']));
+        } else {
+            return to_route('host.apartments.index')->with('message', 'can\'t edit that apartment');
+        }
     }
 
     /**
@@ -136,8 +149,54 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        $apartment->forceDelete();
+        $apartment->delete();
 
         return to_route('host.apartments.index')->with('message', 'aparment deleted');
+    }
+
+    public function trash_apartments()
+    {
+        $trash_apartments = Apartment::onlyTrashed()->orderByDesc('deleted_at')->get();
+
+        dd($trash_apartments);
+
+        /* aggiungere paginate */
+        return to_route('host.apartments.trash', compact('trash_apartments'));
+    }
+
+    public function restore($id)
+    {
+        $apartment = Apartment::withTrashed()->find($id);
+        $apartment->restore();
+
+        return to_route('host.apartments.index')->with('message', 'Welldone! apartments restored successfully');
+    }
+
+    public function forceDelete($id)
+    {
+        $apartment = Apartment::withTrashed()->find($id);
+
+        $thumb = $apartment->thumb;
+
+        $relative_path = Str::after($thumb, 'storage/');
+
+        if (!is_null($apartment->thumbnail)) {
+            Storage::delete($relative_path);
+        }
+
+
+        // TO DO: ELIMINARE IMMAGINI IN LOCALE
+
+        $images = Image::all()->where('apartment_id', '=', $apartment->id)->all();
+
+        foreach ($images as $image) {
+
+            $image->delete();
+        }
+
+
+        $apartment->forceDelete();
+
+        return to_route('host.trash')->with('message', 'Well Done! apartments deleted successfully!');
     }
 }

@@ -89,7 +89,7 @@
                         <div id="thumbHelpID" class="form-text">insert a picture for your apartment thumbnail</div>
                     </div>
 
-                    <button type="submit">Insert</button>
+                    <button type="submit" class="btn btn-success">Insert</button>
 
                 </form>
 
