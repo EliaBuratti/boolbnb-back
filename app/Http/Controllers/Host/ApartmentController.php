@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Image;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -133,7 +134,18 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        $apartment->forceDelete();
+        // TO DO: ELIMINARE IMMAGINI IN LOCALE
+
+        $images = Image::all()->where('apartment_id', '=', $apartment->id)->all();
+
+        foreach ($images as $image) {
+
+            $image->delete();
+        }
+
+
+        $apartment->delete();
+
 
         return to_route('host.apartments.index')->with('message', 'aparment deleted');
     }
