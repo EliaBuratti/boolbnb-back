@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::resource('services', ServiceController::class);
+    Route::resource('services', ServiceController::class)->parameters(['services' => 'service:slug']);
     Route::resource('sponsorships', SponsorshipController::class);
 });
 
