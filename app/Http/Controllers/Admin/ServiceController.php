@@ -56,7 +56,8 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        return view('admin.services.index', compact('service'));
+        //dd($service);
+        return view('admin.services.edit', compact('service'));
     }
 
     /**
@@ -64,7 +65,7 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        dd($request, $service);
+        //dd($request);
 
         if ($request->has('name')) {
             $val_data['name'] = $request->name;

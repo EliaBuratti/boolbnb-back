@@ -33,65 +33,16 @@
 
                                         <div class="actions d-flex">
                                             <div class="edit">
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal" id="btn-{{ $service->id }}">
-                                                    Edit
-                                                </button>
-
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true"
-                                                    id="modal-{{ $service->id }}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal
-                                                                    title</h1>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <form
-                                                                    action="{{ route('admin.services.update', $service) }}"
-                                                                    method="post" id="form-{{ $service->id }}">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <div class="mb-3">
-                                                                        <label for="title"
-                                                                            class="form-label">title</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="title" id="title"
-                                                                            aria-describedby="helpId" placeholder="title">
-                                                                        <small id="helpId"
-                                                                            class="form-text text-muted">Help text</small>
-                                                                    </div>
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary"
-                                                                    id="submit-{{ $service->id }}">Save
-                                                                    changes</button>
-                                                            </div>
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
+                                                <a href="{{ route('admin.services.edit', $service->slug) }}"
+                                                    class="btn btn-primary">Edit</a>
                                             </div>
                                             <div class="delete">
-
-                                                <form action="{{ route('admin.services.destroy', $service->id) }}"
-                                                    method="post">
+                                                <form action="{{ route('admin.services.destroy', $service->slug) }}"
+                                                    method="post" id>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button technology="submit" class="btn btn-danger">delete</button>
                                                 </form>
-
                                             </div>
                                         </div>
                                     </td>
