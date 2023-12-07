@@ -43,43 +43,43 @@ class ApartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreApartmentRequest $request, Apartment $apartment )
+    public function store(StoreApartmentRequest $request, Apartment $apartment)
     {
-        $last_apartment =Apartment::all()->last();
+        $last_apartment = Apartment::all()->last();
         $id_apartment = $last_apartment['id'] + 1;
         //dd($id_apartment);
 
         $val_data = $request->validated();
         $val_data['slug'] = Str::slug($request->title, '-');
 
-        $val_data['user_id'] = 3 ;
-        $val_data['latitude'] = 3 ;
-        $val_data['longitude'] = 3 ;
-       //dd($val_data);
-        
+        $val_data['user_id'] = 3;
+        $val_data['latitude'] = 3;
+        $val_data['longitude'] = 3;
+        //dd($val_data);
+
         if ($request->has('thumbnail')) {
             $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $request->thumbnail);
-            $path = 'apartments' . strstr($complete_path, '/');            
+            $path = 'apartments' . strstr($complete_path, '/');
             $val_data['thumbnail'] = $path;
         }
-        
+
         $new_apartment = Apartment::create($val_data);
 
         if ($request->has('gallery')) {
 
             $gallery = $request['gallery'];
 
-            foreach($gallery as $image) {
+            foreach ($gallery as $image) {
                 $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $image);
-                $path = 'apartments' . strstr($complete_path, '/');            
-/*                 $new_image = Image::create([
+                $path = 'apartments' . strstr($complete_path, '/');
+                /*                 $new_image = Image::create([
                     "apartment_id" => $id_apartment,
                     "img" => $path,
-                ]);  */  
+                ]);  */
                 $new_image = new Image();
                 $new_image->apartment_id = $id_apartment;
                 $new_image->img = $path;
-                $new_image->save();             
+                $new_image->save();
             }
         }
 
@@ -119,11 +119,19 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
+        //dd($request);
+        $val_data = $request->validated();
 
         if ($request->has('thumbnail')) {
-            $complete_path = Storage::put('thumbnails', $request->thumbnail);
-            $path = strstr($complete_path, '/');
-            $val_data['thumbnail'] = $path;
+
+            $path = $apartment->thumbnail;
+
+            Storage::delete('public/' . $path);
+
+            $new_img = Storage::put('public/apartments/' . $apartment->id . 'app', $request->thumbnail);
+
+            $new_path = strstr($new_img, '/');
+            $val_data['thumbnail'] = $new_path;
         }
 
         if ($request->has('title')) {
@@ -167,11 +175,11 @@ class ApartmentController extends Controller
             $val_data['description']  = $request->description;
         }
 
-        dd($apartment);
+        //dd($apartment);
 
         $apartment->update($val_data);
 
-        return to_route('host.apartments.show', compact('aparment'))->with('message', 'aparment updated');
+        return to_route('host.apartments.show', compact('apartment'))->with('message', 'aparment updated');
     }
 
     /**

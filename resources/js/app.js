@@ -19,4 +19,4 @@ const maxDate = subtractYears(18);
 const minDate = subtractYears(100);
 
 dateInput.max = maxDate;
-dateInput.min = minDate;
+dateInput.min = minDate; 
