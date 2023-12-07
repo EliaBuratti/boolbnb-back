@@ -18,6 +18,12 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    <div class="mt-5">
+                        <a href=" {{route('host.apartments.index')}} " class="btn btn-primary">Apartments</a>
+                        <a href=" {{route('admin.sponsorships.index')}} " class="btn btn-primary">Sponsorships</a>
+                        <a href=" {{route('admin.services.index')}} " class="btn btn-primary">Services</a>
+                    </div>
                 </div>
             </div>
         </div>
