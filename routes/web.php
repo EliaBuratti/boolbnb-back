@@ -41,9 +41,9 @@ Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(fu
 
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 
-    Route::get('apartments/trash', [ApartmentController::class, 'trash_apartments'])->name('trash');
-    Route::put('/apartments/trash/{apartments}/restore', [ApartmentController::class, 'restore'])->name('restore');
-    Route::delete('/apartments/trash/{apartments}/destroy', [ApartmentController::class, 'forceDelete'])->name('forceDelete');
+    Route::get('apartments/trash', [ApartmentController::class, 'trash_apartments'])->name('apartments.trash');
+    Route::put('/apartments/trash/{apartments}/restore', [ApartmentController::class, 'restore'])->name('apartments.restore');
+    Route::delete('/apartments/trash/{apartments}/destroy', [ApartmentController::class, 'forceDelete'])->name('apartments.forceDelete');
 });
 
 require __DIR__ . '/auth.php';
