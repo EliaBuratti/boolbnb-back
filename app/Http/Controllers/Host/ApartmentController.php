@@ -75,8 +75,13 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         $countries = config('countries');
+        $user_id = auth()->user()->id;
 
-        return view('host.apartments.edit', compact(['apartment', 'countries']));
+        if ($apartment->user_id == $user_id) {
+            return view('host.apartments.edit', compact(['apartment', 'countries']));
+        } else {
+            return to_route('host.apartments.index')->with('message', 'can\'t edit that apartment');
+        }
     }
 
     /**
