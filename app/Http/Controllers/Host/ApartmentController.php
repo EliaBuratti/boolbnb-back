@@ -153,10 +153,12 @@ class ApartmentController extends Controller
 
     public function trash_apartments()
     {
-        return to_route('host.trash', [
-            'trash_apartments' => Apartment::onlyTrashed()->orderByDesc('deleted_at')
-        ]);
+        $trash_apartments = Apartment::onlyTrashed()->orderByDesc('deleted_at')->get();
+
+        dd($trash_apartments);
+
         /* aggiungere paginate */
+        return to_route('host.apartments.trash', compact('trash_apartments'));
     }
 
     public function restore($id)
