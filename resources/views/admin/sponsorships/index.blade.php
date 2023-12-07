@@ -59,13 +59,6 @@
                         </tbody>
                     </table>
                 </div>
-
-
-                <ul>
-                    @foreach ($sponsorships as $sponsorship)
-                        <li>{{ $sponsorship->name }}</li>
-                    @endforeach
-                </ul>
             </div>
             <div class="col-12 col-sm-7">
                 <h4>Add new sponsorship</h4>
