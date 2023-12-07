@@ -66,6 +66,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+
         $countries = config('countries');
 
         return view('host.apartments.edit', compact(['apartment', 'countries']));
@@ -122,6 +123,8 @@ class ApartmentController extends Controller
         if ($request->has('description')) {
             $val_data['description']  = $request->description;
         }
+
+        dd($apartment);
 
         $apartment->update($val_data);
 
