@@ -23,6 +23,8 @@
                         <a href=" {{route('host.apartments.index')}} " class="btn btn-primary">Apartments</a>
                         <a href=" {{route('admin.sponsorships.index')}} " class="btn btn-primary">Sponsorships</a>
                         <a href=" {{route('admin.services.index')}} " class="btn btn-primary">Services</a>
+
+                        <a class="btn btn-danger" href="{{ route('host.trash') }}">Cestino</a>
                     </div>
                 </div>
             </div>

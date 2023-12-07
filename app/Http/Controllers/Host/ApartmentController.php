@@ -146,6 +146,40 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
+        $apartment->delete();
+
+        return to_route('host.apartments.index')->with('message', 'aparment deleted');
+    }
+
+    public function trash_apartments()
+    {
+        return to_route('host.trash', [
+            'trash_apartments' => Apartment::onlyTrashed()->orderByDesc('deleted_at')
+        ]);
+        /* aggiungere paginate */
+    }
+
+    public function restore($id)
+    {
+        $apartment = Apartment::withTrashed()->find($id);
+        $apartment->restore();
+
+        return to_route('host.apartments.index')->with('message', 'Welldone! apartments restored successfully');
+    }
+
+    public function forceDelete($id)
+    {
+        $apartment = Apartment::withTrashed()->find($id);
+
+        $thumb = $apartment->thumb;
+
+        $relative_path = Str::after($thumb, 'storage/');
+
+        if (!is_null($apartment->thumbnail)) {
+            Storage::delete($relative_path);
+        }
+
+
         // TO DO: ELIMINARE IMMAGINI IN LOCALE
 
         $images = Image::all()->where('apartment_id', '=', $apartment->id)->all();
@@ -156,9 +190,8 @@ class ApartmentController extends Controller
         }
 
 
-        $apartment->delete();
+        $apartment->forceDelete();
 
-
-        return to_route('host.apartments.index')->with('message', 'aparment deleted');
+        return to_route('host.trash')->with('message', 'Well Done! apartments deleted successfully!');
     }
 }
