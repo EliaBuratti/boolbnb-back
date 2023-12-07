@@ -16,6 +16,14 @@
                         <div class="card-footer">
                             <h6>{{ $apartment->city }} - {{ $apartment->address }}</h6>
                             <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="btn btn-primary">show</a>
+                        <a href=" {{route('host.apartments.edit', $apartment->slug)}} " class="btn btn-warning">Edit</a>
+                        <form action="{{route('host.apartments.destroy', $apartment->slug)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+
+                        </form>
+
                         </div>
                     </div>
                 </div>
