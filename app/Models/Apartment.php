@@ -7,14 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apartment extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['title', 'slug', 'nation', 'city', 'postal_code', 'address', 'latitude', 'longitude', 'rooms', 'bathrooms', 'beds', 'm_square', 'description', 'thumbnail', 'visible', 'user_id'];
 
-    public function generateSlug($title){
+    public function generateSlug($title)
+    {
         return Str::slug($title, '-');
     }
 

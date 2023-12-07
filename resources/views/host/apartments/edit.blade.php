@@ -12,7 +12,7 @@
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Apartment Title</label>
-                        <input type="text" class="form-control" name="title" id="title" aria-describedby="helpTitle"
+                        <input type="text" class="form-control" name="name" id="name" aria-describedby="helpTitle"
                             placeholder="{{ old('title', $apartment->title) }}"
                             value="{{ old('title', $apartment->title) }}">
                         <small id="helpTitle" class="form-text text-muted">insert a fascinating title for your
@@ -24,7 +24,10 @@
                         <select class="form-select form-select-lg" name="nation" id="nation">
                             <option disabled selected>Select your country</option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country['name'] }}"{{ $country['name'] == $apartment->nation ? 'selected' : '' }}>{{ $country['name'] }} -
+                            
+                                <option value="{{ $country['name'] }}"
+                                    {{ $country['name'] == $apartment->nation ? 'selected' : '' }}>{{ $country['name'] }} -
+
                                     {{ $country['code'] }}</option>
                             @endforeach
                         </select>
@@ -98,7 +101,9 @@
                         <div id="thumbHelpID" class="form-text">insert a picture for your apartment thumbnail</div>
                     </div>
 
+
                     <button type="submit" class="btn btn-success">Update</button>
+
 
                 </form>
 
