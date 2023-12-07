@@ -48,7 +48,7 @@
                             aria-describedby="helpAdress" placeholder="insert your address">
                         <small id="helpAdress" class="form-text text-muted">insert your address</small>
                     </div>
-
+                    <div id="options"></div>
                     <div class="mb-3">
                         <label for="rooms" class="form-label">Rooms</label>
                         <input type="number" class="form-control" name="rooms" id="rooms"
