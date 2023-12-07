@@ -32,7 +32,7 @@ class UpdateApartmentRequest extends FormRequest
             'beds' => ['required', 'numeric'],
             'm_square' => ['required', 'numeric'],
             'description' => ['required', 'string'],
-            'thumbnail' => ['required', 'image'], #'mimes:'png,jpg'
+            'thumbnail' => ['image'], #'mimes:'png,jpg'
         ];
     }
 }
