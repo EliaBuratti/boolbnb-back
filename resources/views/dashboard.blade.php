@@ -24,7 +24,7 @@
                             <a href=" {{ route('admin.sponsorships.index') }} " class="btn btn-primary">Sponsorships</a>
                             <a href=" {{ route('admin.services.index') }} " class="btn btn-primary">Services</a>
 
-                            <a class="btn btn-danger" href="{{ route('host.apartments.trash') }}">Cestino</a>
+                            <a class="btn btn-danger" href="{{ route('host.trash') }}">Cestino</a>
                         </div>
                     </div>
                 </div>
