@@ -74,6 +74,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+
         $countries = config('countries');
         $user_id = auth()->user()->id;
 
@@ -135,6 +136,8 @@ class ApartmentController extends Controller
         if ($request->has('description')) {
             $val_data['description']  = $request->description;
         }
+
+        dd($apartment);
 
         $apartment->update($val_data);
 
