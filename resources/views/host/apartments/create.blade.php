@@ -5,7 +5,6 @@
         <div class="row">
             <div class="col-12">
 
-
                 <form autocomplete="off" action="{{ route('host.apartments.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
 
@@ -97,7 +96,7 @@
                     </div>
 
 
-                    {{-- <button type="submit" class="btn btn-success">Insert</button> --}}
+                    <button type="submit" class="btn btn-success">Insert</button>
 
                     
 
