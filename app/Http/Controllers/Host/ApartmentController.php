@@ -52,7 +52,9 @@ class ApartmentController extends Controller
         $val_data = $request->validated();
         $val_data['slug'] = Str::slug($request->title, '-');
 
-        $val_data['user_id'] = 3;
+        $val_data['user_id'] = auth()->user()->id;
+
+        /* calcolare latitude e longitude */
         $val_data['latitude'] = 3;
         $val_data['longitude'] = 3;
         //dd($val_data);

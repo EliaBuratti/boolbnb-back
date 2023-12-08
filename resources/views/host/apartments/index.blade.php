@@ -8,6 +8,10 @@
                 <strong>Attention!</strong> {{ session('message') }}
             </div>
         @endif
+
+        <a href="{{route('host.apartments.create')}}" class="btn btn-primary mt-5">Crea un nuovo appartamento</a>
+
+
         <div class="row mt-3">
             @forelse ($apartments as $apartment)
                 <div class="col-4 g-3">
