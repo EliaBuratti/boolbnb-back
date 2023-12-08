@@ -18,7 +18,13 @@ class ServiceController extends Controller
     {
         $services = Service::all();
 
-        return view('admin.services.index', compact('services'));
+        $user_id = auth()->user()->id;
+
+        if ($user_id === 1) {
+            return view('admin.services.index', compact('services'));
+        } else {
+            return to_route('dashboard')->with('message', 'You can\'t view this page');
+        }
     }
 
     /**
@@ -57,7 +63,13 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
         //dd($service);
-        return view('admin.services.edit', compact('service'));
+        $user_id = auth()->user()->id;
+
+        if ($user_id === 1) {
+            return view('admin.services.edit', compact('service'));
+        } else {
+            return to_route('dashboard')->with('message', 'You can\'t view this page');
+        }
     }
 
     /**

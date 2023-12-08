@@ -17,7 +17,13 @@ class SponsorshipController extends Controller
     {
         $sponsorships = Sponsorship::all();
 
-        return view('admin.sponsorships.index', compact('sponsorships'));
+        $user_id = auth()->user()->id;
+
+        if ($user_id === 1) {
+            return view('admin.sponsorships.index', compact('sponsorships'));
+        } else {
+            return to_route('dashboard')->with('message', 'You can\'t view this page');
+        }
     }
 
     /**
@@ -53,7 +59,13 @@ class SponsorshipController extends Controller
      */
     public function edit(Sponsorship $sponsorship)
     {
-        return view('admin.sponsorships.edit', compact('sponsorship'));
+        $user_id = auth()->user()->id;
+
+        if ($user_id === 1) {
+            return view('admin.sponsorships.edit', compact('sponsorship'));
+        } else {
+            return to_route('dashboard')->with('message', 'You can\'t view this page');
+        }
     }
 
     /**

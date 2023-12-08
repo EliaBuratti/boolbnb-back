@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+
+        @include('partials.session_message')
+
         <h2 class="fs-4 text-secondary my-4">
             {{ __('Dashboard') }}
         </h2>
@@ -20,11 +23,14 @@
                         {{ __('You are logged in!') }}
 
                         <div class="mt-5">
-                            <a href=" {{ route('host.apartments.index') }} " class="btn btn-primary">Apartments</a>
+                            @if(Auth::id() === 1)
                             <a href=" {{ route('admin.sponsorships.index') }} " class="btn btn-primary">Sponsorships</a>
                             <a href=" {{ route('admin.services.index') }} " class="btn btn-primary">Services</a>
+                            @else
+                            <a href=" {{ route('host.apartments.index') }} " class="btn btn-primary">Apartments</a>
+                            <a class="btn btn-danger" href="{{ route('host.trash') }}">Cestino</a>    
+                            @endif
 
-                            <a class="btn btn-danger" href="{{ route('host.trash') }}">Cestino</a>
                         </div>
                     </div>
                 </div>
