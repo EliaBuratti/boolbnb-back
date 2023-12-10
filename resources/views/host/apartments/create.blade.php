@@ -5,13 +5,14 @@
         <div class="row">
             <div class="col-12">
 
-                <form autocomplete="off" action="{{ route('host.apartments.store') }}" method="post" enctype="multipart/form-data">
+                <form autocomplete="off" action="{{ route('host.apartments.store') }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Apartment Title</label>
-                        <input type="text" class="form-control" name="title" id="title" aria-describedby="helpTitle"
-                            placeholder="your apartment title">
+                        <input type="text" class="form-control" name="title" id="title"
+                            aria-describedby="helpTitle" placeholder="your apartment title">
                         <small id="helpTitle" class="form-text text-muted">insert a fascinating title for your
                             apartment</small>
                     </div>
@@ -19,9 +20,10 @@
                     <div class="mb-3">
                         <label for="nation" class="form-label">Nation</label>
                         <select class="form-select form-select-lg" name="nation" id="nation">
-                            <option disabled selected>Select your country</option>
+                            <option disabled selected value="false">Select your country</option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country['name'] }}">{{ $country['name'] }} - {{ $country['code'] }}
+                                <option value="{{ $country['name'] }} - {{ $country['code'] }}">
+                                    {{ $country['name'] }} - {{ $country['code'] }}
                                 </option>
                             @endforeach
                         </select>
@@ -98,7 +100,7 @@
 
                     <button type="submit" class="btn btn-success">Insert</button>
 
-                    
+
 
                 </form>
 

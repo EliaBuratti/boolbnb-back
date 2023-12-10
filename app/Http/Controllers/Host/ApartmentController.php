@@ -45,6 +45,7 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request, Apartment $apartment)
     {
+        dd($request);
         $last_apartment = Apartment::all()->last();
         $id_apartment = $last_apartment['id'] + 1;
         //dd($id_apartment);
@@ -55,8 +56,16 @@ class ApartmentController extends Controller
         $val_data['user_id'] = auth()->user()->id;
 
         /* calcolare latitude e longitude */
-        $val_data['latitude'] = 3;
-        $val_data['longitude'] = 3;
+        $response = Apartment::getCoordinates($val_data['address']);
+
+        if ($response->successful()) {
+            $val_data['latitude']  = $response->json()['results'][0]['position']['lat'];
+            $val_data['longitude'] = $response->json()['results'][0]['position']['lon'];
+        }
+
+        dd($val_data);
+        //$val_data['latitude'] = 3;
+        //$val_data['longitude'] = 3;
         //dd($val_data);
 
         if ($request->has('thumbnail')) {

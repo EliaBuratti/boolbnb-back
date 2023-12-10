@@ -1,6 +1,7 @@
 import './bootstrap';
 import '~resources/scss/app.scss';
 import * as bootstrap from 'bootstrap';
+import { toArray } from 'lodash';
 import.meta.glob([
     '../img/**'
 ])
@@ -8,6 +9,9 @@ import.meta.glob([
 
 let resultsSearch = [];
 const addressEl = document.getElementById('address');
+const nationEl = document.getElementById('nation');
+
+
 
 //Dynamic search with tomtom call
 const fetchAddress = async (url) => {
@@ -15,37 +19,52 @@ const fetchAddress = async (url) => {
         const response = await fetch(url);
         const data = await response.json();
         const results = data.results;
+        //console.log(results);
         results.forEach((result, i) => {
-            if (result.type == 'Street') {
+            //console.log(results[i].address.countryCode);
+            //console.log(nationEl.value.includes(results[i].address.countryCode));
+
+            if (result.address.freeformAddress && nationEl.value.includes(results[i].address.countryCode)) {
                 resultsSearch[i] = {
-                    'streetName': result.address.streetName, 'municipality': result.address.municipality,
-                    'value': `${result.address.streetName}, ${result.address.municipality}`
+                    /*                     'streetName': result.address.streetName, 'streetNumber': result.address.streetNumber, 'municipality': result.address.municipality,
+                                        'value': `${result.address.streetName}, ${result.address.municipality}`, */
+                    'freeformAddress': result.address.freeformAddress
                 };
             }
         });
         let newResultsSearch = resultsSearch.filter(result => result != undefined);
         console.log(newResultsSearch);
-        console.log(newResultsSearch.length);
+        //console.log(newResultsSearch.length);
         autocomplete(addressEl, newResultsSearch);
-        return data.results;
+
+        return results;
     } catch (error) {
         console.log(error);
     }
 };
 
+nationEl.addEventListener('click', function () {
+    addressEl.value = '';
+})
+
 addressEl.addEventListener('keyup', function () {
-    const inputValue = addressEl.value;
+
+    const inputValue = `${addressEl.value},  ${nationEl.value}`;
+
     console.log(inputValue);
     fetchAddress(`https://api.tomtom.com/search/2/geocode/${inputValue}.json?storeResult=false&limit=10&view=Unified&key=udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT`);
 
 });
+
+
 
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
-    inp.addEventListener("input", function (e) {
+    inp.addEventListener("keydown", function (e) {
+        console.log(arr);
         var a, b, i, val = this.value;
         /*close any already open lists of autocompleted values*/
         closeAllLists();
@@ -58,12 +77,17 @@ function autocomplete(inp, arr) {
         /*append the DIV element as a child of the autocomplete container:*/
         this.parentNode.appendChild(a);
         /*for each item in the array...*/
+        console.log('sono dentro');
         for (i = 0; i < arr.length; i++) {
+            console.log(arr[i]);
             /*check if the item starts with the same letters as the text field value:*/
             //if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
             /*create a DIV element for each matching element:*/
             b = document.createElement("DIV");
-            b.innerHTML = `<input type='hidden' value='${arr[i].streetName}, ${arr[i].municipality}'>${arr[i].streetName}, ${arr[i].municipality}`;
+            //b.innerHTML = `<input type='hidden' value='${arr[i].streetName} N ${arr[i].streetNumber}, ${arr[i].municipality}'>${arr[i].streetName} N ${arr[i].streetNumber}, ${arr[i].municipality}`;
+            b.innerHTML = `<input type='hidden' value='${arr[i].freeformAddress}'>${arr[i].freeformAddress}`;
+
+
             /*make the matching letters bold:*/
             //b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
             //b.innerHTML += arr[i].substr(val.length);
