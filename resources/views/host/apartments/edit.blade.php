@@ -142,7 +142,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
+                    {{--                     <div class="mb-3">
                         <label for="gallery" class="form-label">Select a pictures for the gallery</label>
                         <input type="file" class="form-control" name="gallery[]" id="gallery"
                             placeholder="Select multiple images" aria-describedby="thumbHelpID" multiple>
@@ -152,7 +152,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                    </div>
+                    </div> --}}
 
 
 
