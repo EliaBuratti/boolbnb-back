@@ -38,8 +38,8 @@ class ApartmentSeeder extends Seeder
             $new_aparment->title = $apartment['title'];
             $new_aparment->slug = Str::slug($new_aparment->title, '-');
             $new_aparment->nation = $apartment['nation'];
-            $new_aparment->city = $apartment['city'];
-            $new_aparment->postal_code = $apartment['postal_code'];
+            /* $new_aparment->city = $apartment['city'];
+            $new_aparment->postal_code = $apartment['postal_code']; */
             $new_aparment->address = $apartment['address'];
             $new_aparment->rooms = $apartment['rooms'];
             $new_aparment->bathrooms = $apartment['bathrooms'];
