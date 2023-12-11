@@ -32,6 +32,7 @@ class UpdateApartmentRequest extends FormRequest
             'description' => ['required', 'string'],
             'thumbnail' => ['image'], #'mimes:'png,jpg'
             'gallery' => ['array'],
+            'services' => ['nullable', 'exists:services,id'],
         ];
     }
 }
