@@ -29,8 +29,9 @@
                             <option disabled selected>Select your country</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country['name'] }}  - {{ $country['code'] }}"
-                                    {{ $country['name'] == $apartment->nation ? 'selected' : '' }}>
-                                    {{ $country['name'] }} - {{ $country['code'] }}</option>
+                                    {{ Str::contains($apartment->nation, $country['name']) ? 'selected' : '' }}>
+                                    {{ $country['name'] }} - {{ $country['code'] }}
+                                </option>
                             @endforeach
                         </select>
                         @error('nation')
