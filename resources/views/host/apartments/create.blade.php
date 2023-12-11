@@ -100,4 +100,7 @@
 
 @section('scripts')
     @vite(['resources/js/fetchDataTomTom.js'])
+    <script>
+        const tomtom_key = '{{env('TOMTOM_KEY')}}';
+    </script>
 @endsection
