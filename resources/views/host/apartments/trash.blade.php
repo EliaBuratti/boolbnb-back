@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+
+        <h1 class="py-5">TRASH</h1>
+
         <div class="row">
 
 
@@ -16,7 +19,7 @@
                     table-primary
                     align-middle">
                         <thead class="table-light">
-                            <caption>Sponsorships</caption>
+                            <caption>Apartments</caption>
                             <tr>
                                 <th>Apartment Name</th>
                                 <th>Deleted</th>
@@ -138,7 +141,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <h2>No sponsorships </h2>
+                                    <h2>No apartments trashed </h2>
                                 </tr>
                             @endforelse
 
