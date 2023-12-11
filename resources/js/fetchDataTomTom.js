@@ -41,7 +41,7 @@ nationEl.addEventListener('click', function () {
 addressEl.addEventListener('keyup', function () {
     let inputValue = `${addressEl.value}, ${nationEl.value}`;
     console.log(inputValue);
-    fetchAddress(`https://api.tomtom.com/search/2/geocode/${inputValue}.json?storeResult=false&limit=10&view=Unified&key=udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT`).then(result => console.log(result));
+    fetchAddress(`https://api.tomtom.com/search/2/geocode/${inputValue}.json?storeResult=false&limit=10&view=Unified&key=${tomtom_key}`).then(result => console.log(result));
     setTimeout(() => {
         console.log(newResultsSearch);
         displayResults(newResultsSearch);
