@@ -66,7 +66,6 @@ class ApartmentController extends Controller
         dd($val_data);
         //$val_data['latitude'] = 3;
         //$val_data['longitude'] = 3;
-        //dd($val_data);
 
         if ($request->has('thumbnail')) {
             $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $request->thumbnail);
@@ -83,10 +82,7 @@ class ApartmentController extends Controller
             foreach ($gallery as $image) {
                 $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $image);
                 $path = 'apartments' . strstr($complete_path, '/');
-                /*                 $new_image = Image::create([
-                    "apartment_id" => $id_apartment,
-                    "img" => $path,
-                ]);  */
+
                 $new_image = new Image();
                 $new_image->apartment_id = $id_apartment;
                 $new_image->img = $path;

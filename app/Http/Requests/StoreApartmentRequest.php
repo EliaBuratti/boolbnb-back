@@ -24,8 +24,6 @@ class StoreApartmentRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'nation' => ['required', 'string'],
-/*             'city' => ['required', 'string'],
-            'postal_code' => ['required', 'string'], */
             'address' => ['required', 'string'],
             'rooms' => ['required', 'numeric'],
             'bathrooms' => ['required', 'numeric'],
