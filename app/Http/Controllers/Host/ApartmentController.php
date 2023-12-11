@@ -60,7 +60,7 @@ class ApartmentController extends Controller
         //dd($val_data);
 
         if ($request->has('thumbnail')) {
-            $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $request->thumbnail);
+            $complete_path = Storage::put('apartments/' . $val_data['slug'], $request->thumbnail);
             $path = 'apartments' . strstr($complete_path, '/');
             $val_data['thumbnail'] = $path;
         }
@@ -70,9 +70,8 @@ class ApartmentController extends Controller
         if ($request->has('gallery')) {
 
             $gallery = $request['gallery'];
-
             foreach ($gallery as $image) {
-                $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $image);
+                $complete_path = Storage::put('apartments/' . $val_data['slug'], $image);
                 $path = 'apartments' . strstr($complete_path, '/');
                 /*                 $new_image = Image::create([
                     "apartment_id" => $id_apartment,
@@ -130,7 +129,7 @@ class ApartmentController extends Controller
 
             Storage::delete('public/' . $path);
 
-            $new_img = Storage::put('public/apartments/' . $apartment->id . 'app', $request->thumbnail);
+            $new_img = Storage::put('public/apartments/' . $apartment->slug, $request->thumbnail);
 
             $new_path = strstr($new_img, '/');
             $val_data['thumbnail'] = $new_path;

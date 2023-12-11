@@ -17,7 +17,7 @@ class ImageSeeder extends Seeder
 
         foreach ($images as $image) {
             $new_image = new Image();
-            $new_image->img = $image['img'];
+            $new_image->img = 'apartments/' . $image['slug'] . $image['img'];
             $new_image->apartment_id = $image['apartment_id'];
             $new_image->save();
         }
