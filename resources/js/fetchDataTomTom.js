@@ -1,108 +1,81 @@
 import './bootstrap';
 import '~resources/scss/app.scss';
 import * as bootstrap from 'bootstrap';
-import { toArray } from 'lodash';
 import.meta.glob([
     '../img/**'
 ])
 
-
 let resultsSearch = [];
 let newResultsSearch = [];
+
+//Dynamic search with tomtom call
+async function fetchAddress(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    const results = data.results;
+    results.forEach((result, i) => {
+        console.log(result.address.freeformAddress);
+        console.log(nationEl.value.includes(results[i].address.countryCode));
+        if (result.address.freeformAddress && nationEl.value.includes(results[i].address.countryCode)) {
+
+            resultsSearch[i] = result.address.freeformAddress;
+        }
+
+    });
+    newResultsSearch = resultsSearch.filter(result => result != undefined);
+    return data.results;
+};
+
 const addressEl = document.getElementById('address');
+const searchResults = document.getElementById('search-results');
 const nationEl = document.getElementById('nation');
 
 
-
-//Dynamic search with tomtom call
-const fetchAddress = async (url) => {
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const results = data.results;
-
-        results.forEach((result, i) => {
-
-
-            if (result.address.freeformAddress && nationEl.value.includes(results[i].address.countryCode)) {
-                resultsSearch[i] = {
-                    'freeformAddress': result.address.freeformAddress
-                };
-            }
-        });
-        newResultsSearch = resultsSearch.filter(result => result != undefined);
-        autocomplete(addressEl, newResultsSearch);
-
-        return results;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
 nationEl.addEventListener('click', function () {
     addressEl.value = '';
+    newResultsSearch = [];
+    searchResults.innerHTML = '';
+
 })
 
 addressEl.addEventListener('keyup', function () {
-
-    const inputValue = `${addressEl.value},  ${nationEl.value}`;
-
+    let inputValue = `${addressEl.value}, ${nationEl.value}`;
     console.log(inputValue);
-    fetchAddress(`https://api.tomtom.com/search/2/geocode/${inputValue}.json?storeResult=false&limit=10&view=Unified&key=udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT`);
+    fetchAddress(`https://api.tomtom.com/search/2/geocode/${inputValue}.json?storeResult=false&limit=10&view=Unified&key=udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT`).then(result => console.log(result));
+    setTimeout(() => {
+        console.log(newResultsSearch);
+        displayResults(newResultsSearch);
+    }, 500);
+});
 
+
+// function to display search results
+function displayResults(results) {
+    searchResults.innerHTML = '';
+    results.forEach(result => {
+        let li = document.createElement('li');
+        li.classList.add('list-unstyled')
+        li.textContent = result;
+        li.addEventListener('click', () => {
+            addressEl.value = result;
+            searchResults.innerHTML = '';
+        });
+        searchResults.appendChild(li);
+    });
+}
+
+// event listener to close search results when clicking outside the input and the results
+document.addEventListener('click', (event) => {
+    let isClickInsideInput = event.target === addressEl;
+    let isClickInsideResults = searchResults.contains(event.target);
+    if (!isClickInsideInput && !isClickInsideResults) {
+        searchResults.innerHTML = '';
+    }
 });
 
 
 
-function autocomplete(inp) {
-
-    const arr = newResultsSearch;
-    var currentFocus;
 
 
-    var a, b, i, val = addressEl.value;
-    /*close any already open lists of autocompleted values*/
-    closeAllLists();
-    if (!val) { return false; }
-    currentFocus = -1;
 
-    /*create a DIV element that will contain the items (values):*/
-    a = document.createElement("DIV");
-    a.setAttribute("id", addressEl.id + "autocomplete-list");
-    a.setAttribute("class", "autocomplete-items");
-    /*append the DIV element as a child of the autocomplete container:*/
 
-    addressEl.parentNode.appendChild(a);
-    /*for each item in the array*/
-
-    for (i = 0; i < arr.length; i++) {
-        /*create a DIV element for each matching element:*/
-        b = document.createElement("DIV");
-        b.innerHTML = `<input type='hidden' value='${arr[i].freeformAddress}'>${arr[i].freeformAddress}`;
-
-        /*execute a function when someone clicks on the item value (DIV element):*/
-        b.addEventListener("click", function (e) {
-            /*insert the value for the autocomplete text field:*/
-            inp.value = this.getElementsByTagName("input")[0].value;
-            /*close the list of autocompleted values,
-            (or any other open lists of autocompleted values:*/
-            closeAllLists();
-        });
-        a.appendChild(b);
-    }
-    /*execute a function when someone clicks in the document:*/
-    document.addEventListener("click", function (e) {
-        closeAllLists(e.target);
-    });
-
-    function closeAllLists(elmnt) {
-        /*close all autocomplete lists in the document,
-        except the one passed as an argument:*/
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
-                x[i].parentNode.removeChild(x[i]);
-            }
-        }
-    }
-}

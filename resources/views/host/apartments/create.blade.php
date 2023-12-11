@@ -20,7 +20,7 @@
                     <div class="mb-3">
                         <label for="nation" class="form-label">Nation</label>
                         <select class="form-select form-select-lg" name="nation" id="nation">
-                            <option disabled selected value="false">Select your country</option>
+                            <option disabled selected>Select your country</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country['name'] }} - {{ $country['code'] }}">
                                     {{ $country['name'] }} - {{ $country['code'] }}
@@ -29,24 +29,12 @@
                         </select>
                     </div>
 
-                    {{-- <div class="mb-3">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" name="city" id="city" aria-describedby="helpCity"
-                            placeholder="city">
-                        <small id="helpCity" class="form-text text-muted">insert the city of the apartament</small>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="postal_code" class="form-label">Postal Code</label>
-                        <input type="number" class="form-control" name="postal_code" id="postal_code"
-                            aria-describedby="helpPostalCode" placeholder="postal code">
-                        <small id="helpPostalCode" class="form-text text-muted">insert postal code</small>
-                    </div> --}}
-
-                    <div class="mb-3">
+                    <div class="mb-3 position-relative">
                         <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" name="address" id="address"
-                            aria-describedby="helpAdress" placeholder="insert your address">
+                        <input type="text" id="address" name="address" class="form-control"
+                            placeholder="insert your address" aria-describedby="helpTitle">
+                        <ul id="search-results" class="w-100 p-0 position-absolute top-100 left-0 bg-white"></ul>
                         <small id="helpAdress" class="form-text text-muted">insert your address</small>
                     </div>
                     <div id="options"></div>
