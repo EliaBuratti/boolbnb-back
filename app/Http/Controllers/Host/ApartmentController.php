@@ -45,10 +45,9 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request, Apartment $apartment)
     {
-        dd($request);
         $last_apartment = Apartment::all()->last();
         $id_apartment = $last_apartment['id'] + 1;
-        //dd($id_apartment);
+
 
         $val_data = $request->validated();
         $val_data['slug'] = Str::slug($request->title, '-');
@@ -62,10 +61,7 @@ class ApartmentController extends Controller
             $val_data['latitude']  = $response->json()['results'][0]['position']['lat'];
             $val_data['longitude'] = $response->json()['results'][0]['position']['lon'];
         }
-
         dd($val_data);
-        //$val_data['latitude'] = 3;
-        //$val_data['longitude'] = 3;
 
         if ($request->has('thumbnail')) {
             $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $request->thumbnail);
