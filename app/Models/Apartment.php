@@ -8,17 +8,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Http;
 
 class Apartment extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['title', 'slug', 'nation', 'city', 'postal_code', 'address', 'latitude', 'longitude', 'rooms', 'bathrooms', 'beds', 'm_square', 'description', 'thumbnail', 'visible', 'user_id'];
+    protected $fillable = ['title', 'slug', 'nation', 'address', 'latitude', 'longitude', 'rooms', 'bathrooms', 'beds', 'm_square', 'description', 'thumbnail', 'visible', 'user_id'];
 
     public function generateSlug($title)
     {
         return Str::slug($title, '-');
+    }
+
+    public static function getCoordinates ($address) {
+        $key_tomtom = env('TOMTOM_KEY');
+
+        return Http::withoutVerifying()->get("https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&lat=37.337&lon=-121.89&view=Unified&key={$key_tomtom}");
+
     }
 
     public function user(): BelongsTo

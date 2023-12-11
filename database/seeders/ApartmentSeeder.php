@@ -20,13 +20,12 @@ class ApartmentSeeder extends Seeder
 
         foreach ($apartments as $apartment) {
 
-            $key_tomtom = env('TOMTOM_KEY');
             $address = $apartment['address'];
             $city = $apartment['city'];
             $nation = $apartment['nation'];
 
-            $response = Http::withoutVerifying()->get("https://api.tomtom.com/search/2/geocode/{$address} {$city} {$nation}.json?storeResult=false&lat=37.337&lon=-121.89&view=Unified&key={$key_tomtom}");
-
+            //$response = Http::withoutVerifying()->get("https://api.tomtom.com/search/2/geocode/{$address} {$city} {$nation}.json?storeResult=false&lat=37.337&lon=-121.89&view=Unified&key={$key_tomtom}");
+            $response = Apartment::getCoordinates($address, $city, $nation);
             $new_aparment = new Apartment();
 
             if ($response->successful()) {

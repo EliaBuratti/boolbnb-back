@@ -5,139 +5,77 @@ import.meta.glob([
     '../img/**'
 ])
 
-
 let resultsSearch = [];
-const addressEl = document.getElementById('address');
+let newResultsSearch = [];
 
 //Dynamic search with tomtom call
-const fetchAddress = async (url) => {
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const results = data.results;
-        results.forEach((result, i) => {
-            if (result.type == 'Street') {
-                resultsSearch[i] = {
-                    'streetName': result.address.streetName, 'municipality': result.address.municipality,
-                    'value': `${result.address.streetName}, ${result.address.municipality}`
-                };
-            }
-        });
-        let newResultsSearch = resultsSearch.filter(result => result != undefined);
-        console.log(newResultsSearch);
-        console.log(newResultsSearch.length);
-        autocomplete(addressEl, newResultsSearch);
-        return data.results;
-    } catch (error) {
-        console.log(error);
-    }
+async function fetchAddress(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    const results = data.results;
+    results.forEach((result, i) => {
+        console.log(result.address.freeformAddress);
+        console.log(nationEl.value.includes(results[i].address.countryCode));
+        if (result.address.freeformAddress && nationEl.value.includes(results[i].address.countryCode)) {
+
+            resultsSearch[i] = result.address.freeformAddress;
+        }
+
+    });
+    newResultsSearch = resultsSearch.filter(result => result != undefined);
+    return data.results;
 };
 
-addressEl.addEventListener('keyup', function () {
-    const inputValue = addressEl.value;
-    console.log(inputValue);
-    fetchAddress(`https://api.tomtom.com/search/2/geocode/${inputValue}.json?storeResult=false&limit=10&view=Unified&key=udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT`);
+const addressEl = document.getElementById('address');
+const searchResults = document.getElementById('search-results');
+const nationEl = document.getElementById('nation');
 
+
+nationEl.addEventListener('click', function () {
+    addressEl.value = '';
+    newResultsSearch = [];
+    searchResults.innerHTML = '';
+
+})
+
+addressEl.addEventListener('keyup', function () {
+    let inputValue = `${addressEl.value}, ${nationEl.value}`;
+    console.log(inputValue);
+    fetchAddress(`https://api.tomtom.com/search/2/geocode/${inputValue}.json?storeResult=false&limit=10&view=Unified&key=udRMY8mFZ7o4kiJOvK0ShT9DEn82wGyT`).then(result => console.log(result));
+    setTimeout(() => {
+        console.log(newResultsSearch);
+        displayResults(newResultsSearch);
+    }, 500);
 });
 
-function autocomplete(inp, arr) {
-    /*the autocomplete function takes two arguments,
-    the text field element and an array of possible autocompleted values:*/
-    var currentFocus;
-    /*execute a function when someone writes in the text field:*/
-    inp.addEventListener("input", function (e) {
-        var a, b, i, val = this.value;
-        /*close any already open lists of autocompleted values*/
-        closeAllLists();
-        if (!val) { return false; }
-        currentFocus = -1;
-        /*create a DIV element that will contain the items (values):*/
-        a = document.createElement("DIV");
-        a.setAttribute("id", this.id + "autocomplete-list");
-        a.setAttribute("class", "autocomplete-items");
-        /*append the DIV element as a child of the autocomplete container:*/
-        this.parentNode.appendChild(a);
-        /*for each item in the array...*/
-        for (i = 0; i < arr.length; i++) {
-            /*check if the item starts with the same letters as the text field value:*/
-            //if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-            /*create a DIV element for each matching element:*/
-            b = document.createElement("DIV");
-            b.innerHTML = `<input type='hidden' value='${arr[i].streetName}, ${arr[i].municipality}'>${arr[i].streetName}, ${arr[i].municipality}`;
-            /*make the matching letters bold:*/
-            //b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-            //b.innerHTML += arr[i].substr(val.length);
-            /*insert a input field that will hold the current array item's value:*/
-            //b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-            /*execute a function when someone clicks on the item value (DIV element):*/
-            b.addEventListener("click", function (e) {
-                /*insert the value for the autocomplete text field:*/
-                inp.value = this.getElementsByTagName("input")[0].value;
-                /*close the list of autocompleted values,
-                (or any other open lists of autocompleted values:*/
-                closeAllLists();
-            });
-            a.appendChild(b);
-            //}
-        }
-    });
-    /*execute a function presses a key on the keyboard:*/
-    // inp.addEventListener("keydown", function (e) {
-    //     var x = document.getElementById(this.id + "autocomplete-list");
-    //     if (x) x = x.getElementsByTagName("div");
-    //     if (e.keyCode == 40) {
-    //         /*If the arrow DOWN key is pressed,
-    //         increase the currentFocus variable:*/
-    //         currentFocus++;
-    //         /*and and make the current item more visible:*/
-    //         addActive(x);
-    //     } else if (e.keyCode == 38) { //up
-    //         /*If the arrow UP key is pressed,
-    //         decrease the currentFocus variable:*/
-    //         currentFocus--;
-    //         /*and and make the current item more visible:*/
-    //         addActive(x);
-    //     } else if (e.keyCode == 13) {
-    //         /*If the ENTER key is pressed, prevent the form from being submitted,*/
-    //         e.preventDefault();
-    //         if (currentFocus > -1) {
-    //             /*and simulate a click on the "active" item:*/
-    //             if (x) x[currentFocus].click();
-    //         }
-    //     }
-    // });
-    // function addActive(x) {
-    //     /*a function to classify an item as "active":*/
-    //     if (!x) return false;
-    //     /*start by removing the "active" class on all items:*/
-    //     removeActive(x);
-    //     if (currentFocus >= x.length) currentFocus = 0;
-    //     if (currentFocus < 0) currentFocus = (x.length - 1);
-    //     /*add class "autocomplete-active":*/
-    //     x[currentFocus].classList.add("autocomplete-active");
-    // }
-    // function removeActive(x) {
-    //     /*a function to remove the "active" class from all autocomplete items:*/
-    //     for (var i = 0; i < x.length; i++) {
-    //         x[i].classList.remove("autocomplete-active");
-    //     }
-    // }
-    function closeAllLists(elmnt) {
-        /*close all autocomplete lists in the document,
-        except the one passed as an argument:*/
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
-                x[i].parentNode.removeChild(x[i]);
-            }
-        }
-    }
-    /*execute a function when someone clicks in the document:*/
-    document.addEventListener("click", function (e) {
-        closeAllLists(e.target);
+
+// function to display search results
+function displayResults(results) {
+    searchResults.innerHTML = '';
+    results.forEach(result => {
+        let li = document.createElement('li');
+        li.classList.add('list-unstyled')
+        li.textContent = result;
+        li.addEventListener('click', () => {
+            addressEl.value = result;
+            searchResults.innerHTML = '';
+        });
+        searchResults.appendChild(li);
     });
 }
 
-/*An array containing all the country names in the world:*/
+// event listener to close search results when clicking outside the input and the results
+document.addEventListener('click', (event) => {
+    let isClickInsideInput = event.target === addressEl;
+    let isClickInsideResults = searchResults.contains(event.target);
+    if (!isClickInsideInput && !isClickInsideResults) {
+        searchResults.innerHTML = '';
+    }
+});
 
-/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+
+
+
+
+
+

@@ -45,6 +45,7 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request, Apartment $apartment)
     {
+        dd($request);
         $last_apartment = Apartment::all()->last();
         $id_apartment = $last_apartment['id'] + 1;
         //dd($id_apartment);
@@ -55,9 +56,16 @@ class ApartmentController extends Controller
         $val_data['user_id'] = auth()->user()->id;
 
         /* calcolare latitude e longitude */
-        $val_data['latitude'] = 3;
-        $val_data['longitude'] = 3;
-        //dd($val_data);
+        $response = Apartment::getCoordinates($val_data['address']);
+
+        if ($response->successful()) {
+            $val_data['latitude']  = $response->json()['results'][0]['position']['lat'];
+            $val_data['longitude'] = $response->json()['results'][0]['position']['lon'];
+        }
+
+        dd($val_data);
+        //$val_data['latitude'] = 3;
+        //$val_data['longitude'] = 3;
 
         if ($request->has('thumbnail')) {
             $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $request->thumbnail);
@@ -74,10 +82,7 @@ class ApartmentController extends Controller
             foreach ($gallery as $image) {
                 $complete_path = Storage::put('apartments/' . $id_apartment . 'app', $image);
                 $path = 'apartments' . strstr($complete_path, '/');
-                /*                 $new_image = Image::create([
-                    "apartment_id" => $id_apartment,
-                    "img" => $path,
-                ]);  */
+
                 $new_image = new Image();
                 $new_image->apartment_id = $id_apartment;
                 $new_image->img = $path;
