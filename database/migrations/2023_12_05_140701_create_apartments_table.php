@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title', 100);
             $table->string('slug');
             $table->string('nation', 80);
-            $table->string('city', 30);
-            $table->string('postal_code', 10);
+            /* $table->string('city', 30);
+            $table->string('postal_code', 10); */
             $table->string('address', 100);
             $table->float('latitude', 9, 7);
             $table->float('longitude', 10, 7);
