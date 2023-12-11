@@ -28,9 +28,10 @@
                         <select class="form-select form-select-lg" name="nation" id="nation">
                             <option disabled selected>Select your country</option>
                             @foreach ($countries as $country)
-                                <option value="{{ $country['name'] }}"
-                                    {{ $country['name'] == $apartment->nation ? 'selected' : '' }}>{{ $country['name'] }} -
-                                    {{ $country['code'] }}</option>
+                                <option value="{{ $country['name'] }}  - {{ $country['code'] }}"
+                                    {{ Str::contains($apartment->nation, $country['name']) ? 'selected' : '' }}>
+                                    {{ $country['name'] }} - {{ $country['code'] }}
+                                </option>
                             @endforeach
                         </select>
                         @error('nation')
@@ -40,33 +41,21 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" name="city" id="city" aria-describedby="helpCity"
-                            placeholder="{{ $apartment->city }}" value="{{ old('city', $apartment->city) }}">
-                        >
-                        <small id="helpCity" class="form-text text-muted">insert the city of the apartament</small>
-                        @error('city')
+                    <div class="mb-3 position-relative">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" id="address" name="address"
+                            value="{{ old('address', $apartment->address) }}" class="form-control"
+                            placeholder="{{ $apartment->address }}" aria-describedby="helpTitle">
+                        <ul id="search-results" class="w-100 p-0 position-absolute top-100 left-0 bg-white"></ul>
+                        <small id="helpAdress" class="form-text text-muted">insert your address</small>
+                        @error('address')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="postal_code" class="form-label">Postal Code</label>
-                        <input type="number" class="form-control" name="postal_code" id="postal_code"
-                            aria-describedby="helpPostalCode" placeholder="{{ $apartment->postal_code }}"
-                            value="{{ old('postal_code', $apartment->postal_code) }}">
-                        <small id="helpPostalCode" class="form-text text-muted">insert postal code</small>
-                        @error('postal_code')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
+                    {{--                     <div class="mb-3">
                         <label for="address" class="form-label">Address</label>
                         <input type="text" class="form-control" name="address" id="address"
                             aria-describedby="helpAdress" placeholder="{{ $apartment->address }}"
@@ -77,7 +66,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="rooms" class="form-label">Rooms</label>
@@ -107,10 +96,9 @@
 
                     <div class="mb-3">
                         <label for="beds" class="form-label">Beds</label>
-                        <input type="number" class="form-control" name="beds" id="beds"
-                            aria-describedby="helpBeds" placeholder="{{ $apartment->beds }}"
-                            value="{{ old('beds', $apartment->beds) }}"> <small id="helpBeds"
-                            class="form-text text-muted">how many people can sleep here?</small>
+                        <input type="number" class="form-control" name="beds" id="beds" aria-describedby="helpBeds"
+                            placeholder="{{ $apartment->beds }}" value="{{ old('beds', $apartment->beds) }}"> <small
+                            id="helpBeds" class="form-text text-muted">how many people can sleep here?</small>
                         @error('beds')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -175,4 +163,11 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    @vite(['resources/js/fetchDataTomTom.js'])
+    <script>
+        const tomtom_key = '{{ env('TOMTOM_KEY') }}';
+    </script>
 @endsection

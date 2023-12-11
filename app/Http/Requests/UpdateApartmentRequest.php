@@ -24,8 +24,6 @@ class UpdateApartmentRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'nation' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'postal_code' => ['required', 'string'],
             'address' => ['required', 'string'],
             'rooms' => ['required', 'numeric'],
             'bathrooms' => ['required', 'numeric'],
@@ -33,6 +31,7 @@ class UpdateApartmentRequest extends FormRequest
             'm_square' => ['required', 'numeric'],
             'description' => ['required', 'string'],
             'thumbnail' => ['image'], #'mimes:'png,jpg'
+            'gallery' => ['array'],
         ];
     }
 }

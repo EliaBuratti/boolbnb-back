@@ -25,7 +25,7 @@ class ApartmentSeeder extends Seeder
             $nation = $apartment['nation'];
 
             //$response = Http::withoutVerifying()->get("https://api.tomtom.com/search/2/geocode/{$address} {$city} {$nation}.json?storeResult=false&lat=37.337&lon=-121.89&view=Unified&key={$key_tomtom}");
-            $response = Apartment::getCoordinates($address, $city, $nation);
+            $response = Apartment::getCoordinates($address);
             $new_aparment = new Apartment();
 
             if ($response->successful()) {
