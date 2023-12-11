@@ -22,7 +22,7 @@ class StoreApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['bail', 'required', 'min:5', 'max:100', 'unique:title'],
+            'title' => ['bail', 'required', 'min:5', 'max:100', 'unique:apartments,title'],
             'nation' => ['required', 'string'],
             'address' => ['required', 'string'],
             'rooms' => ['required', 'numeric'],
@@ -31,6 +31,7 @@ class StoreApartmentRequest extends FormRequest
             'm_square' => ['required', 'numeric'],
             'description' => ['required', 'string'],
             'thumbnail' => ['required', 'image'], #'mimes:'png,jpg'
+            'gallery' => ['required', 'array']
         ];
     }
 }
