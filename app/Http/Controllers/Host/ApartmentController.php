@@ -233,13 +233,12 @@ class ApartmentController extends Controller
         foreach ($images as $image) {
 
             if (!is_null($image)) {
-
-                Storage::deleteDirectory('public/apartments/' . $apartment->slug);
             }
 
             $image->delete();
         }
 
+        Storage::deleteDirectory('public/apartments/' . $apartment->slug);
 
         $apartment->forceDelete();
 
