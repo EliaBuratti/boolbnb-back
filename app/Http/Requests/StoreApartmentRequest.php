@@ -25,13 +25,14 @@ class StoreApartmentRequest extends FormRequest
             'title' => ['bail', 'required', 'min:5', 'max:100', 'unique:apartments,title'],
             'nation' => ['required', 'string'],
             'address' => ['required', 'string'],
-            'rooms' => ['required', 'numeric'],
-            'bathrooms' => ['required', 'numeric'],
-            'beds' => ['required', 'numeric'],
-            'm_square' => ['required', 'numeric'],
-            'description' => ['required', 'string'],
+            'rooms' => ['required', 'numeric', 'min:1', 'max:25'],
+            'bathrooms' => ['required', 'numeric', 'min:1', 'max:25'],
+            'beds' => ['required', 'numeric', 'min:1', 'max:25'],
+            'm_square' => ['required', 'numeric', 'min:10'],
+            'description' => ['bail', 'required', 'min:10', 'max:1000'],
             'thumbnail' => ['required', 'image'], #'mimes:'png,jpg'
-            'gallery' => ['required', 'array']
+            'gallery' => ['required', 'array'],
+            'services' => ['nullable', 'exists:services,id'],
         ];
     }
 }
