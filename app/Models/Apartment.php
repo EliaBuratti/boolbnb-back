@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,11 +23,11 @@ class Apartment extends Model
         return Str::slug($title, '-');
     }
 
-    public static function getCoordinates ($address) {
+    public static function getCoordinates($address)
+    {
         $key_tomtom = env('TOMTOM_KEY');
 
         return Http::withoutVerifying()->get("https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&lat=37.337&lon=-121.89&view=Unified&key={$key_tomtom}");
-
     }
 
     public function user(): BelongsTo
@@ -44,14 +45,14 @@ class Apartment extends Model
         return $this->hasMany(Message::class);
     }
 
-    public function services(): HasMany
+    public function services(): BelongsToMany
     {
-        return $this->hasMany(Service::class);
+        return $this->belongsToMany(Service::class);
     }
 
-    public function sponsorships(): HasMany
+    public function sponsorships(): BelongsToMany
     {
-        return $this->hasMany(Sponsorship::class);
+        return $this->belongsToMany(Sponsorship::class);
     }
 
     public function view(): HasMany

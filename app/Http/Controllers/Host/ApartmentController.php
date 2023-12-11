@@ -7,6 +7,7 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Image;
+use App\Models\Service;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,21 +37,22 @@ class ApartmentController extends Controller
     public function create()
     {
         $countries = config('countries');
+        $services = Service::all();
 
-        return view('host.apartments.create', compact('countries'));
+        return view('host.apartments.create', compact('countries', 'services'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreApartmentRequest $request, Apartment $apartment)
+    public function store(StoreApartmentRequest $request)
     {
         /* $last_apartment = Apartment::all()->last();
         $id_apartment = $last_apartment['id'] + 1; */
 
 
         $val_data = $request->validated();
-        dd($val_data);
+        //dd($val_data);
         $val_data['slug'] = Str::slug($request->title, '-');
 
         $val_data['user_id'] = auth()->user()->id;
@@ -79,7 +81,9 @@ class ApartmentController extends Controller
 
 
 
-        $new_apartment = Apartment::create($val_data);
+        $apartment = Apartment::create($val_data);
+        $apartment->services()->attach($request->services);
+        //dd($apartment);
 
         if ($request->has('gallery')) {
 
@@ -91,7 +95,7 @@ class ApartmentController extends Controller
                 //dd($complete_path);
                 $relative_path = Str::after($complete_path, 'public/');
                 $new_image = new Image();
-                $new_image->apartment_id = $new_apartment->id;
+                $new_image->apartment_id = $apartment->id;
                 $new_image->img = $relative_path;
                 $new_image->save();
             }
