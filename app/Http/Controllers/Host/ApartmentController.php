@@ -122,7 +122,7 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        //dd($request);
+        dd($request);
         $val_data = $request->validated();
 
         if ($request->has('thumbnail')) {

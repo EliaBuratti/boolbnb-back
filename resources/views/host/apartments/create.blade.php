@@ -37,6 +37,7 @@
                         <ul id="search-results" class="w-100 p-0 position-absolute top-100 left-0 bg-white"></ul>
                         <small id="helpAdress" class="form-text text-muted">insert your address</small>
                     </div>
+
                     <div id="options"></div>
                     <div class="mb-3">
                         <label for="rooms" class="form-label">Rooms</label>
@@ -101,6 +102,6 @@
 @section('scripts')
     @vite(['resources/js/fetchDataTomTom.js'])
     <script>
-        const tomtom_key = '{{env('TOMTOM_KEY')}}';
+        const tomtom_key = '{{ env('TOMTOM_KEY') }}';
     </script>
 @endsection
