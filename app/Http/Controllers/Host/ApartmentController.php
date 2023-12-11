@@ -126,9 +126,10 @@ class ApartmentController extends Controller
 
         $countries = config('countries');
         $user_id = auth()->user()->id;
+        $services = Service::all();
 
         if ($apartment->user_id == $user_id) {
-            return view('host.apartments.edit', compact(['apartment', 'countries']));
+            return view('host.apartments.edit', compact(['apartment', 'countries', 'services']));
         } else {
             return to_route('host.apartments.index')->with('message', 'can\'t edit that apartment');
         }
@@ -139,7 +140,7 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        dd($request);
+        //dd($request);
         $val_data = $request->validated();
 
         if ($request->has('thumbnail')) {
@@ -198,6 +199,12 @@ class ApartmentController extends Controller
         //dd($apartment);
 
         $apartment->update($val_data);
+
+        //dd($val_data['services']);
+        if ($request->has('services')) {
+            # Aggiorniamo le technologies
+            $apartment->services()->sync($val_data['services']);
+        }
 
         return to_route('host.apartments.show', compact('apartment'))->with('message', 'aparment updated');
     }

@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+
+        <div class="py-3">@include('../partials.errors')</div>
+
         <div class="row">
             <div class="col-12">
 
@@ -117,6 +120,34 @@
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="services" class="form-label d-block">Choose services:</label>
+                    
+                        @foreach ($services as $service)
+                    
+                        
+                        @if ($errors->any())
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="services-{{ $service->id }}" name="services[]" value="{{ $service->id }}" {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="services-{{ $service->id }}">{{ $service->name }}</label>
+                            </div>
+                    
+                        @else
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="services-{{ $service->id }}" name="services[]"
+                                    value="{{ $service->id }}"
+                                    {{ $apartment->services->contains($service) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="services-{{ $service->id }}">{{ $service->name }}</label>
+                            </div>
+                    
+                        @endif
+                        @endforeach
+                    
+                        @error('services')
+                        <div class="text-danger"> {{$message}} </div>
                         @enderror
                     </div>
 
