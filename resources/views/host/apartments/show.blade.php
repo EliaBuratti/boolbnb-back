@@ -8,6 +8,9 @@
 
                     <div class="col-7">
                         <div class="container-fluid pt-1">
+
+                            <a href="{{route('host.apartments.index')}}" class="btn btn-primary">Apartments List</a>
+
                             <h1 class="display-5 fw-bold">{{ $apartment->title }}</h1>
                             <img class="img-fluid rounded-4" src="{{ asset('storage/' . $apartment->thumbnail) }} "
                                 alt="">
@@ -23,6 +26,22 @@
                             @empty
                                 <h4>no gallery here!</h4>
                             @endforelse
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="d-flex gap-2">
+                            <span>Services:</span>
+                            <ul class="list-unstyled">
+                                @forelse ($apartment->Services as $service)
+                                    <li class="badge bg-primary">
+                                        <i class="fas fa-tag fa-xs fa-fw" aria-hidden="true"></i>
+                                        {{$service->name}}
+                                    </li>
+                                @empty
+                                    <li class="badge bg-primary">No services</li>
+                                @endforelse
+                            </ul>
                         </div>
                     </div>
                 </div>
