@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(fu
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
     
     Route::delete('/apartment/images/{image}/destroy', [ImageController::class, 'destroy'])->name('deleteImg');
+    Route::post('/apartment/images', [ImageController::class, 'store'])->name('addImg');
 
     Route::get('apartment/trash', [ApartmentController::class, 'trash_apartments'])->name('trash');
     Route::put('/apartment/trash/{apartments}/restore', [ApartmentController::class, 'restore'])->name('restore');
