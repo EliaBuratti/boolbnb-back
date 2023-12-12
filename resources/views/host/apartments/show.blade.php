@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+
+        @include('../partials.session_message')
+
             <div class="mt-3 p-5 pt-1 mb-4 bg-light rounded-3">
                 <div class="row">
 
@@ -100,7 +102,7 @@
                                 <div class="input-group mt-3">
                                     <input type="hidden" name="apartment_code" value="{{ $apartment->apartment_code }}">
                                     <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
-                                    <input type="file" name="img" id="img" class="form-control">
+                                    <input type="file" name="img" id="img" class="form-control" required>
                                     <button type="submit" class="btn btn-primary">
                                         Add Image +
                                     </button>
@@ -113,8 +115,10 @@
                 <div class="container-fluid mt-3">
                     <p class="col-md-8 fs-4">{{ $apartment->description }}</p>
 
+                    <a href=" {{ route('host.apartments.edit', $apartment->slug) }} "
+                        class="btn btn-warning">Edit</a>
+
                 </div>
             </div>
-        </div>
     </div>
 @endsection

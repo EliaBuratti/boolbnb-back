@@ -233,7 +233,7 @@ class ApartmentController extends Controller
     {
         $apartment->delete();
 
-        return to_route('host.apartments.index')->with('message', 'aparment deleted');
+        return to_route('host.apartments.index')->with('message', 'Welldone! apartment trashed successfully.');
     }
 
     public function trash_apartments()
@@ -252,7 +252,7 @@ class ApartmentController extends Controller
         $apartment = Apartment::withTrashed()->find($id);
         $apartment->restore();
 
-        return to_route('host.apartments.index')->with('message', 'Welldone! apartments restored successfully');
+        return to_route('host.apartments.index')->with('message', 'Welldone! apartments restored successfully.');
     }
 
     public function forceDelete($id)
@@ -284,6 +284,6 @@ class ApartmentController extends Controller
 
         $apartment->forceDelete();
 
-        return to_route('host.trash')->with('message', 'Well Done! apartments deleted successfully!');
+        return to_route('host.trash')->with('message', 'Well Done! apartments deleted successfully.');
     }
 }

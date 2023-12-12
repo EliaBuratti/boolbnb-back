@@ -191,7 +191,10 @@
 
         </div>
 
-        <button type="submit" class="btn btn-success mb-5">Insert</button>
+        <div class="py-5">
+            <button type="submit" class="btn btn-success">Insert</button>
+            <a href="{{route('host.apartments.index')}}" class="btn btn-primary">Back to apartment list</a>
+        </div>
 
 
 

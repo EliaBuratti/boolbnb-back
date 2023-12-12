@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
 
-        <div class="py-3">@include('../partials.errors')</div>
+        <div class="py-3">
+            @include('../partials.errors')
+        </div>
 
         <div class="row">
             <div class="col-12">
@@ -206,9 +208,12 @@
 
 
 
-                    <button type="submit" class="btn btn-success">Update</button>
+                    <div>
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="btn btn-primary">Back to show</a>
+                        <a href="{{route('host.apartments.index')}}" class="btn btn-primary">Back to apartment list</a>
+                    </div>
                 </form>
-
 
             </div>
         </div>

@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
 
-        <h1 class="py-5">TRASH</h1>
+        <h1 class="pt-3">TRASH</h1>
+        
+        <a href="{{url('dashboard')}}" class="btn btn-primary my-3">Back to dashboard</a>
+        <a href="{{route('host.apartments.index')}}" class="btn btn-primary">Go to apartment list</a>
+        
 
         <div class="row">
 
