@@ -149,12 +149,11 @@ class ApartmentController extends Controller
             $path = $apartment->thumbnail;
             //dd($path);
             Storage::delete($path);
-
             $new_img = Storage::put('public/apartments/apartment-' . $apartment->apartment_code, $request->thumbnail);
 
-            $new_path = $new_img;
+            $relative_path = Str::after($new_img, 'public/');
 
-            $val_data['thumbnail'] = $new_path;
+            $val_data['thumbnail'] = $relative_path;
         }
         //dd($val_data);
 
