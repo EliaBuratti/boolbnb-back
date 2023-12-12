@@ -34,16 +34,15 @@ class ImageController extends Controller
      */
     public function store(StoreImageRequest $request)
     {
-       //dd($request, $user_id = auth()->user()->id);
+        //dd($request, $user_id = auth()->user()->id);
         $new_img = Storage::put('public/apartments/apartment-' . $request->apartment_code, $request->img);
         $relative_path = Str::after($new_img, 'public/');
-        
+
         $data['apartment_id'] = $request->apartment_id;
         $data['img'] = $relative_path;
         $image = Image::create($data);
 
-        return to_route('host.apartments.index')->with('message', 'Image added sucessfully');
-
+        return redirect()->back()->with('success', 'Welldone! Image added successfully.');;
     }
 
     /**
@@ -77,6 +76,6 @@ class ImageController extends Controller
     {
         Storage::delete($image->img);
         $image->delete();
-        return to_route('host.apartments.index')->with('message', 'Delete sucessfully');
+        return redirect()->back()->with('message', 'Welldone! Image deleted sucessfully.');
     }
 }

@@ -2,8 +2,10 @@
 
 @section('content')
     <div class="container">
-        <div class="row mt-4">
 
+        @include('../partials.errors')
+
+        <div class="row mt-4">
 
 
             <div class="col-12 col-sm-5 ">

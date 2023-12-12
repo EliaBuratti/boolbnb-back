@@ -2,12 +2,8 @@
 
 @section('content')
     <div class="container py-3">
-        @if (session('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                {{ session('message') }}
-            </div>
-        @endif
+        
+        @include('../partials.session_message')
 
         <a href="{{route('host.apartments.create')}}" class="btn btn-primary mt-5">Crea un nuovo appartamento</a>
 

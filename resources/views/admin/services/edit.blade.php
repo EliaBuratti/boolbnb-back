@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+        
+        @include('../partials.errors')
+
         <div class="row mt-4">
             <div class="col-6 text-center m-auto">
                 <h4>edit "{{ $service->name }}"</h4>

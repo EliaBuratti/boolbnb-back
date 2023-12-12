@@ -5,15 +5,8 @@
     <section class="create col-10 mx-auto">
         <div class="container">
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li> {{ $error }} </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+        @include('../partials.errors')
+            
 
             <div class="py-4">
                 <h2 class="text-muted text-uppercase">Edit sponsorship: {{ $sponsorship->name }}</h2>
