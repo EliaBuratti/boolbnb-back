@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container py-3">
         @if (session('message'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <strong>Attention!</strong> {{ session('message') }}
+                {{ session('message') }}
             </div>
         @endif
 
         <a href="{{route('host.apartments.create')}}" class="btn btn-primary mt-5">Crea un nuovo appartamento</a>
 
 
-        <div class="row mt-3">
+        <div class="row">
             @forelse ($apartments as $apartment)
                 <div class="col-4 g-3">
                     <div class="card shadow h-100">

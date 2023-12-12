@@ -113,7 +113,7 @@ class ApartmentController extends Controller
 
 
         //dd($request);
-        return to_route('host.apartments.index')->with('message', 'apartment added!');
+        return to_route('host.apartments.index')->with('message', 'Apartment added successfully!');
     }
 
     /**
