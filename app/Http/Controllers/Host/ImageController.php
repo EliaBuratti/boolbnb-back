@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
+use App\Models\Apartment;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ImageController extends Controller
 {
@@ -30,7 +34,16 @@ class ImageController extends Controller
      */
     public function store(StoreImageRequest $request)
     {
-        //
+       //dd($request, $user_id = auth()->user()->id);
+        $new_img = Storage::put('public/apartments/apartment-' . $request->apartment_code, $request->img);
+        $relative_path = Str::after($new_img, 'public/');
+        
+        $data['apartment_id'] = $request->apartment_id;
+        $data['img'] = $relative_path;
+        $image = Image::create($data);
+
+        return to_route('host.apartments.index')->with('message', 'Image added sucessfully');
+
     }
 
     /**
@@ -62,6 +75,8 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        //
+        Storage::delete($image->img);
+        $image->delete();
+        return to_route('host.apartments.index')->with('message', 'Delete sucessfully');
     }
 }
