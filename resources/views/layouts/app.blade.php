@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="http://localhost:5173/#/">
-                    BoolBnB
+                    <img src="{{ asset('storage/logo/Boolbnb.png') }}" width="100" alt="">
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
 
