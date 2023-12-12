@@ -18,7 +18,7 @@ class ApartmentSeeder extends Seeder
     {
         $apartments = config('db_apartments.apartments');
 
-        foreach ($apartments as $apartment) {
+        foreach ($apartments as $i => $apartment) {
 
             $address = $apartment['address'];
             $city = $apartment['city'];
@@ -38,6 +38,7 @@ class ApartmentSeeder extends Seeder
             $new_aparment->title = $apartment['title'];
             $new_aparment->slug = Str::slug($new_aparment->title, '-');
             $new_aparment->nation = $apartment['nation'];
+            $new_aparment->apartment_code = $i + 1;
             /* $new_aparment->city = $apartment['city'];
             $new_aparment->postal_code = $apartment['postal_code']; */
             $new_aparment->address = $apartment['address'];
@@ -46,7 +47,7 @@ class ApartmentSeeder extends Seeder
             $new_aparment->beds = $apartment['beds'];
             $new_aparment->m_square = $apartment['m_square'];
             $new_aparment->description = $apartment['description'];
-            $new_aparment->thumbnail = 'apartments/' . Str::slug($new_aparment->title, '-') . $apartment['thumbnail'];
+            $new_aparment->thumbnail = 'apartments/' . 'apartment-' . $i +1 . $apartment['thumbnail'];
             $new_aparment->visible = $apartment['visible'];
             $new_aparment->save();
         }

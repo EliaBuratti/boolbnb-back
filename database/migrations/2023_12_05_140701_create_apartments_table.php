@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title', 100);
             $table->string('slug');
+            $table->bigInteger('apartment_code');
             $table->string('nation', 80);
             /* $table->string('city', 30);
             $table->string('postal_code', 10); */
