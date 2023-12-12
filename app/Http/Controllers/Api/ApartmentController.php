@@ -59,7 +59,15 @@ class ApartmentController extends Controller
 
         $key_tomtom = env('TOMTOM_KEY');
         $coordinate = "https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
-        //dd($coordinate);
+        
+        
+        if (json_decode(file_get_contents($coordinate))->results == []) {
+            return response()->json([
+                'success' => false,
+                'result' => 'Nothing address found',
+            ]);
+        }
+
         $json = file_get_contents($coordinate);
         $obj = json_decode($json);
         $lat = $obj->results[0]->position->lat;
