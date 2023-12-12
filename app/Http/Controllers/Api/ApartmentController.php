@@ -44,7 +44,7 @@ class ApartmentController extends Controller
         $rooms = $request->query('rooms');
         $address = $request->query('location');
 
-        //dd($beds, $rooms);
+        //dd($beds, $rooms, $address);
 
         if ($request->query->has('beds') || $request->query->has('rooms')) {
             //$apartments = Apartment::with(['services', 'sponsorships'])->where('beds', '>=', $beds)->get();
@@ -59,6 +59,7 @@ class ApartmentController extends Controller
 
         $key_tomtom = env('TOMTOM_KEY');
         $coordinate = "https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
+        //dd($coordinate);
         $json = file_get_contents($coordinate);
         $obj = json_decode($json);
         $lat = $obj->results[0]->position->lat;
@@ -68,7 +69,7 @@ class ApartmentController extends Controller
             "geometryList" => [
                 [
                     "position" => $lat . ',' . $lon,  //posizione che otteniamo dall'input dell'utente
-                    "radius" => 2000,
+                    "radius" => 50000,
                     "type" => "CIRCLE"
                 ]
             ],
@@ -86,9 +87,9 @@ class ApartmentController extends Controller
             array_push($apartmentsList['poiList'], $newApartment);
         }
 
-        //$apartments = json_encode($apartmentsList);
+        //http://127.0.0.1:8000/api/apartments/?beds=1&location=milano&rooms=1  con questa query
 
-        /* $response = Http::withHeaders([
+        $response = Http::withoutVerifying()->withHeaders([
             'Content-Type' => 'application/json',
             'accept' => '/',
 
@@ -96,10 +97,29 @@ class ApartmentController extends Controller
             ->withBody(json_encode($apartmentsList), 'application/json')
             ->post("https://api.tomtom.com/search/2/geometryFilter.json?key={$key_tomtom}");
 
- */
+
+        $responseList = json_decode($response->body())->results;
+        $apartmentFiltered = [];
+
+        foreach ($apartments as $apartment) {
+
+            foreach($responseList as $list) {
+                $position = $list->position;
+                $latitude = $position->lat;
+                $longitude = $position->lon;
+
+                if($latitude === $apartment->latitude && $longitude === $apartment->longitude ) {
+                    array_push($apartmentFiltered, $apartment);
+                }
+
+            }
+
+
+        }
+
         return response()->json([
             'success' => true,
-            'result' => $apartments,
+            'result' => $apartmentFiltered,
         ]);
     }
 }
