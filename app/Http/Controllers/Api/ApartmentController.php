@@ -43,9 +43,9 @@ class ApartmentController extends Controller
 
 
         if ($request->query->has('beds')) {
-            $apartments = Apartment::where('beds', '>=', $beds)->get();
+            $apartments = Apartment::with(['services', 'sponsorships'])->where('beds', '>=', $beds)->get();
         } else {
-            $apartments = Apartment::all();
+            $apartments = Apartment::with(['services', 'sponsorships'])->get();
         }
 
         return response()->json([

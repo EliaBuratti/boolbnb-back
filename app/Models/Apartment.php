@@ -52,7 +52,7 @@ class Apartment extends Model
 
     public function sponsorships(): BelongsToMany
     {
-        return $this->belongsToMany(Sponsorship::class);
+        return $this->belongsToMany(Sponsorship::class)->withPivot('end_sponsorship', 'created_at');
     }
 
     public function view(): HasMany

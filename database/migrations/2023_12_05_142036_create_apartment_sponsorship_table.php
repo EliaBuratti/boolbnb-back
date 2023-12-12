@@ -23,6 +23,8 @@ return new class extends Migration
                 ->references('id')
                 ->on('sponsorships');
 
+            $table->dateTime('end_sponsorship');
+
             # Per indicare che entrambi i campi sono chiavi primarie
             $table->primary(['apartment_id', 'sponsorship_id']);
 
