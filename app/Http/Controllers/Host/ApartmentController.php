@@ -72,7 +72,7 @@ class ApartmentController extends Controller
         //dd($val_data);
 
         if ($request->has('thumbnail')) {
-            $complete_path = Storage::put('apartments/apartment-' . $last_apartment->apartment_code + 1 , $request->thumbnail);
+            $complete_path = Storage::put('public/apartments/apartment-' . $last_apartment->apartment_code + 1, $request->thumbnail);
             //$path = 'apartments' . strstr($complete_path, '/');
             $relative_path = Str::after($complete_path, 'public/');
 
@@ -92,7 +92,7 @@ class ApartmentController extends Controller
             $gallery = $request['gallery'];
 
             foreach ($gallery as $image) {
-                $complete_path = Storage::put('apartments/apartment-' . $last_apartment->apartment_code + 1 , $image);
+                $complete_path = Storage::put('public/apartments/apartment-' . $last_apartment->apartment_code + 1, $image);
                 //$path = 'apartments' . strstr($complete_path, '/');
                 //dd($complete_path);
                 $relative_path = Str::after($complete_path, 'public/');
@@ -143,21 +143,21 @@ class ApartmentController extends Controller
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
         $val_data = $request->validated();
-        
+
         if ($request->has('thumbnail')) {
-            
+
             $path = $apartment->thumbnail;
             //dd($path);
             Storage::delete($path);
-            
-            $new_img = Storage::put('apartments/apartment-' . $apartment->apartment_code , $request->thumbnail);
-            
+
+            $new_img = Storage::put('public/apartments/apartment-' . $apartment->apartment_code, $request->thumbnail);
+
             $new_path = $new_img;
 
             $val_data['thumbnail'] = $new_path;
         }
         //dd($val_data);
-        
+
         if ($request->has('title')) {
             $val_data['title']  = $request->title;
             $val_data['slug'] = Str::slug($request->title . '-');
