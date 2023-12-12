@@ -123,15 +123,34 @@
                     <div class="mb-3">
                         <label for="gallery" class="form-label">Select a pictures for the gallery</label>
                         <input type="file" class="form-control" name="gallery[]" id="gallery"
-                            placeholder="Select multiple images" aria-describedby="thumbHelpID" multiple  class="form-control @error('gallery') is-invalid @enderror" required>
-                        <div id="thumbHelpID" class="form-text">insert a pictures for your apartment!</div>
+                            placeholder="Select multiple images" aria-describedby="galleryHelpID" multiple  class="form-control @error('gallery') is-invalid @enderror" required>
+                        <div id="galleryHelpID" class="form-text">insert a pictures for your apartment!</div>
                         @error('gallery')
                             <div class="text-danger"> {{$message}} </div>
                         @enderror
                     </div>
 
+                        
+                    <div>Do you want to make it immediately visible?</div>
+                    <div class="m-3 form-check form-check-inline">
+                        
+                        <input class="form-check-input" aria-describedby="visible_true_HelpID" type="radio" name="visible" id="visible_true" value="true" class="form-control @error('visible') is-invalid @enderror" checked>
+                            <label class="form-check-label" for="visible_true">Yes</label>
+                            
+                        </div>
+                        <div class="form-check form-check-inline">
 
-                    <button type="submit" class="btn btn-success">Insert</button>
+                            <input class="form-check-input" aria-describedby="visible_false_HelpID" type="radio" name="visible" id="visible_false" value="false" class="form-control @error('visible') is-invalid @enderror" checked>
+                            <label class="form-check-label" for="visible_false">No</label>
+                            
+                        </div>
+
+                        @error('visible')
+                            <div class="text-danger"> {{$message}} </div>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="btn btn-success mb-5">Insert</button>
 
 
 

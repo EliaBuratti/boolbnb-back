@@ -33,6 +33,8 @@ class StoreApartmentRequest extends FormRequest
             'thumbnail' => ['required', 'image'], #'mimes:'png,jpg'
             'gallery' => ['required', 'array'],
             'services' => ['nullable', 'exists:services,id'],
+            'visible' => ['required'],
+
         ];
     }
 }
