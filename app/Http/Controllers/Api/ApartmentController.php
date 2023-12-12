@@ -40,10 +40,14 @@ class ApartmentController extends Controller
     {
         // Ottenere i parametri dalla query string
         $beds = $request->query('beds');
+        $rooms = $request->query('rooms');
 
+        //dd($beds, $rooms);
 
-        if ($request->query->has('beds')) {
-            $apartments = Apartment::with(['services', 'sponsorships'])->where('beds', '>=', $beds)->get();
+        if ($request->query->has('beds') || $request->query->has('rooms')) {
+            //$apartments = Apartment::with(['services', 'sponsorships'])->where('beds', '>=', $beds)->get();
+            //$apartments = Apartment::with(['services', 'sponsorships'])->where('rooms', '>=', $rooms)->get();
+            $apartments = Apartment::with(['services', 'sponsorships'])->where('beds', '>=', $beds)->where('rooms', '>=', $rooms)->get();
         } else {
             $apartments = Apartment::with(['services', 'sponsorships'])->get();
         }
