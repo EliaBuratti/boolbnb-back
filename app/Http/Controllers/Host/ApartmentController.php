@@ -8,6 +8,7 @@ use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Image;
 use App\Models\Service;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,6 +31,7 @@ class ApartmentController extends Controller
 
         return view('host.apartments.index', compact(['apartments', 'countries']));
     }
+
 
     /**
      * Show the form for creating a new resource.

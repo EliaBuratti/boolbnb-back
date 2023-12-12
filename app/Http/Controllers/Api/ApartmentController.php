@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
-    public function index()
+    /* public function index()
     {
         return response()->json([
             'success' => true,
             'result' => Apartment::orderByDesc('id')->paginate(12)
         ]);
-    }
+    } */
 
     public function show($slug)
     {
@@ -31,5 +31,26 @@ class ApartmentController extends Controller
                 'result' => 'Page not found'
             ]);
         }
+    }
+
+    /**
+     * filter apartments with query string
+     */
+    public function index(Request $request)
+    {
+        // Ottenere i parametri dalla query string
+        $beds = $request->query('beds');
+
+
+        if ($request->query->has('beds')) {
+            $apartments = Apartment::where('beds', '>=', $beds)->get();
+        } else {
+            $apartments = Apartment::all();
+        }
+
+        return response()->json([
+            'success' => true,
+            'result' => $apartments,
+        ]);
     }
 }
