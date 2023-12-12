@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -62,6 +64,12 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        //
+        //dd($image);
+
+        Storage::delete($image->img);
+        //dd($image->img);
+        $image->delete();
+
+        return to_route('host.apartments.index')->with('message', 'Delete sucessfully');
     }
 }

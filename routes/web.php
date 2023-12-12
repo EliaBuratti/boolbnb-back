@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SponsorshipController;
 use App\Http\Controllers\Host\ApartmentController;
+use App\Http\Controllers\Host\ImageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,10 +41,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(function () {
 
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
+    
+    Route::delete('/apartment/images/{image}/destroy', [ImageController::class, 'destroy'])->name('deleteImg');
 
     Route::get('apartment/trash', [ApartmentController::class, 'trash_apartments'])->name('trash');
     Route::put('/apartment/trash/{apartments}/restore', [ApartmentController::class, 'restore'])->name('restore');
     Route::delete('/apartment/trash/{apartments}/destroy', [ApartmentController::class, 'forceDelete'])->name('forceDelete');
+
 });
 
 require __DIR__ . '/auth.php';
