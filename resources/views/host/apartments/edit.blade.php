@@ -185,6 +185,25 @@
                         @enderror
                     </div> --}}
 
+                    <div class="mt-5">Set visibility</div>
+                    <div class="m-0 mb-5 form-check form-check-inline">
+                        
+                        <input class="form-check-input" aria-describedby="visible_true_HelpID" type="radio" name="visible" id="visible_true" value="true" class="form-control @error('visible') is-invalid @enderror" {{ $apartment->visible === 1 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="visible_true">Yes</label>
+                            
+                        </div>
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" aria-describedby="visible_false_HelpID" type="radio" name="visible" id="visible_false" value="false" class="form-control @error('visible') is-invalid @enderror"  {{ $apartment->visible === 0 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="visible_false">No</label>
+                            
+                        </div>
+
+                        @error('visible')
+                            <div class="text-danger"> {{$message}} </div>
+                        @enderror
+                    </div>
+
 
 
                     <button type="submit" class="btn btn-success">Update</button>

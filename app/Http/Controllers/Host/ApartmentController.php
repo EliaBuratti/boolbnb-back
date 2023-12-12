@@ -47,9 +47,15 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        /* $last_apartment = Apartment::all()->last();
-        $id_apartment = $last_apartment['id'] + 1; */
+
         $val_data = $request->validated();
+
+        if ($val_data['visible'] === true) {
+
+            $val_data['visible'] = 1;
+        } else {
+            $val_data['visible'] = 0;
+        }
 
         $last_apartment = Apartment::all()->last();
         $val_data['apartment_code'] = $last_apartment->apartment_code + 1;
@@ -143,6 +149,13 @@ class ApartmentController extends Controller
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
         $val_data = $request->validated();
+
+        if ($val_data['visible'] === true) {
+
+            $val_data['visible'] = 1;
+        } else {
+            $val_data['visible'] = 0;
+        }
 
         if ($request->has('thumbnail')) {
 
