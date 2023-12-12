@@ -48,12 +48,13 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="modalTitleId-{{ $gallery_image->id }}">
-                                                            {{ $gallery_image->id }}</h5>
+                                                            <strong>Attention!!</strong>
+                                                        </h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Warning! Are you sure to delete this image??
+                                                        Are you sure to delete this image??
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
