@@ -47,7 +47,7 @@ class Apartment extends Model
 
     public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(Service::class)->withPivot('apartment_id', 'service_id');
     }
 
     public function sponsorships(): BelongsToMany
