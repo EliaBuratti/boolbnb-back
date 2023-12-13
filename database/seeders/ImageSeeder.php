@@ -22,6 +22,7 @@ class ImageSeeder extends Seeder
             $new_image->img = 'apartments/apartment-' . $image['apartment_id'] . $image['img'];
             $new_image->apartment_id = $image['apartment_id'];
             $new_image->save();
+            //.
         }
     }
 }
