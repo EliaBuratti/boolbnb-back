@@ -43,6 +43,15 @@ class ApartmentController extends Controller
         $beds = $request->query('beds');
         $rooms = $request->query('rooms');
         $address = $request->query('location');
+        $range = $request->query('range');
+
+        if(!$rooms){
+            $rooms = 1;
+        }
+
+        if(!$range){
+            $range = 20;
+        }
 
         //dd($beds, $rooms, $address);
 
@@ -59,8 +68,8 @@ class ApartmentController extends Controller
 
         $key_tomtom = env('TOMTOM_KEY');
         $coordinate = "https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
-        
-        
+
+
         if (json_decode(file_get_contents($coordinate))->results == []) {
             return response()->json([
                 'success' => false,
@@ -77,7 +86,7 @@ class ApartmentController extends Controller
             "geometryList" => [
                 [
                     "position" => $lat . ',' . $lon,  //posizione che otteniamo dall'input dell'utente
-                    "radius" => 50000,
+                    "radius" => $range*1000,
                     "type" => "CIRCLE"
                 ]
             ],
@@ -111,23 +120,30 @@ class ApartmentController extends Controller
 
         foreach ($apartments as $apartment) {
 
-            foreach($responseList as $list) {
+            foreach ($responseList as $list) {
                 $position = $list->position;
                 $latitude = $position->lat;
                 $longitude = $position->lon;
 
-                if($latitude === $apartment->latitude && $longitude === $apartment->longitude ) {
+                if ($latitude === $apartment->latitude && $longitude === $apartment->longitude) {
                     array_push($apartmentFiltered, $apartment);
                 }
-
             }
-
-
         }
 
         return response()->json([
             'success' => true,
             'result' => $apartmentFiltered,
+        ]);
+    }
+
+    public function home()
+    {
+        $apartments = Apartment::with(['services', 'sponsorships'])->get();
+
+        return response()->json([
+            'success' => true,
+            'result' => $apartments,
         ]);
     }
 }
