@@ -134,6 +134,7 @@ class ApartmentController extends Controller
         return response()->json([
             'success' => true,
             'result' => $apartmentFiltered,
+            'coordinates' => [$lon, $lat]
         ]);
     }
 
