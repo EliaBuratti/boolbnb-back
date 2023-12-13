@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SponsorshipController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Host\ApartmentController;
 use App\Http\Controllers\Host\ImageController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,8 @@ Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(fu
     Route::put('/apartment/trash/{apartments}/restore', [ApartmentController::class, 'restore'])->name('restore');
     Route::delete('/apartment/trash/{apartments}/destroy', [ApartmentController::class, 'forceDelete'])->name('forceDelete');
 
+    
 });
+Route::post('payment/process', [PaymentController::class, 'index'])->name('payment.process');
 
 require __DIR__ . '/auth.php';

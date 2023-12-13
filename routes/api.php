@@ -33,5 +33,5 @@ Route::get('/services/{service:slug}', [ServiceController::class, 'show']);
 
 Route::get('/sponsorships', [SponsorshipController::class, 'index']);
 
-Route::get('/payment/process', [PaymentController::class, 'index'])->name('payment.process');
+/* Route::get('/payment/process', [PaymentController::class, 'index'])->name('payment.process'); */
 

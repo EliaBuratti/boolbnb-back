@@ -8,12 +8,17 @@
     <title>Braintree-Demo</title>
     <script src="https://js.braintreegateway.com/web/dropin/1.41.0/js/dropin.js"></script>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
 
 <body>
-    <div id="dropin-container"></div>
-    <button id="submit-button" class="button button--small button--green">Purchase</button>
+    <form action="{{ route('payment.process') }}" method="post" id="payment-form">
+        @csrf
+        <input type="hidden" id="nonce" name="nonce">
+        <div id="dropin-container"></div>
+        <button id="submit-button" class="button button--small button--green">Purchase</button>
+    </form>
+
 
     <script>
         var button = document.querySelector('#submit-button');
@@ -23,8 +28,32 @@
             selector: '#dropin-container'
         }, function(err, instance) {
             button.addEventListener('click', function() {
+
+
+                /*                 instance.requestPaymentMethod(function(err, payload) {
+
+                                    console.log(payload);
+                                    get('{{ route('payment.process') }}', {
+                                        payload
+                                    }, function(response) {
+                                        console.log(response);
+                                        if (response.success) {
+                                            alert('Payment successfull!');
+                                        } else {
+                                            alert('Payment failed');
+                                        }
+                                    }, 'json'); */
+
+
+
                 instance.requestPaymentMethod(function(err, payload) {
-                    console.log('ciao');
+
+                    document.querySelector('#nonce').value = payload.nonce;
+                    document.querySelector('#payment-form').submit();
+
+
+
+
                 });
             })
         });
