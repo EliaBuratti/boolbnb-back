@@ -53,5 +53,6 @@ Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(fu
     
 });
 Route::post('payment/process', [PaymentController::class, 'index'])->name('payment.process');
+Route::get('payment/token', [PaymentController::class, 'genToken'])->name('payment.token');
 
 require __DIR__ . '/auth.php';

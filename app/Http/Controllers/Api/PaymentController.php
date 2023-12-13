@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Braintree_Transaction;
-use Braintree_Gateway;
-use Braintree;
+use App\Http\Controllers\Api\PaymentRequest;
+use Braintree\Gateway;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -13,11 +12,7 @@ class PaymentController extends Controller
 
     public function index(Request $request)
     {
-    //dd($request->nonce);
-    //$payload = $request->nonce;
 
-    //$payload = $request->input('payload', false);
-    //dd($payload);
     $nonce = $request->nonce;
     $gateway = $this->brainConfig();
     $status = $gateway->transaction()->sale([
@@ -41,5 +36,17 @@ public function brainConfig()
                     'privateKey' => env('BTREE_PRIVATE_KEY')
                 ]);
 }
+
+public function genToken() {
+    $gateway = $this->brainConfig();
+
+    $clientToken = $gateway->clientToken()->generate();
+    $data = [
+        'success' => true,
+        'client_token' => $clientToken
+    ];
+    return response()->json($data,200);
+}
+
 }
 
