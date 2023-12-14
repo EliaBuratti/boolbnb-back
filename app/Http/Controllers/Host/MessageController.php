@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use App\Models\Apartment;
 
 class MessageController extends Controller
 {
@@ -15,10 +16,19 @@ class MessageController extends Controller
     public function index()
     {
 
-        /* $apartment_id = Apartment::where('user_id', '=', $user_id)->get(); */
-        //$messages = Message::where('apartment_id', '=', $apartment_id);
+        $user_id = auth()->user()->id;
+        $apartments = Apartment::where('user_id', '=', $user_id)->get();
+        $messages_list = [];
+        foreach ($apartments as $apartment) {
+            //dd($apartment->id);
 
-        return view('host.messages.index');
+            $messages = Message::where('apartment_id', '=', $apartment->id)->get();
+
+            array_push($messages_list, $messages);
+        }
+        dd($messages_list);
+
+        return to_route('host.messages.index', compact('messages_list'));
     }
 
     /**
