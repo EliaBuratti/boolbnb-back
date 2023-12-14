@@ -47,9 +47,12 @@ class ApartmentSeeder extends Seeder
             $new_aparment->beds = $apartment['beds'];
             $new_aparment->m_square = $apartment['m_square'];
             $new_aparment->description = $apartment['description'];
-            $new_aparment->thumbnail = 'apartments/' . 'apartment-' . $i +1 . $apartment['thumbnail'];
+            $new_aparment->thumbnail = 'apartments/' . 'apartment-' . $i + 1 . $apartment['thumbnail'];
             $new_aparment->visible = $apartment['visible'];
             $new_aparment->save();
+        }
+
+        foreach ($apartments as $apartment) {
         }
     }
 }

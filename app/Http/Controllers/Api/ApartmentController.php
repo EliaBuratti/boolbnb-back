@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -44,24 +45,63 @@ class ApartmentController extends Controller
         $rooms = $request->query('rooms');
         $address = $request->query('location');
         $range = $request->query('range');
+        $servicesQuery = $request->query('services');
 
-        if(!$rooms){
+
+        //dd($servicesQuery);
+
+        if (!$rooms) {
             $rooms = 1;
         }
 
-        if(!$range){
+        if (!$range) {
             $range = 20;
         }
 
         //dd($beds, $rooms, $address);
 
-        if ($request->query->has('beds') || $request->query->has('rooms')) {
-            //$apartments = Apartment::with(['services', 'sponsorships'])->where('beds', '>=', $beds)->get();
-            //$apartments = Apartment::with(['services', 'sponsorships'])->where('rooms', '>=', $rooms)->get();
+        if ($request->query->has('beds') || $request->query->has('rooms') || $request->query->has('services')) {
             $apartments = Apartment::with(['services', 'sponsorships'])
                 ->where('beds', '>=', $beds)
                 ->where('rooms', '>=', $rooms)
                 ->get();
+
+            $services = [];
+
+            foreach ($servicesQuery as $service) {
+
+                $singleService = Service::where('slug', '=', $service)->get();
+                $singleServiceID = ($singleService[0]->id);
+                array_push($services, $singleServiceID);
+            }
+            //dd($services);
+            $apartamentsFiltered = [];
+
+            foreach ($apartments as $apartment) {
+
+                $apartmentServices = [];
+
+                foreach ($apartment->services as $i => $service) {
+                    array_push($apartmentServices, $service->id);
+                }
+                //dd($apartmentServices);
+
+                $push = null;
+
+                if (empty(array_diff($services, $apartmentServices))) {
+                    $push = true;
+                    array_push($apartamentsFiltered, $apartment);
+                } else {
+                    $push = false;
+                    //break;
+                }
+
+                //dd($push);
+                //dd($apartamentsFiltered);
+            }
+
+            $apartments = $apartamentsFiltered;
+            //dd($apartments);
         } else {
             $apartments = Apartment::with(['services', 'sponsorships'])->get();
         }
@@ -86,7 +126,7 @@ class ApartmentController extends Controller
             "geometryList" => [
                 [
                     "position" => $lat . ',' . $lon,  //posizione che otteniamo dall'input dell'utente
-                    "radius" => $range*1000,
+                    "radius" => $range * 1000,
                     "type" => "CIRCLE"
                 ]
             ],
