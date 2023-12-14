@@ -25,7 +25,7 @@ class PaymentController extends Controller
             'apartmentid' =>['required', 'numeric','exists:apartments,id'],
         ]);
 
-        //return redirect('https://www.youtube.com/shorts/pSq2Jgl430s');
+        return redirect('https://www.youtube.com/shorts/pSq2Jgl430s');
 
         $userLogId = auth()->user()->id;  
 
@@ -33,33 +33,31 @@ class PaymentController extends Controller
 
         foreach($apartments as $apartment){
             
-            //dd($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId);
             if($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
                 
-                
+                // da sposotare sotto al pagamento se va a buon fine e cambiare if(true) con if($status->success)
                 if(true){
 
-                    $actualDate = date("Y-m-d H:i:s"); // Recupera la data e l'ora attuale
+                    $actualDate = date("Y-m-d H:i:s"); //actual date
     
+                    //get last row if end_sponsorhip is more than actual date
                     $sponsorship = DB::table('apartment_sponsorship')
                     ->where('apartment_id', $validatedData['apartmentid'])
                     ->where('end_sponsorship', '>=', $actualDate)
                     ->get()->last();
-    
-    
-                    //$dateProva = date_diff(new DateTime(), $sponsorship->end_sponsorship);
-                    //dd(!empty($sponsorship), $sponsorship);
-                    //dd($sponsorship);
 
+                    //if result not empty
                     if(!empty($sponsorship) ) {
 
+                        //setup end date to add new time
                         $date = $sponsorship->end_sponsorship;
 
                     } else {
+
                         $date = $actualDate;
                     }
 
-                    $end_date = date("Y-m-d H:i:s", strtotime($date . ' + 1 day + 3 hours 30 minutes')); // Aggiunge un giorno alla data attuale
+                    $end_date = date("Y-m-d H:i:s", strtotime($date . ' + 1 day + 3 hours 30 minutes')); // date sum
 
                     dd($end_date);
                     
