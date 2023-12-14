@@ -60,12 +60,11 @@ class ApartmentController extends Controller
 
         //dd($beds, $rooms, $address);
 
-        if ($request->query->has('beds') || $request->query->has('rooms')) {
+        if ($request->query->has('beds') || $request->query->has('rooms') || $request->query->has('services')) {
             $apartments = Apartment::with(['services', 'sponsorships'])
                 ->where('beds', '>=', $beds)
                 ->where('rooms', '>=', $rooms)
                 ->get();
-
 
             if ($request->query->has('services')) {
                 $services = [];
@@ -89,22 +88,15 @@ class ApartmentController extends Controller
                     }
                     //dd($apartmentServices);
 
-                    $push = null;
 
                     if (empty(array_diff($services, $apartmentServices))) {
-                        $push = true;
                         array_push($apartamentsFiltered, $apartment);
-                    } else {
-                        $push = false;
-                        //break;
                     }
-
-                    //dd($push);
-                    //dd($apartamentsFiltered);
                 }
 
                 $apartments = $apartamentsFiltered;
             }
+
 
             //dd($apartments);
         } else {
