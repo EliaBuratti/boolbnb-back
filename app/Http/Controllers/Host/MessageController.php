@@ -17,18 +17,16 @@ class MessageController extends Controller
     {
 
         $user_id = auth()->user()->id;
-        $apartments = Apartment::where('user_id', '=', $user_id)->get();
-        $messages_list = [];
+
+        $apartments = Apartment::where('user_id', $user_id)->with('messages')->get();
+
+        $messages = [];
         foreach ($apartments as $apartment) {
-            //dd($apartment->id);
 
-            $messages = Message::where('apartment_id', '=', $apartment->id)->get();
-
-            array_push($messages_list, $messages);
+            array_push($messages, $apartment['messages'][0]);
         }
-        dd($messages_list);
 
-        return to_route('host.messages.index', compact('messages_list'));
+        return view('host.messages.index', compact('messages'));
     }
 
     /**

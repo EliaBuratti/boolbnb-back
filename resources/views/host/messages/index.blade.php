@@ -5,11 +5,21 @@
 
     @include('../partials.errors')
 
-    @foreach ($messages as $message)
-        <div class="mt-5">
-            {{$message->name}}
+    @forelse ($messages as $message)
+        <div class="mb-5">
+            {{$message->name}} <br>
+            {{$message->subject}} <br>
+            {{$message->email}} <br>
+            {{$message->message}} <br>
+            {{$message->apartment_id}} <br>
         </div>
-    @endforeach
+    @empty
+        <div>
+            No messages
+        </div>
+    @endforelse
+
+
     
 </div>
 @endsection
