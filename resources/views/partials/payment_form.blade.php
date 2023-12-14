@@ -16,6 +16,8 @@
     <form action="{{ route('payment.process') }}" method="post" id="payment-form">
         @csrf
         <input type="hidden" id="nonce" name="nonce">
+        <input type="hidden" id="sponsorship" name="sponsorship" value="1">
+        <input type="hidden" id="apartmentid" name="apartmentid">
         <div id="dropin-container"></div>
         <button id="submit-button" class="button button--small button--green">Purchase</button>
     </form>
@@ -26,7 +28,7 @@
 
         axios.get('{{ route('payment.token') }}')
             .then(response => {
-                console.log(response.data.client_token);
+                //console.log(response.data.client_token);
                 braintree.dropin.create({
                     authorization: response.data.client_token,
                     selector: '#dropin-container'
@@ -36,6 +38,7 @@
                         instance.requestPaymentMethod(function(err, payload) {
 
                             document.querySelector('#nonce').value = payload.nonce;
+                            document.querySelector('#apartmentid').value = 5;
                             document.querySelector('#payment-form').submit();
                         });
                     });
