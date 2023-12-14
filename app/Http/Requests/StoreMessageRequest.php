@@ -11,7 +11,7 @@ class StoreMessageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'apartament_id' => 'required',
+            'name' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+            'email' => 'required'
+
         ];
     }
 }

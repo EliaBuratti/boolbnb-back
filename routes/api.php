@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApartmentController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\SponsorshipController;
@@ -33,4 +34,4 @@ Route::get('/services/{service:slug}', [ServiceController::class, 'show']);
 
 Route::get('/sponsorships', [SponsorshipController::class, 'index']);
 
-
+Route::post('/messages/', [MessageController::class, 'index']);
