@@ -60,47 +60,52 @@ class ApartmentController extends Controller
 
         //dd($beds, $rooms, $address);
 
-        if ($request->query->has('beds') || $request->query->has('rooms') || $request->query->has('services')) {
+        if ($request->query->has('beds') || $request->query->has('rooms')) {
             $apartments = Apartment::with(['services', 'sponsorships'])
                 ->where('beds', '>=', $beds)
                 ->where('rooms', '>=', $rooms)
                 ->get();
 
-            $services = [];
 
-            foreach ($servicesQuery as $service) {
+            if ($request->query->has('services')) {
+                $services = [];
 
-                $singleService = Service::where('slug', '=', $service)->get();
-                $singleServiceID = ($singleService[0]->id);
-                array_push($services, $singleServiceID);
-            }
-            //dd($services);
-            $apartamentsFiltered = [];
+                foreach ($servicesQuery as $service) {
 
-            foreach ($apartments as $apartment) {
-
-                $apartmentServices = [];
-
-                foreach ($apartment->services as $i => $service) {
-                    array_push($apartmentServices, $service->id);
-                }
-                //dd($apartmentServices);
-
-                $push = null;
-
-                if (empty(array_diff($services, $apartmentServices))) {
-                    $push = true;
-                    array_push($apartamentsFiltered, $apartment);
-                } else {
-                    $push = false;
-                    //break;
+                    $singleService = Service::where('slug', '=', $service)->get();
+                    $singleServiceID = ($singleService[0]->id);
+                    array_push($services, $singleServiceID);
                 }
 
-                //dd($push);
-                //dd($apartamentsFiltered);
+                //dd($services);
+                $apartamentsFiltered = [];
+
+                foreach ($apartments as $apartment) {
+
+                    $apartmentServices = [];
+
+                    foreach ($apartment->services as $i => $service) {
+                        array_push($apartmentServices, $service->id);
+                    }
+                    //dd($apartmentServices);
+
+                    $push = null;
+
+                    if (empty(array_diff($services, $apartmentServices))) {
+                        $push = true;
+                        array_push($apartamentsFiltered, $apartment);
+                    } else {
+                        $push = false;
+                        //break;
+                    }
+
+                    //dd($push);
+                    //dd($apartamentsFiltered);
+                }
+
+                $apartments = $apartamentsFiltered;
             }
 
-            $apartments = $apartamentsFiltered;
             //dd($apartments);
         } else {
             $apartments = Apartment::with(['services', 'sponsorships'])->get();
@@ -173,7 +178,7 @@ class ApartmentController extends Controller
 
         return response()->json([
             'success' => true,
-            'result' => $apartmentFiltered,
+            'result' => $apartments,
             'coordinates' => [$lon, $lat]
         ]);
     }
