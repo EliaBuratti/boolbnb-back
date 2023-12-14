@@ -3,7 +3,7 @@
 return [
     "apartments" => [
         [
-            "title" => "LA TORRE DEL MANGHEN: Agri-alloggio indipendente",
+            "title" => "La torre del Manghen: agri-alloggio indipendente",
             "nation" => "Italy",
             "city" => "Rota D'imagna, Lombardia",
             "postal_code" => '24037',
@@ -20,7 +20,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Intero alloggio: unità in affitto",
+            "title" => "Casa Marù",
             "nation" => "Italy",
             "city" => "Como, Lombardia",
             "postal_code" => '22100',
@@ -37,7 +37,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Intero alloggio: chalet",
+            "title" => "Chalet Tir Longë",
             "nation" => "Italy",
             "city" => "Cesana torinese, Piemonte",
             "postal_code" => '10054',
@@ -54,7 +54,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Appartamento di lusso a Castello Planta Meran",
+            "title" => "Schloss Planta Meran",
             "nation" => "Italy",
             "city" => "Merano, Trentino-Alto Adige",
             "postal_code" => '39012',
@@ -68,7 +68,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Villa Niobe | Appartamento esclusivo con spiaggia privata",
+            "title" => "Villa Niobe",
             "nation" => "Italy",
             "city" => "Stresa, Piemonte",
             "postal_code" => '28838',
@@ -76,7 +76,7 @@ return [
             "rooms" => 3,
             "bathrooms" => 3,
             "beds" => 7,
-            "m_square" => 95,
+            "m_square" => 195,
             "description" => "Situato accanto al famoso Parco del Pallavicino, a 1 km dal centro di Stresa, al primo piano di un'incantevole e storica villa liberty recentemente rinnovata, con un rigoglioso giardino che circonda il retro della proprietà, l'appartamento gode di un'eccezionale vista frontale sul lago e di un accesso privato ad una bellissima spiaggia attrezzata.
             L'appartamento è elegante, arioso e molto luminoso grazie alle ampie finestre e balconi presenti in ogni stanza. Ha una superficie di 150 mq e dotato di 2 incantevoli camere matrimoniali e 1 camera tripla, molto confortevoli per un massimo di 7 persone, 3 bagni completi, una meravigliosa zona giorno con una splendida terrazza affacciata sul lago, tavolo da pranzo all'aperto e al coperto, 2 divani, Smart TV e una cucina completamente attrezzata.
             Proprio di fronte alla proprietà, attraversando la strada principale che costeggia il lungolago, si accede alla meravigliosa spiaggia privata, attrezzata con sdraio, ombrelloni e doccia.",
@@ -84,7 +84,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Iurta con bagno, riscaldata",
+            "title" => "Iurta alpina",
             "nation" => "Italy",
             "city" => "Ostana, Piemonte",
             "postal_code" => '12030',
@@ -102,7 +102,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Campino, Italia. Intero alloggio: villa",
+            "title" => "Villa Pietra",
             "nation" => "Italy",
             "city" => "Campino, Piemonte",
             "postal_code" => '28838',
@@ -111,7 +111,7 @@ return [
             "bathrooms" => 4,
             "beds" => 8,
             "m_square" => 500,
-            "description" => "illa Petra, con il suo design moderno e minimalista, vi attirerà con le sue sfumature di colore all'interno degli spazi interni che conferiscono alla proprietà una sofisticata eleganza. La villa climatizzata (500 m²) può ospitare comodamente 8 persone in 4 camere da letto:
+            "description" => "Villa Petra, con il suo design moderno e minimalista, vi attirerà con le sue sfumature di colore all'interno degli spazi interni che conferiscono alla proprietà una sofisticata eleganza. La villa climatizzata (500 m²) può ospitare comodamente 8 persone in 4 camere da letto:
             - Il piano terra è composto da un'ampia zona giorno con finestre a tutta altezza per godere dell'incredibile vista sul lago, una zona pranzo, un angolo salotto con comodi divani e TV e un camino aperto. La cucina, dotata di elettrodomestici di alta qualità, dà accesso al tavolo esterno e al giardino. Servizi igienici. Nella zona notte si trovano una camera da letto principale con letto matrimoniale e bagno privato con vasca, e una seconda camera da letto con letto matrimoniale e bagno privato con doccia.
             - Attraverso l'elegante scala a chiocciola, si raggiunge il primo piano, dove si trova un'accogliente zona soggiorno con divani (trasformabili in due letti singoli), TV e scrivania. La zona notte su questo piano è composta da una camera con letto matrimoniale, una camera con due letti singoli e un bagno con vasca idromassaggio e doccia.
             - Al piano inferiore troverete la vostra area spa privata con una mini piscina con massaggio ad aria, una doccia emozionale e un'area relax con una selezione di tisane. Accesso alla zona piscina esterna.",
@@ -137,7 +137,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Attico Ascarelli flat terrazzo privato metro duomo",
+            "title" => "Attico Ascarelli",
             "nation" => "Italy",
             "city" => "Napoli, Campania",
             "postal_code" =>  '80133',
@@ -145,13 +145,13 @@ return [
             "rooms" => 2,
             "bathrooms" => 2,
             "beds" => 3,
-            "m_square" => 55,
+            "m_square" => 65,
             "description" => "Goditi questo meraviglioso attico (65mq) con ampio terrazzo a livello e due camere da letto nel cuore della città. Nuovo, arredato in stile minimalista. Accanto alla stazione metro Duomo e circondato da negozi e ristoranti (a un minuto dalla pizzeria più famosa di Napoli).",
             "thumbnail" => '/1d014c26-77bb-43de-8518-400746c5fae3.png',
             "visible" => true,
         ],
         [
-            "title" => "Intero alloggio: appartamento",
+            "title" => "La Piccicca",
             "nation" => "Italy",
             "city" => "Lecce, Puglia",
             "postal_code" =>  '73100',
@@ -166,7 +166,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Splendida Casa sull'Albero a Pochi Minuti da Firenze",
+            "title" => "Casa Barthel",
             "nation" => "Italy",
             "city" => "Firenze, Toscana",
             "postal_code" =>  '50121',
@@ -175,7 +175,7 @@ return [
             "bathrooms" => 1,
             "beds" => 2,
             "m_square" => 18,
-            "description" => "casaBARTHEL è un luogo perfetto per una vacanza e una residenza d'artista, immerso nel paesaggio toscano a soli venti minuti dal Duomo e ad un'ora da Siena. Vieni a vivere con noi: goditi i nostri ulivi, l'orto, il campo da tennis e la piccola piscina.",
+            "description" => "Casa Barthel è un luogo perfetto per una vacanza e una residenza d'artista, immerso nel paesaggio toscano a soli venti minuti dal Duomo e ad un'ora da Siena. Vieni a vivere con noi: goditi i nostri ulivi, l'orto, il campo da tennis e la piccola piscina.",
             "thumbnail" => '/7115f8b1-f4cd-4ed2-adf9-78aff0011759.png',
             "visible" => true,
         ],
