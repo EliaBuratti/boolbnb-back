@@ -74,7 +74,7 @@
                             placeholder="Type the address of your apartment"
                             class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}"
                             required>
-                        <ul id="search-results" class="w-100 p-0 position-absolute top-100 left-0 bg-white"></ul>
+                        <ul id="search-results" class="w-100 p-0 position-absolute top-100 left-0 bg-white z-2"></ul>
                         @error('address')
                             <div class="text-danger"> {{ $message }} </div>
                         @enderror
