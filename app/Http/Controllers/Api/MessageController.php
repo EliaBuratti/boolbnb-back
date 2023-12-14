@@ -45,11 +45,10 @@ class MessageController extends Controller
         $new_message->email = $mail;
         $new_message->save();
 
-        $message = Message::all();
 
         return response()->json([
             'success' => true,
-            'result' => $message
+            'message' => 'your message is sent to host : )'
         ]);
     }
 }
