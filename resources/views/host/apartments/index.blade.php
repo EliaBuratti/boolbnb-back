@@ -14,9 +14,9 @@
         @include('../partials.session_message')
 
 
-        <div class="row">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
             @forelse ($apartments as $apartment)
-                <div class="col-4 g-3 position-relative img_overlay">
+                <div class="col g-3 position-relative img_overlay">
                     
                     <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="">
                         <div class="my_card shadow">

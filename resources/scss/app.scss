@@ -1,4 +1,18 @@
 @use '~bootstrap/scss/bootstrap';
 @use './partials/apartments';
 @use './partials/payment';
-@use './partials/apartment-card'
+@use './partials/apartment-card';
+
+$primary: #ffde59;
+
+.primary {
+    color: $primary;
+}
+
+.bg_primary {
+    background-color: $primary;
+}
+
+header {
+    height: 56px;
+}

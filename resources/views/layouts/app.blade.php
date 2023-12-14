@@ -15,6 +15,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <!-- FontAwesome CDN -->
+    <script src="https://kit.fontawesome.com/95701d90ff.js" crossorigin="anonymous"></script>
+
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
 
@@ -25,9 +28,9 @@
     <div id="app">
 
 
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="http://localhost:5173/#/">
+        <header class="navbar navbar-expand navbar-light bg-white shadow-sm p-0">
+            <div class="container flex-nowrap">
+                <a class="navbar-brand d-flex align-items-center" href="{{route('dashboard')}}">
                     <img src="{{ asset('storage/logo/Boolbnb.png') }}" width="100" alt="">
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
@@ -52,7 +55,7 @@
                                 {{ Auth::user()->name }}
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ url('dashboard') }}">{{__('Dashboard')}}</a>
                                 <a class="dropdown-item" href="{{ url('profile') }}">{{__('Profile')}}</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -69,7 +72,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </header>
 
         <main class="">
             @yield('content')
