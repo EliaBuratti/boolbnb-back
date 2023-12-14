@@ -53,7 +53,10 @@
                                         <div class="card-header text-center">Messages</div>
 
                                         <div class="card-body">
-                                            <a href=" {{ route('host.messages.index') }} " class="btn btn-primary">My messages</a>
+                                            <strong>Total messages: {{$total_messages}}</strong>
+                                            <div class="py-4">
+                                                <a href=" {{ route('host.messages.index') }} " class="btn btn-primary">My messages</a>
+                                            </div>
                                         </div>
 
                                     </div>
