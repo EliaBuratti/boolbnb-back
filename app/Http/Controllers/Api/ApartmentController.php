@@ -75,34 +75,32 @@ class ApartmentController extends Controller
                 array_push($services, $singleServiceID);
             }
             //dd($services);
+            $apartamentsFiltered = [];
+
             foreach ($apartments as $apartment) {
-                //dd($apartment->services);
-                /* -prendere il singolo appartamento*/
-                /* for ($i = 0; $i < $apartment->services; $i++) {
-                    $apartment->services[$i]->id;
-                    dd($apartment->services[$i]);
-                    if (!(in_array($apartment->services[$i]->id, $services))) {
-                        unset($apartments);
-                    }
-                } */
+
+                $apartmentServices = [];
+
                 foreach ($apartment->services as $i => $service) {
-                    $apartment->services[$i]->id;
-                    if (!(in_array($apartment->services[$i]->id, $services))) {
-                        unset($apartment);
-                    }
+                    array_push($apartmentServices, $service->id);
                 }
-                dd($apartments);
-                /* -prendere i servizi nella query */
-                /* fare un controllo in cui ogni appartamento ha il primo servizio, se lo ha prosegui senno lo rimuovi dall'array */
+                //dd($apartmentServices);
+
+                $push = null;
+
+                if (empty(array_diff($services, $apartmentServices))) {
+                    $push = true;
+                    array_push($apartamentsFiltered, $apartment);
+                } else {
+                    $push = false;
+                    //break;
+                }
+
+                //dd($push);
+                //dd($apartamentsFiltered);
             }
 
-
-
-
-
-
-
-
+            $apartments = $apartamentsFiltered;
             //dd($apartments);
         } else {
             $apartments = Apartment::with(['services', 'sponsorships'])->get();
