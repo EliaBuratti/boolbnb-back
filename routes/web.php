@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SponsorshipController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Host\ApartmentController;
 use App\Http\Controllers\Host\ImageController;
+use App\Http\Controllers\Host\MessageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +43,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(function () {
 
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
-    
+
     Route::delete('/apartment/images/{image}/destroy', [ImageController::class, 'destroy'])->name('deleteImg');
     Route::post('/apartment/images', [ImageController::class, 'store'])->name('addImg');
 
@@ -50,7 +51,7 @@ Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(fu
     Route::put('/apartment/trash/{apartments}/restore', [ApartmentController::class, 'restore'])->name('restore');
     Route::delete('/apartment/trash/{apartments}/destroy', [ApartmentController::class, 'forceDelete'])->name('forceDelete');
 
-    
+    Route::resource('messages', MessageController::class);
 });
 Route::post('payment/process', [PaymentController::class, 'index'])->name('payment.process');
 Route::get('payment/token', [PaymentController::class, 'genToken'])->name('payment.token');

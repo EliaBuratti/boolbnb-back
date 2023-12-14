@@ -14,7 +14,11 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+
+        /* $apartment_id = Apartment::where('user_id', '=', $user_id)->get(); */
+        //$messages = Message::where('apartment_id', '=', $apartment_id);
+
+        return view('host.messages.index');
     }
 
     /**

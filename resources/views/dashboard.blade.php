@@ -28,7 +28,10 @@
                             <a href=" {{ route('admin.services.index') }} " class="btn btn-primary">Services</a>
                             @else
                             <a href=" {{ route('host.apartments.index') }} " class="btn btn-primary">Apartments</a>
-                            <a class="btn btn-danger" href="{{ route('host.trash') }}">Cestino</a>    
+                            <a class="btn btn-danger" href="{{ route('host.trash') }}">Cestino</a>
+                            
+                            <a href=" {{ route('host.messages.index') }} " class="btn btn-primary">Messages</a>
+                            
                             @endif
 
                         </div>

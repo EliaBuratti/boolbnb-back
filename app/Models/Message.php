@@ -10,7 +10,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['email', 'name', 'last_name', 'subject', 'body'];
+    protected $fillable = ['email', 'message'];
 
     public function apartment(): BelongsTo
     {
