@@ -38,7 +38,7 @@
                         instance.requestPaymentMethod(function(err, payload) {
 
                             document.querySelector('#nonce').value = payload.nonce;
-                            document.querySelector('#apartmentid').value = 15;
+                            document.querySelector('#apartmentid').value = 5;
                             document.querySelector('#payment-form').submit();
                         });
                     });

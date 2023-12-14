@@ -26,7 +26,7 @@ return new class extends Migration
             $table->dateTime('end_sponsorship');
 
             # Per indicare che entrambi i campi sono chiavi primarie
-            $table->primary(['apartment_id', 'sponsorship_id']);
+            //$table->primary(['apartment_id', 'sponsorship_id']);
 
             $table->timestamps();
         });
