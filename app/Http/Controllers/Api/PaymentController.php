@@ -25,8 +25,6 @@ class PaymentController extends Controller
             'apartmentid' =>['required', 'numeric','exists:apartments,id'],
         ]);
 
-        return redirect('https://www.youtube.com/shorts/pSq2Jgl430s');
-
         $userLogId = auth()->user()->id;  
 
         $apartments = Apartment::where('user_id', '=', $userLogId)->get();
@@ -35,8 +33,20 @@ class PaymentController extends Controller
             
             if($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
                 
+
+                $nonce = $request->nonce;
+                $gateway = $this->brainConfig();
+                $status = $gateway->transaction()->sale([
+                'amount' => '1.00',
+                'paymentMethodNonce' => $nonce,
+                'options' => [
+                    'submitForSettlement' => True
+                    ]
+                ]);
+
+
                 // da sposotare sotto al pagamento se va a buon fine e cambiare if(true) con if($status->success)
-                if(true){
+                if($status->success){
 
                     $actualDate = date("Y-m-d H:i:s"); //actual date
     
@@ -59,7 +69,7 @@ class PaymentController extends Controller
 
                     $end_date = date("Y-m-d H:i:s", strtotime($date . ' + 1 day + 3 hours 30 minutes')); // date sum
 
-                    dd($end_date);
+                    //dd($end_date);
                     
                     $apartment->sponsorships()->attach($apartment->id,
                         [
@@ -67,28 +77,10 @@ class PaymentController extends Controller
                         'end_sponsorship' => $end_date,
                         ]);
 
-                dd(!empty($sponsorship));
+                //dd(!empty($sponsorship));
                 
                     
                 }
-
-
-                dd($userLogId);    
-                $nonce = $request->nonce;
-                $gateway = $this->brainConfig();
-                $status = $gateway->transaction()->sale([
-                'amount' => '10.00',
-                'paymentMethodNonce' => $nonce,
-                'options' => [
-                    'submitForSettlement' => True
-                    ]
-                ]);
-        
-/*                 if($status->success){
-                    $apartment->sponsorships()->attach([$apartment->id]);
-                } */
-                dd($status->success);// true o false if payment it'ok
-                //dd(response()->json($status));
                 return response()->json($status);
 
             } 
