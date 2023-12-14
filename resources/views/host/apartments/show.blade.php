@@ -1,29 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-
-        @include('../partials.session_message')
-
-        <div class="mt-3 p-5 pt-1 mb-4 bg-light rounded-3">
-            <div class="row">
-
-                <div class="col-12">
+<div class="container">
 
 
-                    <a href="{{ route('host.apartments.index') }}" class="btn btn-primary">Apartments List</a>
+    <h1 class="py-2">{{ $apartment->title }}</h1>
 
-                    <h1 class="display-5 fw-bold">{{ $apartment->title }}</h1>
+    <div class="row mb-4">
 
-                </div>
-                <div class="container-fluid pt-1 col-7">
-                    <img class="img-fluid rounded-4 h-100" src="{{ asset('storage/' . $apartment->thumbnail) }} "
-                        alt="">
-                </div>
-                <div class="col-5">
-                    <div class="row">
-                        @forelse ($gallery as $gallery_image)
-                            <div class="col-6 g-2 position-relative img_overlay">
+        <div class="col-md-8 col-12">
+            <img src="{{ asset('storage/' . $apartment->thumbnail) }} " class="w-100 rounded-5">
+        </div>
+        {{-- /cover thumbnail --}}
+
+        <div class="col-md-4 col-12 mt-md-0 mt-3">
+
+            <div class="row row-cols-md-2 row-cols-3 g-3">
+                
+                @forelse ($gallery as $gallery_image)
+                            <div class="img-container position-relative img_overlay">
                                 <img class="img-fluid rounded-4 " src="{{ asset('storage/' . $gallery_image->img) }} "
                                     alt="">
                                 <div class="">
@@ -73,54 +68,95 @@
                                     </div>
                                 </div>
                             </div>
-                        @empty
-                            <h4>no gallery here!</h4>
-                        @endforelse
-                    </div>
-                </div>
+                @empty
+                    <h4>no gallery here!</h4>
+                @endforelse
+            
+            </div>
 
-
-                <div class="col-12 d-flex justify-content-between pe-0 align-items-center">
-                    <div class="d-flex gap-2 col-5 align-items-center">
-                        <span>Services:</span>
-                        <ul class="list-unstyled m-0">
-                            @forelse ($apartment->Services as $service)
-                                <li class="badge bg-primary">
-                                    <i class="fas fa-tag fa-xs fa-fw" aria-hidden="true"></i>
-                                    {{ $service->name }}
-                                </li>
-                            @empty
-                                <li class="badge bg-primary">No services</li>
-                            @endforelse
-                        </ul>
-                    </div>
-
-                    <div class="col-5">
-                        <form autocomplete="off" action="{{ route('host.addImg') }}" method="post"
+            <form autocomplete="off" action="{{ route('host.addImg') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="input-group mt-3">
                                 <input type="hidden" name="apartment_code" value="{{ $apartment->apartment_code }}">
                                 <input type="hidden" name="apartment_id" value="{{ $apartment->id }}">
                                 <input type="file" name="img" id="img" class="form-control" required>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn bg_primary">
                                     Add Image +
                                 </button>
                             </div>
                         </form>
-                    </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <h4 class="mb-3">Basic informations</h4>
+        <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-2 row-cols-1 g-3">
+            <div class="col d-flex justify-content-center">
+                <div class="fs-5 p-3 rounded-4 shadow-sm">
+                    <i class="fa-solid fa-square primary"></i>
+                    <span class="fw-medium ms-3 me-2">Rooms:</span>
+                    <span>{{ $apartment->rooms }}</span>
+                </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <div class="fs-5 p-3 rounded-4 shadow-sm">
+                    <i class="fa-solid fa-bed primary"></i>
+                    <span class="fw-medium ms-3 me-2">Beds:</span>
+                    <span>{{ $apartment->beds }}</span>
+                </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <div class="fs-5 p-3 rounded-4 shadow-sm">
+                    <i class="fa-solid fa-bath primary"></i>
+                    <span class="fw-medium ms-3 me-2">Bathrooms:</span>
+                    <span>{{ $apartment->bathrooms }}</span>
+                </div>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <div class="fs-5 p-3 rounded-4 shadow-sm">
+                    <i class="fa-solid fa-ruler-combined primary"></i>
+                    <span class="fw-medium ms-3 me-2">Surface:</span>
+                    <span>{{ $apartment->m_square }} m<sup>2</sup></span>
                 </div>
             </div>
 
-            <div class="container-fluid mt-3">
-                <p class="col-md-8 fs-4">{{ $apartment->description }}</p>
-
-                <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn btn-warning">Edit</a>
-
-            </div>
-        </div>
-        <div class="col-4">
-            @include('../partials.payment_form')
         </div>
     </div>
+
+    <div class="mb-4">
+        <h4 class="mb-3">Description</h4>
+        <p class="mb-4">{{ $apartment->description }}</p>
+    </div>
+
+
+    <div class="mb-4">
+        <h4 class="mb-3">Services</h4>
+        <div class="d-flex gap-2 flex-wrap">
+            @forelse ($apartment->Services as $service)
+            <div class="badge bg_primary text-dark">
+                {{ $service->name }}
+            </div>
+            @empty
+            <div class="badge bg_primary text-dark">
+                No services
+            </div>
+            @endforelse
+
+        </div>
+
+
+    </div>
+
+    <div class="py-5">
+
+        <a href="{{ route('host.apartments.index') }}" class="btn btn-primary">Apartments List</a>
+    
+        <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn bg_primary">Edit</a>
+
+        <a href=" {{ route('host.apartments.show', $apartment->slug) }} " class="btn btn-outline-dark">Add Sponsorship</a>
+
+    </div>
+
+</div>
 @endsection
