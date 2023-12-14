@@ -34,4 +34,4 @@ Route::get('/services/{service:slug}', [ServiceController::class, 'show']);
 
 Route::get('/sponsorships', [SponsorshipController::class, 'index']);
 
-Route::get('/messages', [MessageController::class, 'index']);
+Route::post('/messages/', [MessageController::class, 'index']);
