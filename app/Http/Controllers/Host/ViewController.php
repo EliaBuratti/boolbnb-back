@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\View;
 use App\Http\Requests\StoreViewRequest;
 use App\Http\Requests\UpdateViewRequest;
+use App\Models\Apartment;
 
 class ViewController extends Controller
 {
@@ -14,7 +15,31 @@ class ViewController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = auth()->user()->id;
+
+        $apartments = Apartment::where('user_id', $user_id)->get();
+        foreach ($apartments as $apartment) {
+            $apartmentID = $apartment['id'];
+
+            $stats = View::where('apartment_id', $apartmentID)->get();
+            //dd($stats);
+        }
+        /* 
+
+FINIRE QUI E CONTROLLARE IL CONTROLLO DOVE C'È IL SALVATAGGIO DELLA VISITA, 
+ORA COME ORA SE UTENTE 1 VISITA APPARTAMENTO 1 E POI VISITA APPARTAMENTO 2 SALVA SOLO LA VISITA AD APPARTAMENTO 1 : (
+
+
+*/
+        $messages = [];
+        foreach ($apartments as $apartment) {
+
+            foreach ($apartment['messages'] as $message) {
+                array_push($messages, $message);
+            }
+        }
+
+        return view('host.analitycs.index', compact('stats'));
     }
 
     /**

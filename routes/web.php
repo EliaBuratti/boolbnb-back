@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Host\ApartmentController;
 use App\Http\Controllers\Host\ImageController;
 use App\Http\Controllers\Host\MessageController;
+use App\Http\Controllers\Host\ViewController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,7 @@ Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(fu
     Route::delete('/apartment/trash/{apartments}/destroy', [ApartmentController::class, 'forceDelete'])->name('forceDelete');
 
     Route::resource('messages', MessageController::class);
+    Route::resource('views', ViewController::class);
 });
 Route::post('payment/process', [PaymentController::class, 'index'])->name('payment.process');
 Route::get('payment/token', [PaymentController::class, 'genToken'])->name('payment.token');
