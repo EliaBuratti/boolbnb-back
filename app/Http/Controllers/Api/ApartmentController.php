@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class ApartmentController extends Controller
@@ -118,8 +119,23 @@ class ApartmentController extends Controller
         $obj = json_decode($json);
         $lat = $obj->results[0]->position->lat;
         $lon = $obj->results[0]->position->lon;
+        /* coordinate dell'user */
 
-        $apartmentsList = [
+        /* $apartments_test = DB::table('apartments')
+            ->select('*')
+            ->selectRaw('ST_Distance(ST_Point(longitude, latitude), ST_Point(?, ?)) AS distance', [$yourLongitude, $yourLatitude])
+            ->whereRaw('ST_Distance(ST_Point(longitude, latitude), ST_Point(?, ?)) <= ?', [$yourLongitude, $yourLatitude, $radiusInMeters])
+            ->orderBy('distance')
+            ->get(); */
+
+
+        //$apartments_test = 'SELECT * FROM apartments WHERE ST_Distance(POINT($lon, $lat),POINT(apartments.longitude, apartments.latitude)) < 2;';
+        //$apartments_test = Apartment::whereRaw('ST_Distance(POINT(' . $lon . ',' . $lat . '), POINT(apartments.longitude, apartments.latitude)) < ' . $range / 10)->get();
+        $apartments_test = Apartment::whereRaw('ST_Distance( POINT(apartments.longitude, apartments.latitude),POINT(' . $lon . ',' . $lat . ')) < ' . $range / 100)->get();
+        //dd($apartments_test);
+
+
+        /* $apartmentsList = [
             "geometryList" => [
                 [
                     "position" => $lat . ',' . $lon,  //posizione che otteniamo dall'input dell'utente
@@ -129,7 +145,8 @@ class ApartmentController extends Controller
             ],
             "poiList" => []
         ];
-
+ */
+        /* 
         foreach ($apartments as $apartment) {
             $newApartment = [
                 "position" => [
@@ -139,11 +156,11 @@ class ApartmentController extends Controller
             ];
 
             array_push($apartmentsList['poiList'], $newApartment);
-        }
+        } */
 
         //http://127.0.0.1:8000/api/apartments/?beds=1&location=milano&rooms=1  con questa query
 
-        $response = Http::withoutVerifying()->withHeaders([
+        /* $response = Http::withoutVerifying()->withHeaders([
             'Content-Type' => 'application/json',
             'accept' => '/',
 
@@ -154,8 +171,8 @@ class ApartmentController extends Controller
 
         $responseList = json_decode($response->body())->results;
         $apartmentFiltered = [];
-
-        foreach ($apartments as $apartment) {
+ */
+        /* foreach ($apartments as $apartment) {
 
             foreach ($responseList as $list) {
                 $position = $list->position;
@@ -167,10 +184,10 @@ class ApartmentController extends Controller
                 }
             }
         }
-
+ */
         return response()->json([
             'success' => true,
-            'result' => $apartmentFiltered,
+            'result' => $apartments_test,
             'coordinates' => [$lon, $lat]
         ]);
     }
