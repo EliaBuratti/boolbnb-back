@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\PaymentRequest;
 use App\Models\Apartment;
+use App\Models\Image;
+use App\Models\Sponsorship;
 use Braintree\Gateway;
 use DateTime;
 use Illuminate\Http\Request;
@@ -18,35 +20,38 @@ class PaymentController extends Controller
 
     public function index(Request $request)
     {
-        //dd($request);
 
         $validatedData = $request->validate([
             'sponsorship' => ['required', 'numeric', 'exists:sponsorships,id'],
             'apartmentid' => ['required', 'numeric', 'exists:apartments,id'],
         ]);
 
-        $userLogId = auth()->user()->id;
+
+        $sponsorships = Sponsorship::where('id', '=', $validatedData['sponsorship'])->get();
+        $duration = explode(':', $sponsorships[0]->duration);
+
+        $userLogId = auth()->user()->id;  
 
         $apartments = Apartment::where('user_id', '=', $userLogId)->get();
 
-        foreach ($apartments as $apartment) {
+        foreach($apartments as $apartment){
+            
+            if($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
 
-            //dd('sono qua');
-            if ($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
 
                 $nonce = $request->nonce;
                 $gateway = $this->brainConfig();
                 $status = $gateway->transaction()->sale([
-                    'amount' => '1.00',
+
+                    'amount' => $sponsorships[0]->price,
                     'paymentMethodNonce' => $nonce,
                     'options' => [
                         'submitForSettlement' => True
-                    ]
-                ]);
-
-
-                // da sposotare sotto al pagamento se va a buon fine e cambiare if(true) con if($status->success)
-                if ($status->success) {
+                        ]
+                    ]);
+                    
+                //dd($status->success);
+                if($status->success){
 
                     $actualDate = date("Y-m-d H:i:s"); //actual date
 
@@ -66,23 +71,23 @@ class PaymentController extends Controller
                         $date = $actualDate;
                     }
 
-                    $end_date = date("Y-m-d H:i:s", strtotime($date . ' + 1 day + 3 hours 30 minutes')); // date sum
 
-                    //dd($end_date);
-
-                    $apartment->sponsorships()->attach(
-                        $apartment->id,
+                    $end_date = date("Y-m-d H:i:s", strtotime($date . '+' . $duration[0] . 'hours +' . $duration[1] . 'minutes +' . $duration[2] . 'seconds' )); // date sum  ' + 1 day + 3 hours 30 minutes'
+                    
+                    $apartment->sponsorships()->attach($apartment->id,
                         [
-                            'sponsorship_id' => $validatedData['sponsorship'],
-                            'end_sponsorship' => $end_date,
-                        ]
-                    );
+                        'sponsorship_id' => $validatedData['sponsorship'],
+                        'end_sponsorship' => $end_date,
+                        ]);
+                    
+                        //$gallery = Image::where('apartment_id', '=', $apartment->id)->get();
 
-                    //dd(!empty($sponsorship));
-                    dd('id sponsorship: ' . $validatedData['sponsorship'], $end_date, status: $status->success);
+                        return back()->with('message', 'Your apartment: '. $apartment->title .' is sponsored until the date: ' . $end_date );
                 }
-                return response()->json($status);
-            }
+                                
+            } 
+            
+
         }
     }
 
