@@ -31,7 +31,7 @@
         <header class="navbar navbar-expand navbar-light bg-white shadow-sm p-0">
             <div class="container flex-nowrap">
                 <a class="navbar-brand d-flex align-items-center" href="{{route('dashboard')}}">
-                    <img src="{{ asset('storage/logo/Boolbnb.png') }}" width="100" alt="">
+                    <img src="{{ asset('storage/logo/Logo.svg') }}" width="120" alt="">
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
 
