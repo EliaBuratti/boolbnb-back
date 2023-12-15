@@ -248,9 +248,9 @@
                 
             <div class="py-3">
 
-                <button type="submit" class="btn btn-success">Insert</button>
+                <button type="submit" class="btn btn-dark primary">Insert</button>
 
-                <a href="{{route('host.apartments.index')}}" class="btn btn-primary">Back to apartment list</a>
+                <a href="{{route('host.apartments.index')}}" class="btn btn-dark primary">Back to apartment list</a>
 
             </div>
 

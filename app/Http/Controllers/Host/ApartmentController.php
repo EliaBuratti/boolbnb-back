@@ -7,6 +7,7 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Image;
+use App\Models\Message;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -257,30 +258,52 @@ class ApartmentController extends Controller
 
     public function forceDelete($id)
     {
-        $apartment = Apartment::withTrashed()->find($id);
+        //Appartamento preso tramite id con servivi e sponsorizzazioni
+        $apartment = Apartment::with(['services', 'sponsorships'])->withTrashed()->find($id);
 
+        //Messaggi associati all'appartamento preso tramite id
+        $messages = Message::where('apartment_id', '=', $id)->get();
+
+        //NON SO SE FUNZIONA
         $thumb = $apartment->thumb;
-
         $relative_path = Str::after($thumb, 'storage/');
-
         if (!is_null($apartment->thumbnail)) {
             Storage::delete($relative_path);
         }
 
+        //Immagini relative all'appartamento preso tramite id
+        $images = Image::where('apartment_id', '=', $apartment->id)->get();
 
-        // TO DO: ELIMINARE IMMAGINI IN LOCALE
-
-        $images = Image::all()->where('apartment_id', '=', $apartment->id)->all();
-
+        //Ogni immagine viene dissociata dall'appartamento e viene eliminata dal db
         foreach ($images as $image) {
 
             if (!is_null($image)) {
-            }
 
-            $image->delete();
+                $image->apartment()->dissociate();
+
+                $image->delete();
+            }
         }
 
-        Storage::deleteDirectory('public/apartments/' . $apartment->slug);
+        //Ogni messaggio viene dissociato dall'appartamento e viene eliminato dal db
+        foreach ($messages as $message) {
+            $message->apartment()->dissociate();
+
+            $message->delete();
+        }
+
+
+        if ($apartment->services) {
+            $apartment->services()->detach();
+        }
+
+        if ($apartment->sponsorships) {
+            $apartment->sponsorships()->detach();
+        }
+
+
+        //TO DO: QUESTO DELETE DIRECTORY NON FUNZIONA
+        Storage::deleteDirectory('apartments/apartment-' . $apartment->apartment_code);
 
         $apartment->forceDelete();
 

@@ -6,7 +6,13 @@
         @include('../partials.session_message')
 
 
-        <h1 class="py-2">{{ $apartment->title }}</h1>
+        <div class="py-5 d-flex align-items-center">
+
+            <h1 class="col-10">{{ $apartment->title }}</h1>
+
+            <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn primary btn-dark col-2">Edit</a>
+
+        </div>
 
         <div class="row mb-4">
 
@@ -151,9 +157,7 @@
 
         <div class="py-5">
 
-            <a href="{{ route('host.apartments.index') }}" class="btn btn-primary">Apartments List</a>
-
-            <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn bg_primary">Edit</a>
+            <a href="{{ route('host.apartments.index') }}" class="btn primary btn-dark">Back to apartments List</a>
 
             {{--             <a href=" {{ route('partials.payment_form', $apartment->slug) }} " class="btn btn-outline-dark">Add
                 Sponsorship</a> --}}
