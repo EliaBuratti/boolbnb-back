@@ -20,7 +20,6 @@ class PaymentController extends Controller
 
     public function index(Request $request)
     {
-        //dd($request);
 
         $validatedData = $request->validate([
             'sponsorship' => ['required', 'numeric', 'exists:sponsorships,id'],
@@ -29,7 +28,6 @@ class PaymentController extends Controller
 
         $sponsorships = Sponsorship::where('id', '=', $validatedData['sponsorship'])->get();
         $duration = explode(':', $sponsorships[0]->duration);
-        //dd($duration[0]);
 
         $userLogId = auth()->user()->id;  
 
@@ -39,8 +37,18 @@ class PaymentController extends Controller
             
             if($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
 
-                //spostare sotto e mettere $status->success
-                if(true){
+                $nonce = $request->nonce;
+                $gateway = $this->brainConfig();
+                $status = $gateway->transaction()->sale([
+                    'amount' => $sponsorships[0]->price,
+                    'paymentMethodNonce' => $nonce,
+                    'options' => [
+                        'submitForSettlement' => True
+                        ]
+                    ]);
+                    
+                //dd($status->success);
+                if($status->success){
 
                     $actualDate = date("Y-m-d H:i:s"); //actual date
     
@@ -69,26 +77,11 @@ class PaymentController extends Controller
                         'end_sponsorship' => $end_date,
                         ]);
                     
-                        $gallery = Image::where('apartment_id', '=', $apartment->id)->get();
+                        //$gallery = Image::where('apartment_id', '=', $apartment->id)->get();
 
                         return back()->with('message', 'Your apartment: '. $apartment->title .' is sponsored until the date: ' . $end_date );
-                        //return to_route(('host.apartments.show', $apartmentSponsor = $apartment )->with('message', 'Your apartment is sponsored until the date: ' . $end_date ), compact(['apartment']));
-                        
-                        //return view('host.apartments.show')->with('message', 'Your apartment is sponsored until the date: ' . $end_date );
-
-                        //return redirect('host.apartments.show','', compact(['apartment', 'gallery']));
-                    //dd($validatedData['sponsorship'], $end_date, /*'status':  $status->success  */ );
                 }
-                //dd($status->success);
-                $nonce = $request->nonce;
-                $gateway = $this->brainConfig();
-                $status = $gateway->transaction()->sale([
-                'amount' => '1.00',
-                'paymentMethodNonce' => $nonce,
-                'options' => [
-                    'submitForSettlement' => True
-                    ]
-                ]);
+                
 
                 
 
