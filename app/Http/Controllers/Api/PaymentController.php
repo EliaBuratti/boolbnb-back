@@ -23,8 +23,9 @@ class PaymentController extends Controller
 
         $validatedData = $request->validate([
             'sponsorship' => ['required', 'numeric', 'exists:sponsorships,id'],
-            'apartmentid' =>['required', 'numeric','exists:apartments,id'],
+            'apartmentid' => ['required', 'numeric', 'exists:apartments,id'],
         ]);
+
 
         $sponsorships = Sponsorship::where('id', '=', $validatedData['sponsorship'])->get();
         $duration = explode(':', $sponsorships[0]->duration);
@@ -37,9 +38,11 @@ class PaymentController extends Controller
             
             if($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
 
+
                 $nonce = $request->nonce;
                 $gateway = $this->brainConfig();
                 $status = $gateway->transaction()->sale([
+
                     'amount' => $sponsorships[0]->price,
                     'paymentMethodNonce' => $nonce,
                     'options' => [
@@ -51,23 +54,23 @@ class PaymentController extends Controller
                 if($status->success){
 
                     $actualDate = date("Y-m-d H:i:s"); //actual date
-    
+
                     //get last row if end_sponsorhip is more than actual date
                     $sponsorship = DB::table('apartment_sponsorship')
-                    ->where('apartment_id', $validatedData['apartmentid'])
-                    ->where('end_sponsorship', '>=', $actualDate)
-                    ->get()->last();
+                        ->where('apartment_id', $validatedData['apartmentid'])
+                        ->where('end_sponsorship', '>=', $actualDate)
+                        ->get()->last();
 
                     //if result not empty
-                    if(!empty($sponsorship) ) {
+                    if (!empty($sponsorship)) {
 
                         //setup end date to add new time
                         $date = $sponsorship->end_sponsorship;
-
                     } else {
 
                         $date = $actualDate;
                     }
+
 
                     $end_date = date("Y-m-d H:i:s", strtotime($date . '+' . $duration[0] . 'hours +' . $duration[1] . 'minutes +' . $duration[2] . 'seconds' )); // date sum  ' + 1 day + 3 hours 30 minutes'
                     
@@ -81,41 +84,32 @@ class PaymentController extends Controller
 
                         return back()->with('message', 'Your apartment: '. $apartment->title .' is sponsored until the date: ' . $end_date );
                 }
-                
-
-                
-
-                
-                //return response()->json($status);
-                
+                                
             } 
             
+
         }
-        
-        
-       
+    }
+
+    public function brainConfig()
+    {
+        return new \Braintree\Gateway([
+            'environment' => env('BTREE_ENVIRONMENT'),
+            'merchantId' => env('BTREE_MERCHANT_ID'),
+            'publicKey' => env('BTREE_PUBLIC_KEY'),
+            'privateKey' => env('BTREE_PRIVATE_KEY')
+        ]);
+    }
+
+    public function genToken()
+    {
+        $gateway = $this->brainConfig();
+
+        $clientToken = $gateway->clientToken()->generate();
+        $data = [
+            'success' => true,
+            'client_token' => $clientToken
+        ];
+        return response()->json($data, 200);
+    }
 }
-
-public function brainConfig()
-{
-  return new \Braintree\Gateway([
-                    'environment' => env('BTREE_ENVIRONMENT'),
-                    'merchantId' => env('BTREE_MERCHANT_ID'),
-                    'publicKey' => env('BTREE_PUBLIC_KEY'),
-                    'privateKey' => env('BTREE_PRIVATE_KEY')
-                ]);
-}
-
-public function genToken() {
-    $gateway = $this->brainConfig();
-
-    $clientToken = $gateway->clientToken()->generate();
-    $data = [
-        'success' => true,
-        'client_token' => $clientToken
-    ];
-    return response()->json($data,200);
-}
-
-}
-

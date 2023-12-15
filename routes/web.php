@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Host\DashboardController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SponsorshipController;
 use App\Http\Controllers\Api\PaymentController;
@@ -23,10 +24,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+/* 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard'); */
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
