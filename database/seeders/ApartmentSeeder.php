@@ -35,7 +35,7 @@ class ApartmentSeeder extends Seeder
             $new_aparment->slug = Str::slug($new_aparment->title, '-');
             $new_aparment->nation = $apartment['nation'];
             $new_aparment->apartment_code = $i + 1;
-            $new_aparment->address = $apartment['address'];
+            $new_aparment->address = $address;
             $new_aparment->rooms = $apartment['rooms'];
             $new_aparment->bathrooms = $apartment['bathrooms'];
             $new_aparment->beds = $apartment['beds'];
