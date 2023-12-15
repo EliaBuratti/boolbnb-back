@@ -39,7 +39,7 @@ class ApartmentController extends Controller
     public function create()
     {
         $countries = config('countries');
-        $services = Service::all();
+        $services = Service::orderBy('name')->get();
 
         return view('host.apartments.create', compact('countries', 'services'));
     }
@@ -136,7 +136,7 @@ class ApartmentController extends Controller
 
         $countries = config('countries');
         $user_id = auth()->user()->id;
-        $services = Service::all();
+        $services = Service::orderBy('name')->get();
 
         if ($apartment->user_id == $user_id) {
             return view('host.apartments.edit', compact(['apartment', 'countries', 'services']));
