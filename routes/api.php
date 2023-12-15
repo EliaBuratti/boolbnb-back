@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\SponsorshipController;
+use App\Http\Controllers\Api\ViewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,4 @@ Route::get('/services/{service:slug}', [ServiceController::class, 'show']);
 Route::get('/sponsorships', [SponsorshipController::class, 'index']);
 
 Route::post('/messages/', [MessageController::class, 'index']);
+Route::post('/views/', [ViewController::class, 'index']);
