@@ -23,8 +23,11 @@ class MessageController extends Controller
         $messages = [];
         foreach ($apartments as $apartment) {
 
-            array_push($messages, $apartment['messages'][0]);
+            foreach ($apartment['messages'] as $message) {
+                array_push($messages, $message);
+            }
         }
+
 
         return view('host.messages.index', compact('messages'));
     }

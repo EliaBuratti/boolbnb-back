@@ -27,7 +27,7 @@ class DashboardController extends Controller
         }
 
         $total_messages = count($messages);
-
+        //dd($messages_a);
         return view('dashboard', compact(['total_apartment', 'total_messages']));
     }
 }
