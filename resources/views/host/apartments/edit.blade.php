@@ -254,9 +254,9 @@
             {{-- FINE SECONDA ROW --}}
 
             <div class="py-3">
-                <button type="submit" class="btn btn-success">Update</button>
-                <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="btn btn-primary">Back to show</a>
-                <a href="{{route('host.apartments.index')}}" class="btn btn-primary">Back to apartment list</a>
+                <button type="submit" class="btn btn-dark primary">Update</button>
+                <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="btn  btn-dark primary">Back to show</a>
+                <a href="{{route('host.apartments.index')}}" class="btn btn-dark primary">Back to apartment list</a>
             </div>
         </form>
 

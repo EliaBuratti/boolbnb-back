@@ -6,7 +6,7 @@
         <div class="d-flex justify-content-between align-items-center py-4">
             <h1>My Apartments</h1>
             
-            <a href="{{route('host.apartments.create')}}" class="btn btn-primary">Add new apartment</a>
+            <a href="{{route('host.apartments.create')}}" class="btn btn-dark primary">Add new apartment</a>
             
         </div>
 

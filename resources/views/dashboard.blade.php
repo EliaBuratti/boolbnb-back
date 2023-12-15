@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
             <div class="col">
                 <div class="card">
-                    <div class="card-header">{{ __('User Dashboard') }}</div>
+                    <div class="card-header bg_primary">{{ __('User Dashboard') }}</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -34,12 +34,12 @@
 
                                     <div class="card">
 
-                                        <div class="card-header text-center">Apartments</div>
+                                        <div class="card-header text-center bg_primary">Apartments</div>
 
                                         <div class="card-body">
                                             <strong>Total apatments: {{$total_apartment}}</strong>
                                             <div class="py-4">
-                                                <a href=" {{ route('host.apartments.index') }} " class="btn btn-primary">My aparments</a>
+                                                <a href=" {{ route('host.apartments.index') }} " class="btn btn-dark primary">My aparments</a>
                                                 <a class="btn btn-danger" href="{{ route('host.trash') }}">Trash</a>
                                             </div>
                                         </div>
@@ -50,12 +50,12 @@
 
                                     <div class="card">
 
-                                        <div class="card-header text-center">Messages</div>
+                                        <div class="card-header text-center bg_primary">Messages</div>
 
                                         <div class="card-body">
                                             <strong>Total messages: {{$total_messages}}</strong>
                                             <div class="py-4">
-                                                <a href=" {{ route('host.messages.index') }} " class="btn btn-primary">My messages</a>
+                                                <a href=" {{ route('host.messages.index') }} " class="btn btn-dark primary">My messages</a>
                                             </div>
                                         </div>
 
