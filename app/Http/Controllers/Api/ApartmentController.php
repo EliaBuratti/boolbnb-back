@@ -196,9 +196,34 @@ class ApartmentController extends Controller
     {
         $apartments = Apartment::with(['services', 'sponsorships'])->get();
 
+        $apartmentWthSponsor = [];
+
+         foreach($apartments as $apartment) {
+            $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
+            
+            if($lastSponsor) {
+                $actualDate = date("Y-m-d H:i:s"); //actual date
+
+                if($actualDate < $lastSponsor) {
+                    
+                    array_unshift($apartmentWthSponsor,$apartment);  
+
+                } else {
+                    
+                    array_push($apartmentWthSponsor, $apartment);
+                }
+
+            } else {
+
+                array_push($apartmentWthSponsor, $apartment);
+
+            }
+
+        }
+
         return response()->json([
             'success' => true,
-            'result' => $apartments,
+            'result' => $apartmentWthSponsor 
         ]);
     }
 }
