@@ -24,9 +24,10 @@ class ApartmentController extends Controller
     {
 
         $user_id = auth()->user()->id;
-        //dd($user_id);
-        //$apartments = Apartment::paginate(6);
+
         $apartments = Apartment::where('user_id', '=', $user_id)->get();
+        //$apartments = Apartment::where('user_id', '=', $user_id)->paginate(9);
+        //da attivare dopo aver fixato paginazione
 
         $countries = config('countries');
 
@@ -163,8 +164,9 @@ class ApartmentController extends Controller
         if ($request->has('thumbnail')) {
 
             $path = $apartment->thumbnail;
-            //dd($path);
-            Storage::delete($path);
+
+            Storage::delete('public/' . $path);
+            //dd('public/' . $path);
             $new_img = Storage::put('public/apartments/apartment-' . $apartment->apartment_code, $request->thumbnail);
 
             $relative_path = Str::after($new_img, 'public/');
@@ -301,9 +303,7 @@ class ApartmentController extends Controller
             $apartment->sponsorships()->detach();
         }
 
-
-        //TO DO: QUESTO DELETE DIRECTORY NON FUNZIONA
-        Storage::deleteDirectory('apartments/apartment-' . $apartment->apartment_code);
+        Storage::deleteDirectory('public/apartments/apartment-' . $apartment->apartment_code);
 
         $apartment->forceDelete();
 

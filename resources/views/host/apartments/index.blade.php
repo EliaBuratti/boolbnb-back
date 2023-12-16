@@ -96,5 +96,8 @@
                 <h1>no apartments</h1>
             @endforelse
         </div>
+        {{-- /.row --}}
+
+        {{-- <div> {{ $apartments->links('pagination::bootstrap-5') }} </div> --}}
     </div>
 @endsection
