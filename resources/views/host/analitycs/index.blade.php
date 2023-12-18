@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="col col-md-3">
-                <h3>Total views for yours apartments</h3>
+                <h3>Total views for yours apartments : {{ $totalViews }}</h3>
             </div>
         </div>
     </div>
