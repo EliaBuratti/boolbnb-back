@@ -159,12 +159,13 @@
 
             <a href="{{ route('host.apartments.index') }}" class="btn primary btn-dark">Back to apartments List</a>
 
+            <a href="{{ route('host.sponsorship', $apartment->slug) }}" class="btn primary btn-dark">Sponsorship</a>
+
             {{--             <a href=" {{ route('partials.payment_form', $apartment->slug) }} " class="btn btn-outline-dark">Add
                 Sponsorship</a> --}}
 
         </div>
 
-        @include('partials.payment_form')
 
     </div>
 @endsection

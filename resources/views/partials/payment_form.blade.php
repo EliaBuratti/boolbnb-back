@@ -14,7 +14,7 @@
         @csrf
         <input type="hidden" id="nonce" name="nonce">
         <input type="hidden" id="sponsorship" name="sponsorship" value="3" {{-- value="{{ $sponsorship->id }}" --}}>
-        <input type="hidden" id="apartmentid" name="apartmentid" value="5" {{-- value="{{ $apartment->id }}" --}}>
+        <input type="hidden" id="apartmentid" name="apartmentid" value="3" {{-- value="{{ $apartment->id }}" --}}>
         <div id="dropin-container"></div>
         <button id="submit-button" class="button button--small button--green">Purchase</button>
     </form>

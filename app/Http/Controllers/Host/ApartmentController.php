@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Image;
 use App\Models\Message;
 use App\Models\Service;
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -308,5 +309,14 @@ class ApartmentController extends Controller
         $apartment->forceDelete();
 
         return to_route('host.trash')->with('message', 'Well Done! apartments deleted successfully.');
+    }
+
+    public function sponsorship($slug)
+    {
+        $apartment = Apartment::where('slug', '=', $slug)->get();
+        //dd($apartment);
+        $sponsorships = Sponsorship::all();
+        //dd($sponsorships);
+        return view('host.apartments.sponsorship', compact('apartment', 'sponsorships'));
     }
 }
