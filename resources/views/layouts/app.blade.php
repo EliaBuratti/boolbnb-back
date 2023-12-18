@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/logo/icon-boolbnb.svg') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -30,10 +31,11 @@
 
         <header class="navbar navbar-expand navbar-light bg-white shadow-sm p-0">
             <div class="container flex-nowrap">
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('dashboard') }}">
+                <a class="navbar-brand d-flex align-items-center" href="http://localhost:5174/#/">
                     <img src="{{ asset('storage/logo/Logo.svg') }}" width="120" alt="">
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
+                <a href="{{ route('dashboard') }}" class="navbar-brand fs-6">Dashboard</a>
 
                 <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
 
