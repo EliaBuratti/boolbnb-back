@@ -131,7 +131,7 @@ class ApartmentController extends Controller
 
         //$apartments_test = 'SELECT * FROM apartments WHERE ST_Distance(POINT($lon, $lat),POINT(apartments.longitude, apartments.latitude)) < 2;';
         //$apartments_test = Apartment::whereRaw('ST_Distance(POINT(' . $lon . ',' . $lat . '), POINT(apartments.longitude, apartments.latitude)) < ' . $range / 10)->get();
-        $apartments_test = Apartment::whereRaw('ST_Distance( POINT(apartments.longitude, apartments.latitude),POINT(' . $lon . ',' . $lat . ')) < ' . $range / 100)->get();
+        $apartments_test = Apartment::where('visible', '=', 1)->whereRaw('ST_Distance( POINT(apartments.longitude, apartments.latitude),POINT(' . $lon . ',' . $lat . ')) < ' . $range / 100)->get();
         //dd($apartments_test);
 
 
@@ -198,32 +198,28 @@ class ApartmentController extends Controller
 
         $apartmentWthSponsor = [];
 
-         foreach($apartments as $apartment) {
+        foreach ($apartments as $apartment) {
             $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
-            
-            if($lastSponsor) {
+
+            if ($lastSponsor) {
                 $actualDate = date("Y-m-d H:i:s"); //actual date
 
-                if($actualDate < $lastSponsor) {
-                    
-                    array_unshift($apartmentWthSponsor,$apartment);  
+                if ($actualDate < $lastSponsor) {
 
+                    array_unshift($apartmentWthSponsor, $apartment);
                 } else {
-                    
+
                     array_push($apartmentWthSponsor, $apartment);
                 }
-
             } else {
 
                 array_push($apartmentWthSponsor, $apartment);
-
             }
-
         }
 
         return response()->json([
             'success' => true,
-            'result' => $apartmentWthSponsor 
+            'result' => $apartmentWthSponsor
         ]);
     }
 }

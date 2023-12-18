@@ -174,7 +174,7 @@
                     <div class="m-3 form-check form-check-inline">
 
                         <input class="form-check-input" aria-describedby="visible_true_HelpID" type="radio"
-                            name="visible" id="visible_true" value="true"
+                            name="visible" id="visible_true" value="1"
                             class="form-control @error('visible') is-invalid @enderror" checked>
 
                         <label class="form-check-label" for="visible_true">Yes</label>
@@ -184,7 +184,7 @@
                     <div class="form-check form-check-inline">
 
                         <input class="form-check-input" aria-describedby="visible_false_HelpID" type="radio"
-                            name="visible" id="visible_false" value="false"
+                            name="visible" id="visible_false" value="0"
                             class="form-control @error('visible') is-invalid @enderror" checked>
 
                         <label class="form-check-label" for="visible_false">No</label>
