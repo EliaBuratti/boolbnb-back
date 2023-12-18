@@ -25,8 +25,8 @@ class ApartmentController extends Controller
 
         $user_id = auth()->user()->id;
 
-        $apartments = Apartment::where('user_id', '=', $user_id)->get();
-        //$apartments = Apartment::where('user_id', '=', $user_id)->paginate(9);
+        //$apartments = Apartment::where('user_id', '=', $user_id)->get();
+        $apartments = Apartment::where('user_id', '=', $user_id)->paginate(9);
         //da attivare dopo aver fixato paginazione
 
         $countries = config('countries');
