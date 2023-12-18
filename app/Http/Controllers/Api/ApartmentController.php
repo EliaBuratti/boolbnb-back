@@ -8,6 +8,7 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -50,10 +51,14 @@ class ApartmentController extends Controller
         $apartamentsFiltered = [];
         $apartamentsFilteredSponsored = [];
 
+        //dd($address);
 
+        $addressQuery = str_replace(' ', '+', $address);
+        
+        //dd($addressQuery);
         $key_tomtom = env('TOMTOM_KEY');
-        $coordinate = "https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
-
+        $coordinate = "https://api.tomtom.com/search/2/geocode/{$addressQuery}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
+        //dd($coordinate);
 
         if (json_decode(file_get_contents($coordinate))->results == []) {
             return response()->json([
