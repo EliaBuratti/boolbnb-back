@@ -13,8 +13,8 @@
     <form action="{{ route('payment.process') }}" method="post" id="payment-form">
         @csrf
         <input type="hidden" id="nonce" name="nonce">
-        <input type="hidden" id="sponsorship" name="sponsorship" value="3" {{-- value="{{ $sponsorship->id }}" --}}>
-        <input type="hidden" id="apartmentid" name="apartmentid" value="3" {{-- value="{{ $apartment->id }}" --}}>
+        <input type="hidden" id="sponsorship" name="sponsorship" value="1" {{-- value="{{ $sponsorship->id }}" --}}>
+        <input type="hidden" id="apartmentid" name="apartmentid" value="{{ $apartment[0]->id }}" {{-- value="{{ $apartment->id }}" --}}>
         <div id="dropin-container"></div>
         <button id="submit-button" class="button button--small button--green">Purchase</button>
     </form>
@@ -35,8 +35,9 @@
                         instance.requestPaymentMethod(function(err, payload) {
 
                             document.querySelector('#nonce').value = payload.nonce;
-                            
-                            //document.querySelector('#apartmentid').value = 5;
+
+                            document.querySelector('#sponsorship').value = document
+                                .querySelector('input[name="sponsorship"]:checked').value;
 
                             document.querySelector('#payment-form').submit();
                         });
