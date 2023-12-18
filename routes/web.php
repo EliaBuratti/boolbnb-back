@@ -53,6 +53,7 @@ Route::middleware(['auth', 'verified'])->prefix('host')->name('host.')->group(fu
     Route::get('apartment/trash', [ApartmentController::class, 'trash_apartments'])->name('trash');
     Route::put('/apartment/trash/{apartments}/restore', [ApartmentController::class, 'restore'])->name('restore');
     Route::delete('/apartment/trash/{apartments}/destroy', [ApartmentController::class, 'forceDelete'])->name('forceDelete');
+    Route::get('/apartment/{apartments}/sponsorship', [ApartmentController::class, 'sponsorship'])->name('sponsorship');
 
     Route::resource('messages', MessageController::class);
 });
