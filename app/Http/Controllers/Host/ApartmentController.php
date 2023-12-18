@@ -10,6 +10,7 @@ use App\Models\Image;
 use App\Models\Message;
 use App\Models\Service;
 use App\Models\Sponsorship;
+use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -126,9 +127,11 @@ class ApartmentController extends Controller
     {
         $gallery = Image::where('apartment_id', '=', $apartment->id)->get();
 
+        $views = View::where('apartment_id', '=', $apartment->id)->get();
+
         //dd($gallery);
 
-        return view('host.apartments.show', compact(['apartment', 'gallery']));
+        return view('host.apartments.show', compact(['apartment', 'gallery', 'views']));
     }
 
     /**
