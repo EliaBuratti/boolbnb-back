@@ -83,9 +83,9 @@ class ApartmentController extends Controller
         //dd($val_data);
 
         if ($request->has('thumbnail')) {
-            $complete_path = Storage::put('public/apartments/apartment-' . $last_apartment->apartment_code + 1, $request->thumbnail);
+            $complete_path = Storage::put('apartments/apartment-' . $last_apartment->apartment_code + 1, $request->thumbnail);
             //$path = 'apartments' . strstr($complete_path, '/');
-            $relative_path = Str::after($complete_path, 'public/');
+            $relative_path = $complete_path;
 
             //dd($relative_path);
             $val_data['thumbnail'] = $relative_path;
@@ -103,10 +103,10 @@ class ApartmentController extends Controller
             $gallery = $request['gallery'];
 
             foreach ($gallery as $image) {
-                $complete_path = Storage::put('public/apartments/apartment-' . $last_apartment->apartment_code + 1, $image);
+                $complete_path = Storage::put('apartments/apartment-' . $last_apartment->apartment_code + 1, $image);
                 //$path = 'apartments' . strstr($complete_path, '/');
                 //dd($complete_path);
-                $relative_path = Str::after($complete_path, 'public/');
+                $relative_path = $complete_path;
                 $new_image = new Image();
                 $new_image->apartment_id = $apartment->id;
                 $new_image->img = $relative_path;
@@ -169,9 +169,9 @@ class ApartmentController extends Controller
 
             Storage::delete('public/' . $path);
             //dd('public/' . $path);
-            $new_img = Storage::put('public/apartments/apartment-' . $apartment->apartment_code, $request->thumbnail);
+            $new_img = Storage::put('apartments/apartment-' . $apartment->apartment_code, $request->thumbnail);
 
-            $relative_path = Str::after($new_img, 'public/');
+            $relative_path = $new_img;
 
             $val_data['thumbnail'] = $relative_path;
         }
@@ -181,42 +181,6 @@ class ApartmentController extends Controller
             $val_data['title']  = $request->title;
             $val_data['slug'] = Str::slug($request->title . '-');
         }
-
-        /* if ($request->has('nation')) {
-            $val_data['nation']  = $request->nation;
-        }
-
-        if ($request->has('city')) {
-            $val_data['city']  = $request->city;
-        }
-
-        if ($request->has('postal_code')) {
-            $val_data['postal_code']  = $request->postal_code;
-        }
-
-        if ($request->has('address')) {
-            $val_data['address']  = $request->address;
-        }
-
-        if ($request->has('rooms')) {
-            $val_data['rooms']  = $request->rooms;
-        }
-
-        if ($request->has('bathrooms')) {
-            $val_data['bathrooms']  = $request->bathrooms;
-        }
-
-        if ($request->has('beds')) {
-            $val_data['beds']  = $request->beds;
-        }
-
-        if ($request->has('m_square')) {
-            $val_data['m_square']  = $request->m_square;
-        }
-
-        if ($request->has('description')) {
-            $val_data['description']  = $request->description;
-        } */
 
         //dd($apartment);
 
@@ -305,7 +269,7 @@ class ApartmentController extends Controller
             $apartment->sponsorships()->detach();
         }
 
-        Storage::deleteDirectory('public/apartments/apartment-' . $apartment->apartment_code);
+        Storage::deleteDirectory('apartments/apartment-' . $apartment->apartment_code);
 
         $apartment->forceDelete();
 

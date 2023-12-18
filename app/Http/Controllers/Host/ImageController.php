@@ -35,8 +35,8 @@ class ImageController extends Controller
     public function store(StoreImageRequest $request)
     {
         //dd($request, $user_id = auth()->user()->id);
-        $new_img = Storage::put('public/apartments/apartment-' . $request->apartment_code, $request->img);
-        $relative_path = Str::after($new_img, 'public/');
+        $new_img = Storage::put('apartments/apartment-' . $request->apartment_code, $request->img);
+        $relative_path = $new_img;
 
         $data['apartment_id'] = $request->apartment_id;
         $data['img'] = $relative_path;
