@@ -6,17 +6,21 @@
         @include('../partials.session_message')
 
 
-        <div class="py-5 d-flex justify-content-between align-items-center">
+        <div class="py-3 d-flex justify-content-between align-items-center">
 
-            <h1>{{ $apartment->title }}</h1>
+            <h1>{{ $apartment->title }} </h1>
 
             <div>
                 <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn primary btn-dark">Edit</a>
                 <a href="{{ route('host.sponsorship', $apartment->slug) }}" class="btn primary btn-dark">Sponsorship</a>
             </div>
 
-
         </div>
+
+        <div class="alert alert-primary" role="alert">
+            <div class="col-12" id="timer"></div>
+        </div>
+
 
         <div class="row mb-4">
 
@@ -188,4 +192,40 @@
 
 @section('scripts')
     @vite(['resources/js/ChartSingle.js'])
+
+    <script>
+        const targhetTime = new Date('{{ $sponsored }}')
+            .getTime(); //(year, monthIndex, day, hours, minutes, seconds, milliseconds)
+
+        // genero il tempo rimanente in millisecondi
+        const secondsMs = 1000;
+        const minuteMs = secondsMs * 60;
+        const hourMs = minuteMs * 60;
+        const dayMs = hourMs * 24;
+
+        const clock = setInterval(function() {
+
+            // ottengo la data attuale in millisecondi e poi faccio la differenza
+            const realTime = new Date().getTime();
+            const milliSecTime = Number(targhetTime - realTime);
+
+            if (milliSecTime > 0) {
+
+                // calcolo la differernza e la divido a seconda di quello che mi occorre
+                let secondsRemain = Math.floor((milliSecTime % minuteMs) / secondsMs);
+                let minuteRemain = Math.floor((milliSecTime % hourMs) / minuteMs);
+                let hourRemain = Math.floor((milliSecTime % dayMs) / hourMs);
+                let dayRemain = Math.floor(milliSecTime / dayMs);
+
+
+                //stampo in pagina il conto alla rovescia
+                document.getElementById("timer").innerHTML =
+                    `Sponsored until: ${dayRemain} day${dayRemain < 1 ? '' : 's'}, ${hourRemain} hour${hourRemain < 1 ? '' : 's'}, ${minuteRemain} minute${minuteRemain < 1 ? '' : 's'}.`;
+            } else {
+                //quando scatta il timer fermo il loop e stampo in pagina
+                clearInterval(clock);
+                document.getElementById("timer").innerHTML = ''
+            };
+        }, 1000);
+    </script>
 @endsection

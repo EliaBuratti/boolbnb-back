@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Models\Sponsorship;
 use App\Models\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -129,9 +130,28 @@ class ApartmentController extends Controller
 
         $views = View::where('apartment_id', '=', $apartment->id)->get();
 
+        $sponsored = '';
+        
+        $actualDate = date("Y-m-d H:i:s"); //actual date
+
+        $sponsorship = DB::table('apartment_sponsorship')
+                        ->where('apartment_id', $apartment->id)
+                        ->where('end_sponsorship', '>=', $actualDate)
+                        ->get()->last();
+
+                    //if result not empty
+                    if (!empty($sponsorship)) {
+
+                        //setup end date to add new time
+                        //$hourformat = str_replace([ ' ', ':'], ', ',$sponsorship->end_sponsorship);
+                        //$sponsored = str_replace('-', ', ',$hourformat).', 0';
+                        $sponsored = str_replace(' ', 'T',$sponsorship->end_sponsorship);
+                        //dd($sponsored, $sponsorship->end_sponsorship);
+                    }
+
         //dd($gallery);
 
-        return view('host.apartments.show', compact(['apartment', 'gallery', 'views']));
+        return view('host.apartments.show', compact(['apartment', 'gallery', 'views','sponsored']));
     }
 
     /**
