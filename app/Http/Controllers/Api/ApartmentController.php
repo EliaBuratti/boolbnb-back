@@ -47,62 +47,7 @@ class ApartmentController extends Controller
         $address = $request->query('location');
         $range = $request->query('range');
         $servicesQuery = $request->query('services');
-
-
-        //dd($servicesQuery);
-
-        if (!$rooms) {
-            $rooms = 1;
-        }
-
-        if (!$range) {
-            $range = 20;
-        }
-
-        //dd($beds, $rooms, $address);
-
-        if ($request->query->has('beds') || $request->query->has('rooms') || $request->query->has('services')) {
-            $apartments = Apartment::with(['services', 'sponsorships'])
-                ->where('beds', '>=', $beds)
-                ->where('rooms', '>=', $rooms)
-                ->get();
-
-            if ($request->query->has('services')) {
-                $services = [];
-
-                foreach ($servicesQuery as $service) {
-
-                    $singleService = Service::where('slug', '=', $service)->get();
-                    $singleServiceID = ($singleService[0]->id);
-                    array_push($services, $singleServiceID);
-                }
-
-                //dd($services);
-                $apartamentsFiltered = [];
-
-                foreach ($apartments as $apartment) {
-
-                    $apartmentServices = [];
-
-                    foreach ($apartment->services as $i => $service) {
-                        array_push($apartmentServices, $service->id);
-                    }
-                    //dd($apartmentServices);
-
-
-                    if (empty(array_diff($services, $apartmentServices))) {
-                        array_push($apartamentsFiltered, $apartment);
-                    }
-                }
-
-                $apartments = $apartamentsFiltered;
-            }
-
-
-            //dd($apartments);
-        } else {
-            $apartments = Apartment::with(['services', 'sponsorships'])->get();
-        }
+        $apartamentsFiltered = [];
 
         $key_tomtom = env('TOMTOM_KEY');
         $coordinate = "https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
@@ -119,6 +64,62 @@ class ApartmentController extends Controller
         $obj = json_decode($json);
         $lat = $obj->results[0]->position->lat;
         $lon = $obj->results[0]->position->lon;
+
+        if (!$rooms) {
+            $rooms = 1;
+        }
+
+        if (!$range) {
+            $range = 20;
+        }
+
+        //dd($beds, $rooms, $address);
+
+        if ($request->query->has('beds') || $request->query->has('rooms')) {
+            $apartments = Apartment::with(['services', 'sponsorships'])
+                ->where('visible', '=', 1)
+                ->whereRaw('ST_Distance( POINT(apartments.longitude, apartments.latitude),POINT(' . $lon . ',' . $lat . ')) < ' . $range / 100)
+                ->where('beds', '>=', $beds)
+                ->where('rooms', '>=', $rooms)
+                ->get();
+
+                //dd($apartments);
+
+                
+                if ($request->query->has('services')) {
+                    $services = [];
+
+                    //dd($servicesQuery);
+                    foreach ($servicesQuery as $service) {
+
+                        $singleService = Service::where('slug', '=', $service)->get();
+                        $singleServiceID = ($singleService[0]->id);
+                        array_push($services, $singleServiceID);
+                    }
+
+
+                    foreach ($apartments as $apartment) {
+
+                        $apartmentServices = [];
+
+                        foreach ($apartment->services as $i => $service) {
+                            array_push($apartmentServices, $service->id);
+                        }
+
+
+
+                        if (empty(array_diff($services, $apartmentServices))) {
+
+                            array_push($apartamentsFiltered, $apartment);
+                        }
+                    }
+            } else {
+                $apartamentsFiltered = $apartments;
+            }
+
+        }
+
+        
         /* coordinate dell'user */
 
         /* $apartments_test = DB::table('apartments')
@@ -131,7 +132,8 @@ class ApartmentController extends Controller
 
         //$apartments_test = 'SELECT * FROM apartments WHERE ST_Distance(POINT($lon, $lat),POINT(apartments.longitude, apartments.latitude)) < 2;';
         //$apartments_test = Apartment::whereRaw('ST_Distance(POINT(' . $lon . ',' . $lat . '), POINT(apartments.longitude, apartments.latitude)) < ' . $range / 10)->get();
-        $apartments_test = Apartment::where('visible', '=', 1)->whereRaw('ST_Distance( POINT(apartments.longitude, apartments.latitude),POINT(' . $lon . ',' . $lat . ')) < ' . $range / 100)->get();
+        //$apartments_test = Apartment::where('visible', '=', 1)->whereRaw('ST_Distance( POINT(apartments.longitude, apartments.latitude),POINT(' . $lon . ',' . $lat . ')) < ' . $range / 100)->get();
+        //$apartments_test = $apartamentsFiltered->where('visible', '=', 1)->whereRaw('ST_Distance( POINT(apartments.longitude, apartments.latitude),POINT(' . $lon . ',' . $lat . ')) < ' . $range / 100)->get();
         //dd($apartments_test);
 
 
@@ -185,9 +187,10 @@ class ApartmentController extends Controller
             }
         }
  */
+
         return response()->json([
             'success' => true,
-            'result' => $apartments_test,
+            'result' => $apartamentsFiltered,
             'coordinates' => [$lon, $lat]
         ]);
     }
