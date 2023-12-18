@@ -22,6 +22,8 @@ class ViewController extends Controller
 
         $views = [];
 
+        $totalViews = 0;
+
         foreach ($apartments as $i => $apartment) {
             $apartmentID = $apartment['id'];
             //dd($apartment['title']);
@@ -30,14 +32,15 @@ class ViewController extends Controller
             //dd($stats);
             array_push($views, [$apartment['title'], $stats]);
 
+            $totalViews += $stats;
             /*  $views += [
                 $apartment['title'] => $stats
             ]; */
         }
 
-        //dd($views);
+        //dd($totalViews);
 
-        return view('host.analitycs.index', compact('views'));
+        return view('host.analitycs.index', compact('views', 'totalViews'));
         //return response()->json($views);
     }
 

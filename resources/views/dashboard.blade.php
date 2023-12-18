@@ -54,6 +54,23 @@
 
                     </div>
                 </div>
+
+                <div class="col">
+
+                    <div class="card">
+
+                        <div class="card-header text-center bg_primary">Views</div>
+
+                        <div class="card-body">
+                            <strong>Total views: {{ $totalViews }}</strong>
+                            <div class="py-4">
+                                <a href=" {{ route('host.views.index') }} " class="btn btn-dark primary">My
+                                    views</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         @endif
     </div>
