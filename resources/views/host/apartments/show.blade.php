@@ -137,20 +137,33 @@
         </div>
 
 
+
+
         <div class="mb-4">
             <h4 class="mb-3">Services</h4>
-            <div class="d-flex gap-2 flex-wrap">
-                @forelse ($apartment->Services as $service)
-                    <div class="badge bg_primary text-dark">
-                        {{ $service->name }}
-                    </div>
-                @empty
-                    <div class="badge bg_primary text-dark">
-                        No services
-                    </div>
-                @endforelse
+            <div class="row align-items-center">
+                <div class="col-7">
+                    <div class="d-flex gap-2 flex-wrap">
+                        @forelse ($apartment->Services as $service)
+                            <div class="badge bg_primary text-dark">
+                                {{ $service->name }}
+                            </div>
+                        @empty
+                            <div class="badge bg_primary text-dark">
+                                No services
+                            </div>
+                        @endforelse
 
+                    </div>
+                </div>
+
+                <div class="col-5">
+                    <div class="views text-center m-auto" style="width: 100%;">
+                        <canvas id="singleApartmentViews" data-set="{{ json_encode($views) }}"></canvas>
+                    </div>
+                </div>
             </div>
+
 
 
         </div>
@@ -168,4 +181,8 @@
 
 
     </div>
+@endsection
+
+@section('scripts')
+    @vite(['resources/js/ChartSingle.js'])
 @endsection
