@@ -48,6 +48,8 @@ class ApartmentController extends Controller
         $range = $request->query('range');
         $servicesQuery = $request->query('services');
         $apartamentsFiltered = [];
+        $apartamentsFilteredSponsored = [];
+
 
         $key_tomtom = env('TOMTOM_KEY');
         $coordinate = "https://api.tomtom.com/search/2/geocode/{$address}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
@@ -106,20 +108,88 @@ class ApartmentController extends Controller
                             array_push($apartmentServices, $service->id);
                         }
 
-
-
                         if (empty(array_diff($services, $apartmentServices))) {
 
-                            array_push($apartamentsFiltered, $apartment);
+                            array_push($apartamentsFilteredSponsored, $apartment);
                         }
                     }
-            } else {
-                $apartamentsFiltered = $apartments;
+                } else {
+                    $apartamentsFilteredSponsored = $apartments;
+                }
+
+                $apartmentSponsoredId = [];
+
+
+                foreach ($apartamentsFilteredSponsored as $apartment) {
+                    $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
+        
+                    if ($lastSponsor) {
+                        $actualDate = date("Y-m-d H:i:s"); //actual date
+        
+                        if ($actualDate < $lastSponsor) {
+
+                            array_unshift($apartamentsFiltered, $apartment);
+                            array_push($apartmentSponsoredId, $apartment->id);
+                        } else {
+                            array_push($apartamentsFiltered, $apartment);
+                        }
+
+                    } else {
+                        array_push($apartamentsFiltered, $apartment);
+                    }
+                   
             }
 
         }
 
-        
+        return response()->json([
+            'success' => true,
+            'result' => $apartamentsFiltered,
+            'coordinates' => [$lon, $lat],
+            'sponsored' => $apartmentSponsoredId,
+        ]);
+
+}
+
+    public function home()
+    {
+        $apartments = Apartment::with(['services', 'sponsorships'])->get();
+
+        $apartmentWthSponsor = [];
+        $apartmentSponsoredId = [];
+
+        foreach ($apartments as $apartment) {
+            $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
+
+            if ($lastSponsor) {
+                $actualDate = date("Y-m-d H:i:s"); //actual date
+
+                if ($actualDate < $lastSponsor) {
+
+                    array_unshift($apartmentWthSponsor, $apartment);
+                    array_push($apartmentSponsoredId, $apartment->id);
+                } else {
+
+                    array_push($apartmentWthSponsor, $apartment);
+                }
+            } else {
+
+                array_push($apartmentWthSponsor, $apartment);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'result' => $apartmentWthSponsor,
+            'sponsored' => $apartmentSponsoredId,
+        ]);
+    }
+}
+
+
+
+
+
         /* coordinate dell'user */
 
         /* $apartments_test = DB::table('apartments')
@@ -187,45 +257,3 @@ class ApartmentController extends Controller
             }
         }
  */
-
-        return response()->json([
-            'success' => true,
-            'result' => $apartamentsFiltered,
-            'coordinates' => [$lon, $lat]
-        ]);
-    }
-
-    public function home()
-    {
-        $apartments = Apartment::with(['services', 'sponsorships'])->get();
-
-        $apartmentWthSponsor = [];
-        $apartmentSponsoredId = [];
-
-        foreach ($apartments as $apartment) {
-            $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
-
-            if ($lastSponsor) {
-                $actualDate = date("Y-m-d H:i:s"); //actual date
-
-                if ($actualDate < $lastSponsor) {
-
-                    array_unshift($apartmentWthSponsor, $apartment);
-                    array_push($apartmentSponsoredId, $apartment->id);
-                } else {
-
-                    array_push($apartmentWthSponsor, $apartment);
-                }
-            } else {
-
-                array_push($apartmentWthSponsor, $apartment);
-            }
-        }
-
-        return response()->json([
-            'success' => true,
-            'result' => $apartmentWthSponsor,
-            'sponsored' => $apartmentSponsoredId,
-        ]);
-    }
-}
