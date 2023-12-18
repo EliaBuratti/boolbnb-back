@@ -17,10 +17,8 @@ use function PHPUnit\Framework\throwException;
 
 class PaymentController extends Controller
 {
-
     public function index(Request $request)
     {
-
         $validatedData = $request->validate([
             'sponsorship' => ['required', 'numeric', 'exists:sponsorships,id'],
             'apartmentid' => ['required', 'numeric', 'exists:apartments,id'],
