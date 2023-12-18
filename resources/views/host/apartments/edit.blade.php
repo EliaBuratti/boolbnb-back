@@ -174,14 +174,14 @@
 
                     <div class="form-check form-check-inline">
                         
-                        <input class="form-check-input" aria-describedby="visible_true_HelpID" type="radio" name="visible" id="visible_true" value="true" class="form-control @error('visible') is-invalid @enderror" {{ $apartment->visible === 1 ? 'checked' : '' }}>
+                        <input class="form-check-input" aria-describedby="visible_true_HelpID" type="radio" name="visible" id="visible_true" value="1" class="form-control @error('visible') is-invalid @enderror" {{ $apartment->visible === 1 ? 'checked' : '' }}>
                             <label class="form-check-label" for="visible_true">Visible</label>
                             
                     </div>
 
                     <div class="form-check form-check-inline">
 
-                        <input class="form-check-input" aria-describedby="visible_false_HelpID" type="radio" name="visible" id="visible_false" value="false" class="form-control @error('visible') is-invalid @enderror"  {{ $apartment->visible === 0 ? 'checked' : '' }}>
+                        <input class="form-check-input" aria-describedby="visible_false_HelpID" type="radio" name="visible" id="visible_false" value="0" class="form-control @error('visible') is-invalid @enderror"  {{ $apartment->visible === 0 ? 'checked' : '' }}>
                         <label class="form-check-label" for="visible_false">Not visible</label>
                         
                     </div>

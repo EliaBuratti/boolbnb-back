@@ -54,11 +54,11 @@ class ApartmentController extends Controller
 
         $val_data = $request->validated();
 
-        if ($val_data['visible'] === true) {
+        if ($val_data['visible'] == 1) {
 
-            $val_data['visible'] = 1;
+            $val_data['visible'] = true;
         } else {
-            $val_data['visible'] = 0;
+            $val_data['visible'] = false;
         }
 
         $last_apartment = Apartment::all()->last();
@@ -154,12 +154,13 @@ class ApartmentController extends Controller
     {
         $val_data = $request->validated();
 
-        if ($val_data['visible'] === true) {
+        if ($val_data['visible'] == 1) {
 
-            $val_data['visible'] = 1;
+            $val_data['visible'] = true;
         } else {
-            $val_data['visible'] = 0;
+            $val_data['visible'] = false;
         }
+        //dd($val_data['visible']);
 
         if ($request->has('thumbnail')) {
 
