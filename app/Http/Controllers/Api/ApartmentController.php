@@ -200,6 +200,7 @@ class ApartmentController extends Controller
         $apartments = Apartment::with(['services', 'sponsorships'])->get();
 
         $apartmentWthSponsor = [];
+        $apartmentSponsoredId = [];
 
         foreach ($apartments as $apartment) {
             $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
@@ -210,6 +211,7 @@ class ApartmentController extends Controller
                 if ($actualDate < $lastSponsor) {
 
                     array_unshift($apartmentWthSponsor, $apartment);
+                    array_push($apartmentSponsoredId, $apartment->id);
                 } else {
 
                     array_push($apartmentWthSponsor, $apartment);
@@ -222,7 +224,8 @@ class ApartmentController extends Controller
 
         return response()->json([
             'success' => true,
-            'result' => $apartmentWthSponsor
+            'result' => $apartmentWthSponsor,
+            'sponsored' => $apartmentSponsoredId,
         ]);
     }
 }
