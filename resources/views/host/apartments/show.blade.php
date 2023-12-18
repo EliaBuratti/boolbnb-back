@@ -17,7 +17,7 @@
 
         </div>
 
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-primary" role="alert" id="countdown">
             <div class="col-12" id="timer"></div>
         </div>
 
@@ -224,7 +224,8 @@
             } else {
                 //quando scatta il timer fermo il loop e stampo in pagina
                 clearInterval(clock);
-                document.getElementById("timer").innerHTML = ''
+                document.getElementById("countdown").remove();
+
             };
         }, 1000);
     </script>
