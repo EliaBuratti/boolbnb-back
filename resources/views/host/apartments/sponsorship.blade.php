@@ -14,7 +14,13 @@
                         value="{{ $sponsorship->id }}" {{ $sponsorship->id == 1 ? 'checked' : '' }}>
                     <h3 class="fw-bold">{{ $sponsorship->name }}</h3>
                     <div class="fw-medium">Price: {{ $sponsorship->price }} $</div>
-                    <div class="fw-medium"> Duration: {{ $sponsorship->duration }}</div>
+                    @if($sponsorship->duration == '24:00:00')
+                        <div class="fw-medium"> Duration: 1 Day</div>
+                    @elseif($sponsorship->duration == '72:00:00')
+                        <div class="fw-medium"> Duration: 3 Days</div>
+                    @else
+                        <div class="fw-medium"> Duration: 6 Days</div>
+                    @endif
                 </label>
             @endforeach
         </div>
