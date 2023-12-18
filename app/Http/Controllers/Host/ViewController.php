@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\View;
 use App\Http\Requests\StoreViewRequest;
 use App\Http\Requests\UpdateViewRequest;
+use App\Models\Apartment;
 
 class ViewController extends Controller
 {
@@ -14,7 +15,30 @@ class ViewController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = auth()->user()->id;
+
+        $apartments = Apartment::where('user_id', $user_id)->get();
+        //dd($apartments);
+
+        $views = [];
+
+        foreach ($apartments as $i => $apartment) {
+            $apartmentID = $apartment['id'];
+            //dd($apartment['title']);
+            //dd($apartmentID);
+            $stats = View::where('apartment_id', $apartmentID)->count();
+            //dd($stats);
+            array_push($views, [$apartment['title'], $stats]);
+
+            /*  $views += [
+                $apartment['title'] => $stats
+            ]; */
+        }
+
+        //dd($views);
+
+        return view('host.analitycs.index', compact('views'));
+        //return response()->json($views);
     }
 
     /**
