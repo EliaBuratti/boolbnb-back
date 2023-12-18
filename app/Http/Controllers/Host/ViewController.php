@@ -18,28 +18,27 @@ class ViewController extends Controller
         $user_id = auth()->user()->id;
 
         $apartments = Apartment::where('user_id', $user_id)->get();
-        foreach ($apartments as $apartment) {
+        //dd($apartments);
+
+        $views = [];
+
+        foreach ($apartments as $i => $apartment) {
             $apartmentID = $apartment['id'];
-
-            $stats = View::where('apartment_id', $apartmentID)->get();
+            //dd($apartment['title']);
+            //dd($apartmentID);
+            $stats = View::where('apartment_id', $apartmentID)->count();
             //dd($stats);
-        }
-        /* 
+            array_push($views, [$apartment['title'], $stats]);
 
-FINIRE QUI E CONTROLLARE IL CONTROLLO DOVE C'È IL SALVATAGGIO DELLA VISITA, 
-ORA COME ORA SE UTENTE 1 VISITA APPARTAMENTO 1 E POI VISITA APPARTAMENTO 2 SALVA SOLO LA VISITA AD APPARTAMENTO 1 : (
-
-
-*/
-        $messages = [];
-        foreach ($apartments as $apartment) {
-
-            foreach ($apartment['messages'] as $message) {
-                array_push($messages, $message);
-            }
+            /*  $views += [
+                $apartment['title'] => $stats
+            ]; */
         }
 
-        return view('host.analitycs.index', compact('stats'));
+        //dd($views);
+
+        return view('host.analitycs.index', compact('views'));
+        //return response()->json($views);
     }
 
     /**

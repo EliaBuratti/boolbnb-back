@@ -11,8 +11,19 @@
         @include('../partials.session_message')
 
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
-            {{ $stats }}
+        <div class="row justify-content-center align-items-center">
+            <div class="col col-md-9">
+                <div style="width: 100%;">
+                    <canvas id="chartViews" data-set="{{ json_encode($views) }}"></canvas>
+                </div>
+            </div>
+            <div class="col col-md-3">
+                <h3>Total views for yours apartments</h3>
+            </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    @vite(['resources/js/Chart.js'])
 @endsection
