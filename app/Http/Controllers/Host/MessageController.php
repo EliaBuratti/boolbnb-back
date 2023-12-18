@@ -24,7 +24,7 @@ class MessageController extends Controller
         foreach ($apartments as $apartment) {
 
             foreach ($apartment['messages'] as $message) {
-                array_push($messages, $message);
+                array_unshift($messages, $message);
             }
         }
 
