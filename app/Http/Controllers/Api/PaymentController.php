@@ -28,13 +28,13 @@ class PaymentController extends Controller
         $sponsorships = Sponsorship::where('id', '=', $validatedData['sponsorship'])->get();
         $duration = explode(':', $sponsorships[0]->duration);
 
-        $userLogId = auth()->user()->id;  
+        $userLogId = auth()->user()->id;
 
         $apartments = Apartment::where('user_id', '=', $userLogId)->get();
 
-        foreach($apartments as $apartment){
-            
-            if($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
+        foreach ($apartments as $apartment) {
+
+            if ($apartment->id == $validatedData['apartmentid'] && $apartment->user_id == $userLogId) {
 
 
                 $nonce = $request->nonce;
@@ -45,11 +45,11 @@ class PaymentController extends Controller
                     'paymentMethodNonce' => $nonce,
                     'options' => [
                         'submitForSettlement' => True
-                        ]
-                    ]);
-                    
+                    ]
+                ]);
+
                 //dd($status->success);
-                if($status->success){
+                if ($status->success) {
 
                     $actualDate = date("Y-m-d H:i:s"); //actual date
 
@@ -70,22 +70,21 @@ class PaymentController extends Controller
                     }
 
 
-                    $end_date = date("Y-m-d H:i:s", strtotime($date . '+' . $duration[0] . 'hours +' . $duration[1] . 'minutes +' . $duration[2] . 'seconds' )); // date sum  ' + 1 day + 3 hours 30 minutes'
-                    
-                    $apartment->sponsorships()->attach($apartment->id,
+                    $end_date = date("Y-m-d H:i:s", strtotime($date . '+' . $duration[0] . 'hours +' . $duration[1] . 'minutes +' . $duration[2] . 'seconds')); // date sum  ' + 1 day + 3 hours 30 minutes'
+
+                    $apartment->sponsorships()->attach(
+                        $apartment->id,
                         [
-                        'sponsorship_id' => $validatedData['sponsorship'],
-                        'end_sponsorship' => $end_date,
-                        ]);
-                    
-                        //$gallery = Image::where('apartment_id', '=', $apartment->id)->get();
+                            'sponsorship_id' => $validatedData['sponsorship'],
+                            'end_sponsorship' => $end_date,
+                        ]
+                    );
 
-                        return back()->with('message', 'Your apartment: '. $apartment->title .' is sponsored until the date: ' . $end_date );
+                    //$gallery = Image::where('apartment_id', '=', $apartment->id)->get();
+                    //dd(date('d-m-Y', strtotime($end_date)));
+                    return back()->with('message', 'Your apartment: ' . $apartment->title . ' is sponsored until the date: ' . date('d-m-Y', strtotime($end_date)) . ' at ' . date('H:m', strtotime($end_date)));
                 }
-                                
-            } 
-            
-
+            }
         }
     }
 
