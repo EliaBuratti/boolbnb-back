@@ -24,11 +24,11 @@
             </thead>
             <tbody>
                 @forelse ($messages as $message)
-                <tr class="">
+                <tr>
                     <td scope="row">{{$message->name}}</td>
                     <td scope="row">{{$message->email}}</td>
-                    <td>{{ucfirst($message->subject)}}</td>
-                    <td>{{$message->created_at->format('d-m-Y H:m')}}</td>
+                    <td scope="row">{{ucfirst($message->subject)}}</td>
+                    <td scope="row">{{$message->created_at->format('d-m-Y H:m')}}</td>
                     <td>
                         <!-- Modal trigger button -->
                         <button type="button"
