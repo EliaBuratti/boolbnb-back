@@ -27,7 +27,7 @@
                 <tr class="">
                     <td scope="row">{{$message->name}}</td>
                     <td scope="row">{{$message->email}}</td>
-                    <td>{{$message->subject}}</td>
+                    <td>{{ucfirst($message->subject)}}</td>
                     <td>{{$message->created_at->format('d-m-Y H:m')}}</td>
                     <td>
                         <!-- Modal trigger button -->
@@ -48,23 +48,33 @@
                                 role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalTitleId-{{ $message->id }}">
-                                            <strong> {{$message->subject}} </strong>
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+
+                                        <div>
+                                            <h5>Message from : {{$message->name}} </h5>
+    
+                                            <div>
+                                                Email : {{$message->email}}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body text-center">
+                                        
+                                        <strong class="modal-title fs-5" id="modalTitleId-{{ $message->id }}">
+                                            {{ucfirst($message->subject)}}
+                                        </strong>
 
-                                        <h5>By: {{$message->email}} </h5>
+                                        
 
-                                        <div class="pt-4">Message:</div>
-                                        <p>
-                                            {{$message->message}}
-                                        </p>
+                                        <div class="pt-4">
+                                            <span class="bg_primary fw-bold rounded-pill p-1">Message</span>
+                                            <p>
+                                                {{$message->message}}
+                                            </p>
+                                        </div>
+
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn primary btn-dark"
                                             data-bs-dismiss="modal">Close!</button>
                                         
                                     </div>
