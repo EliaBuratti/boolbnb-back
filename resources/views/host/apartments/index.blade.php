@@ -19,10 +19,14 @@
                 <div class="col g-3 position-relative img_overlay">
 
                     <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="">
-                        <div class="my_card shadow">
+                        <div class="my_card shadow {{in_array( $apartment->id, $sponsoredApartmentsIds) ? 'sponsored' : '' }}" >
                             <img class="image" src="{{ asset('storage/' . $apartment->thumbnail) }}" alt="">
                             <div class="my_card_content">
                                 <h6 class="fw-semibold text-dark">{{ $apartment->title }}</h6>
+                            </div>
+
+                            <div class="sponsored_badge">
+                                Sponsored
                             </div>
                         </div>
                     </a>
