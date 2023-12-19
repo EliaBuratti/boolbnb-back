@@ -156,6 +156,9 @@
             </table>
         </div>
 
+        <div class="pt-4"> {{ $trash_apartments->links('pagination::bootstrap-5') }} </div>
+
+
         <a href="{{ url('/') }}" class="btn btn-dark primary my-3">Back to dashboard</a>
         <a href="{{ route('host.apartments.index') }}" class="btn btn-dark primary">Go to apartment list</a>
     </div>

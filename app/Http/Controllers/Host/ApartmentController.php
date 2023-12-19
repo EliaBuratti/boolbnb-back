@@ -28,9 +28,7 @@ class ApartmentController extends Controller
 
         $user_id = auth()->user()->id;
 
-        //$apartments = Apartment::where('user_id', '=', $user_id)->get();
         $apartments = Apartment::where('user_id', '=', $user_id)->paginate(9);
-        //da attivare dopo aver fixato paginazione
 
         $countries = config('countries');
 
@@ -131,27 +129,27 @@ class ApartmentController extends Controller
         $views = View::where('apartment_id', '=', $apartment->id)->get();
 
         $sponsored = '';
-        
+
         $actualDate = date("Y-m-d H:i:s"); //actual date
 
         $sponsorship = DB::table('apartment_sponsorship')
-                        ->where('apartment_id', $apartment->id)
-                        ->where('end_sponsorship', '>=', $actualDate)
-                        ->get()->last();
+            ->where('apartment_id', $apartment->id)
+            ->where('end_sponsorship', '>=', $actualDate)
+            ->get()->last();
 
-                    //if result not empty
-                    if (!empty($sponsorship)) {
+        //if result not empty
+        if (!empty($sponsorship)) {
 
-                        //setup end date to add new time
-                        //$hourformat = str_replace([ ' ', ':'], ', ',$sponsorship->end_sponsorship);
-                        //$sponsored = str_replace('-', ', ',$hourformat).', 0';
-                        $sponsored = str_replace(' ', 'T',$sponsorship->end_sponsorship);
-                        //dd($sponsored, $sponsorship->end_sponsorship);
-                    }
+            //setup end date to add new time
+            //$hourformat = str_replace([ ' ', ':'], ', ',$sponsorship->end_sponsorship);
+            //$sponsored = str_replace('-', ', ',$hourformat).', 0';
+            $sponsored = str_replace(' ', 'T', $sponsorship->end_sponsorship);
+            //dd($sponsored, $sponsorship->end_sponsorship);
+        }
 
         //dd($gallery);
 
-        return view('host.apartments.show', compact(['apartment', 'gallery', 'views','sponsored']));
+        return view('host.apartments.show', compact(['apartment', 'gallery', 'views', 'sponsored']));
     }
 
     /**
@@ -233,7 +231,7 @@ class ApartmentController extends Controller
 
         $user_id = auth()->user()->id;
 
-        $trash_apartments = Apartment::onlyTrashed()->where('user_id', '=', $user_id)->orderByDesc('deleted_at')->get();
+        $trash_apartments = Apartment::onlyTrashed()->where('user_id', '=', $user_id)->orderByDesc('deleted_at')->paginate(10);
 
         /* aggiungere paginate */
         return view('host.apartments.trash', compact('trash_apartments'));
