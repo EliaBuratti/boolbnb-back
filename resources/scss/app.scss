@@ -16,3 +16,15 @@ $primary: #ffde59;
 header {
     height: 60px;
 }
+
+
+td {
+    white-space: nowrap;
+    /* Evita il ritorno a capo automatico del testo */
+
+    overflow: hidden;
+    /* Nasconde il testo che supera la larghezza della cella */
+
+    text-overflow: ellipsis;
+    /* Aggiunge i puntini di sospensione (...) */
+}

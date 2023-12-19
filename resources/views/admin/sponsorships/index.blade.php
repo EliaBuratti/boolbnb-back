@@ -11,13 +11,8 @@
 
                 <div class="table-responsive">
                     <table
-                        class="table table-striped
-                    table-hover	
-                    table-borderless
-                    table-primary
-                    align-middle">
+                        class="table table-hover align-middle">
                         <thead class="table-light">
-                            <caption>Sponsorships</caption>
                             <tr>
                                 <th>Sponsorship Name</th>
                                 <th>Actions</th>
@@ -26,17 +21,14 @@
                         <tbody class="table-group-divider">
 
                             @forelse ($sponsorships as $sponsorship)
-                                <tr class="table-primary">
+                                <tr>
                                     <td scope="row">{{ $sponsorship->name }}</td>
                                     <td>
-
-                                        {{-- controllare poi se l'edit nella stess view del create da problemi --}}
-
-                                        <div class="actions">
+                                        <div class="actions d-flex gap-3">
 
                                             <div class="edit">
                                                 <a href=" {{ route('admin.sponsorships.edit', $sponsorship->id) }}"
-                                                    class="btn btn-primary">Edit</a>
+                                                    class="btn primary btn-dark">Edit</a>
                                             </div>
                                             <div class="delete">
 
@@ -44,7 +36,7 @@
                                                     method="post">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button technology="submit" class="btn btn-danger">delete</button>
+                                                    <button technology="submit" class="btn btn-danger">Delete</button>
                                                 </form>
 
                                             </div>
@@ -103,7 +95,7 @@
                         <small id="timeHelper" class="form-text text-muted">Add duration</small>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Add + </button>
+                    <button type="submit" class="btn primary btn-dark">Add + </button>
                 </form>
             </div>
         </div>
