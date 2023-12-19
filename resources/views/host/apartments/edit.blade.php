@@ -198,7 +198,7 @@
             <div class="row">
 
                 {{-- Description --}}
-                <div class="col-5">
+                <div class="col-12 col-lg-5 py-5">
     
                     <label for="description" class="form-label">Description</label>
     
@@ -211,7 +211,7 @@
                 </div>
 
                 {{-- Services --}}
-                <div class="col-7">
+                <div class="col-12 col-lg-7">
     
                     <label for="services" class="form-label d-block text-center">Choose services:</label>
                 
@@ -220,7 +220,7 @@
                         
                         @if ($errors->any())
         
-                            <div class="col-3 form-check form-check-inline me-0">
+                            <div class="col-6 col-md-3 col-lg-4 form-check form-check-inline me-0">
         
                                 <input class="form-check-input" type="checkbox" id="services-{{ $service->id }}" name="services[]" value="{{ $service->id }}" {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
         
@@ -232,7 +232,7 @@
                     
                         @else
                         
-                        <div class="col-3 form-check form-check-inline me-0">
+                        <div class="col-6 col-md-3 col-lg-4 form-check form-check-inline me-0">
                             
                             <input class="form-check-input" type="checkbox" id="services-{{ $service->id }}" name="services[]"
                             value="{{ $service->id }}"
@@ -253,10 +253,10 @@
             </div>
             {{-- FINE SECONDA ROW --}}
 
-            <div class="py-3">
-                <button type="submit" class="btn btn-dark primary">Update</button>
-                <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="btn  btn-dark primary">Back to show</a>
-                <a href="{{route('host.apartments.index')}}" class="btn btn-dark primary">Back to apartment list</a>
+            <div class="py-3 d-flex flex-wrap gap-4">
+                <button type="submit" class="btn btn-dark primary flex-grow-1 flex-lg-grow-0">Update</button>
+                <a href="{{ route('host.apartments.show', $apartment->slug) }}" class="btn  btn-dark primary flex-grow-1 flex-lg-grow-0">Back to show</a>
+                <a href="{{route('host.apartments.index')}}" class="btn btn-dark primary flex-grow-1 flex-lg-grow-0">Back to apartment list</a>
             </div>
         </form>
 

@@ -29,15 +29,15 @@
 
                         <div class="card-body">
                             <strong>Total apartments: {{ $total_apartment }}</strong>
-                            <div class="py-4">
+                            <div class="py-4 d-flex flex-wrap gap-3">
                                 @if ($total_apartment)
-                                    <a href=" {{ route('host.apartments.index') }} " class="btn btn-dark primary">My
+                                    <a href=" {{ route('host.apartments.index') }} " class="btn btn-dark primary flex-grow-1">My
                                         apartments</a>
                                 @else
-                                    <a href="{{ route('host.apartments.create') }}" class="btn btn-dark primary">Add new
+                                    <a href="{{ route('host.apartments.create') }}" class="btn btn-dark primary flex-grow-1">Add new
                                         apartment</a>
                                 @endif
-                                <a class="btn btn-danger" href="{{ route('host.trash') }}">Trash</a>
+                                <a class="btn btn-danger flex-grow-1" href="{{ route('host.trash') }}">Trash</a>
                             </div>
                         </div>
                     </div>
