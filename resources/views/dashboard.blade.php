@@ -16,8 +16,21 @@
         @endif
 
         @if (Auth::id() === 1)
-            <a href=" {{ route('admin.sponsorships.index') }} " class="btn btn-primary">Sponsorships</a>
-            <a href=" {{ route('admin.services.index') }} " class="btn btn-primary">Services</a>
+            <div class="d-flex gap-4 py-4">
+                <a href=" {{ route('admin.sponsorships.index') }} " class="btn btn-dark primary position-relative">
+                    Sponsorships 
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg_primary text-dark border border-black">
+                        {{$total_sponsorships}}
+                        <span class="visually-hidden">Total Sponsorships</span>
+                    </span>
+                </a>
+                <a href=" {{ route('admin.services.index') }} " class="btn btn-dark primary position-relative">
+                    Services <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg_primary text-dark border border-black">
+                        {{$total_services}}
+                        <span class="visually-hidden">Total Services</span>
+                    </span>
+                </a>
+            </div>
         @else
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mt-4">
 
