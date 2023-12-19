@@ -17,7 +17,7 @@
 
         </div>
 
-        <div class="alert alert-primary" role="alert" id="countdown">
+        <div class="" role="alert" id="countdown">
             <div class="col-12" id="timer"></div>
         </div>
 
@@ -219,6 +219,7 @@
 
 
                 //stampo in pagina il conto alla rovescia
+                document.getElementById("countdown").classList.add('alert', 'alert-primary');
                 document.getElementById("timer").innerHTML =
                     `Sponsored until: ${dayRemain} day${dayRemain < 1 ? '' : 's'}, ${hourRemain} hour${hourRemain < 1 ? '' : 's'}, ${minuteRemain} minute${minuteRemain < 1 ? '' : 's'}.`;
             } else {
