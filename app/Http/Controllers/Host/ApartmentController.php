@@ -265,6 +265,9 @@ class ApartmentController extends Controller
         //Immagini relative all'appartamento preso tramite id
         $images = Image::where('apartment_id', '=', $apartment->id)->get();
 
+
+        $views = View::where('apartment_id', '=', $apartment->id)->get();
+
         //Ogni immagine viene dissociata dall'appartamento e viene eliminata dal db
         foreach ($images as $image) {
 
@@ -281,6 +284,12 @@ class ApartmentController extends Controller
             $message->apartment()->dissociate();
 
             $message->delete();
+        }
+
+        foreach ($views as $view) {
+            $view->apartment()->dissociate();
+
+            $view->delete();
         }
 
 

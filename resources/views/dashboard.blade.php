@@ -30,8 +30,13 @@
                         <div class="card-body">
                             <strong>Total apartments: {{ $total_apartment }}</strong>
                             <div class="py-4">
-                                <a href=" {{ route('host.apartments.index') }} " class="btn btn-dark primary">My
-                                    apartments</a>
+                                @if ($total_apartment)
+                                    <a href=" {{ route('host.apartments.index') }} " class="btn btn-dark primary">My
+                                        apartments</a>
+                                @else
+                                    <a href="{{ route('host.apartments.create') }}" class="btn btn-dark primary">Add new
+                                        apartment</a>
+                                @endif
                                 <a class="btn btn-danger" href="{{ route('host.trash') }}">Trash</a>
                             </div>
                         </div>
