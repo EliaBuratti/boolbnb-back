@@ -30,9 +30,29 @@ class ApartmentController extends Controller
 
         $apartments = Apartment::where('user_id', '=', $user_id)->paginate(9);
 
+
+        //Da controllare se funziona dopo che la sponsorizzazione è scaduta
+        //⤵
+        $sponsoredApartmentsIds = [];
+        $actualDate = date("Y-m-d H:i:s");
+        foreach ($apartments as $apartment) {
+
+            $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
+
+            foreach ($apartment->sponsorships as $sponsorship) {
+
+                if ($actualDate < $lastSponsor['pivot']['end_sponsorship']) {
+
+                    array_unshift($sponsoredApartmentsIds, $sponsorship['pivot']['apartment_id']);
+                }
+            }
+        }
+        $sponsoredApartmentsIds = array_unique($sponsoredApartmentsIds);
+        //⤴
+
         $countries = config('countries');
 
-        return view('host.apartments.index', compact(['apartments', 'countries']));
+        return view('host.apartments.index', compact(['apartments', 'countries', 'sponsoredApartmentsIds']));
     }
 
 
