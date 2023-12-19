@@ -54,7 +54,7 @@ class ApartmentController extends Controller
         //dd($address);
 
         $addressQuery = str_replace(' ', '+', $address);
-        
+
         //dd($addressQuery);
         $key_tomtom = env('TOMTOM_KEY');
         $coordinate = "https://api.tomtom.com/search/2/geocode/{$addressQuery}.json?storeResult=false&limit=1&extendedPostalCodesFor=Geo&view=Unified&key={$key_tomtom}";
@@ -90,61 +90,58 @@ class ApartmentController extends Controller
                 ->where('rooms', '>=', $rooms)
                 ->get();
 
-                //dd($apartments);
-
-                
-                if ($request->query->has('services')) {
-                    $services = [];
-
-                    //dd($servicesQuery);
-                    foreach ($servicesQuery as $service) {
-
-                        $singleService = Service::where('slug', '=', $service)->get();
-                        $singleServiceID = ($singleService[0]->id);
-                        array_push($services, $singleServiceID);
-                    }
+            //dd($apartments);
 
 
-                    foreach ($apartments as $apartment) {
+            if ($request->query->has('services')) {
+                $services = [];
 
-                        $apartmentServices = [];
+                //dd($servicesQuery);
+                foreach ($servicesQuery as $service) {
 
-                        foreach ($apartment->services as $i => $service) {
-                            array_push($apartmentServices, $service->id);
-                        }
-
-                        if (empty(array_diff($services, $apartmentServices))) {
-
-                            array_push($apartamentsFilteredSponsored, $apartment);
-                        }
-                    }
-                } else {
-                    $apartamentsFilteredSponsored = $apartments;
+                    $singleService = Service::where('slug', '=', $service)->get();
+                    $singleServiceID = ($singleService[0]->id);
+                    array_push($services, $singleServiceID);
                 }
 
-                $apartmentSponsoredId = [];
+
+                foreach ($apartments as $apartment) {
+
+                    $apartmentServices = [];
+
+                    foreach ($apartment->services as $i => $service) {
+                        array_push($apartmentServices, $service->id);
+                    }
+
+                    if (empty(array_diff($services, $apartmentServices))) {
+
+                        array_push($apartamentsFilteredSponsored, $apartment);
+                    }
+                }
+            } else {
+                $apartamentsFilteredSponsored = $apartments;
+            }
+
+            $apartmentSponsoredId = [];
 
 
-                foreach ($apartamentsFilteredSponsored as $apartment) {
-                    $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
-        
-                    if ($lastSponsor) {
-                        $actualDate = date("Y-m-d H:i:s"); //actual date
-        
-                        if ($actualDate < $lastSponsor) {
+            foreach ($apartamentsFilteredSponsored as $apartment) {
+                $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
 
-                            array_unshift($apartamentsFiltered, $apartment);
-                            array_push($apartmentSponsoredId, $apartment->id);
-                        } else {
-                            array_push($apartamentsFiltered, $apartment);
-                        }
+                if ($lastSponsor) {
+                    $actualDate = date("Y-m-d H:i:s"); //actual date
 
+                    if ($actualDate < $lastSponsor['pivot']['end_sponsorship']) {
+
+                        array_unshift($apartamentsFiltered, $apartment);
+                        array_push($apartmentSponsoredId, $apartment->id);
                     } else {
                         array_push($apartamentsFiltered, $apartment);
                     }
-                   
+                } else {
+                    array_push($apartamentsFiltered, $apartment);
+                }
             }
-
         }
 
         return response()->json([
@@ -153,14 +150,13 @@ class ApartmentController extends Controller
             'coordinates' => [$lon, $lat],
             'sponsored' => $apartmentSponsoredId,
         ]);
-
-}
+    }
 
     public function home()
     {
         $apartments = Apartment::with(['services', 'sponsorships'])
-        ->where('visible', '=', 1)
-        ->get();
+            ->where('visible', '=', 1)
+            ->get();
 
         $apartmentWthSponsor = [];
         $apartmentSponsoredId = [];
@@ -169,9 +165,10 @@ class ApartmentController extends Controller
             $lastSponsor = $apartment->sponsorships()->orderBy('end_sponsorship', 'desc')->first();
 
             if ($lastSponsor) {
+
                 $actualDate = date("Y-m-d H:i:s"); //actual date
 
-                if ($actualDate < $lastSponsor) {
+                if ($actualDate < $lastSponsor['pivot']['end_sponsorship']) {
 
                     array_unshift($apartmentWthSponsor, $apartment);
                     array_push($apartmentSponsoredId, $apartment->id);
