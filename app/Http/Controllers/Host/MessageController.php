@@ -20,13 +20,15 @@ class MessageController extends Controller
 
         $apartments = Apartment::where('user_id', $user_id)->with('messages')->get();
 
-        $messages = [];
+        $messages_list = [];
         foreach ($apartments as $apartment) {
 
             foreach ($apartment['messages'] as $message) {
-                array_unshift($messages, $message);
+                array_unshift($messages_list, $message);
             }
         }
+
+        $messages = collect($messages_list)->sortByDesc('created_at')->values()->all();
 
 
         return view('host.messages.index', compact('messages'));
