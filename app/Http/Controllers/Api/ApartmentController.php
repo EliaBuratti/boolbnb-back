@@ -158,7 +158,9 @@ class ApartmentController extends Controller
 
     public function home()
     {
-        $apartments = Apartment::with(['services', 'sponsorships'])->get();
+        $apartments = Apartment::with(['services', 'sponsorships'])
+        ->where('visible', '=', 1)
+        ->get();
 
         $apartmentWthSponsor = [];
         $apartmentSponsoredId = [];
