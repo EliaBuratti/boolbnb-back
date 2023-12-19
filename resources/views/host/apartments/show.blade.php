@@ -10,9 +10,9 @@
 
             <h1>{{ $apartment->title }} </h1>
 
-            <div>
-                <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn primary btn-dark">Edit</a>
-                <a href="{{ route('host.sponsorship', $apartment->slug) }}" class="btn primary btn-dark">Sponsorship</a>
+            <div class="d-flex flex-wrap gap-3">
+                <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn primary btn-dark flex-grow-1 flex-lg-grow-0">Edit</a>
+                <a href="{{ route('host.sponsorship', $apartment->slug) }}" class="btn primary btn-dark flex-grow-1 flex-lg-grow-0">Sponsorship</a>
             </div>
 
         </div>
@@ -148,9 +148,9 @@
 
 
         <div class="mb-4">
-            <h4 class="mb-3">Services</h4>
             <div class="row align-items-center">
-                <div class="col-7">
+                <div class="col-12 col-lg-7">
+                    <h4 class="mb-3">Services</h4>
                     <div class="d-flex gap-2 flex-wrap">
                         @forelse ($apartment->Services as $service)
                             <div class="badge bg_primary text-dark">
@@ -165,7 +165,7 @@
                     </div>
                 </div>
 
-                <div class="col-5">
+                <div class="col-12 col-lg-5">
                     <div class="views text-center m-auto" style="width: 100%;">
                         <canvas id="singleApartmentViews" data-set="{{ json_encode($views) }}"></canvas>
                     </div>
