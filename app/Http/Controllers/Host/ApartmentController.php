@@ -151,18 +151,18 @@ class ApartmentController extends Controller
         $sponsored = '';
 
         $actualDate = date("Y-m-d H:i:s"); //actual date
+        $dateFormatIt = strtotime($actualDate . '+ 1 hours');
 
         $sponsorship = DB::table('apartment_sponsorship')
             ->where('apartment_id', $apartment->id)
-            ->where('end_sponsorship', '>=', $actualDate)
+            ->where('end_sponsorship', '>=', $dateFormatIt)
             ->get()->last();
 
         //if result not empty
         if (!empty($sponsorship)) {
 
             //setup end date to add new time
-            //$hourformat = str_replace([ ' ', ':'], ', ',$sponsorship->end_sponsorship);
-            //$sponsored = str_replace('-', ', ',$hourformat).', 0';
+
             $sponsored = str_replace(' ', 'T', $sponsorship->end_sponsorship);
             //dd($sponsored, $sponsorship->end_sponsorship);
         }
