@@ -81,8 +81,8 @@ class PaymentController extends Controller
                     );
 
                     //$gallery = Image::where('apartment_id', '=', $apartment->id)->get();
-                    //dd(date('d-m-Y', strtotime($end_date)));
-                    return back()->with('message', 'Your apartment: ' . $apartment->title . ' is sponsored until the date: ' . date('d-m-Y', strtotime($end_date)) . ' at ' . date('H:m', strtotime($end_date)));
+                    //dd(date('d-m-Y H:i', strtotime($end_date)));
+                    return back()->with('message', 'Your apartment: ' . $apartment->title . ' is sponsored until the date: ' . date('d-m-Y', strtotime($end_date)) . ' at ' . date('H:i', strtotime($end_date)));
                 }
             }
         }
