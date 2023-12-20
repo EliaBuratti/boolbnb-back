@@ -11,8 +11,10 @@
             <h1>{{ $apartment->title }} </h1>
 
             <div class="d-flex flex-wrap gap-3">
-                <a href=" {{ route('host.apartments.edit', $apartment->slug) }} " class="btn primary btn-dark flex-grow-1 flex-lg-grow-0">Edit</a>
-                <a href="{{ route('host.sponsorship', $apartment->slug) }}" class="btn primary btn-dark flex-grow-1 flex-lg-grow-0">Sponsorship</a>
+                <a href=" {{ route('host.apartments.edit', $apartment->slug) }} "
+                    class="btn primary btn-dark flex-grow-1 flex-lg-grow-0">Edit</a>
+                <a href="{{ route('host.sponsorship', $apartment->slug) }}"
+                    class="btn primary btn-dark flex-grow-1 flex-lg-grow-0">Sponsorship</a>
             </div>
 
         </div>
@@ -207,7 +209,7 @@
 
             // ottengo la data attuale in millisecondi e poi faccio la differenza
             const realTime = new Date().getTime();
-            const milliSecTime = Number(targhetTime - realTime);
+            const milliSecTime = Number((targhetTime + hourMs) - realTime);
 
             if (milliSecTime > 0) {
 
@@ -221,7 +223,11 @@
                 //stampo in pagina il conto alla rovescia
                 document.getElementById("countdown").classList.add('alert', 'alert-primary');
                 document.getElementById("timer").innerHTML =
-                    `Sponsored until: ${dayRemain} day${dayRemain < 1 ? '' : 's'}, ${hourRemain} hour${hourRemain < 1 ? '' : 's'}, ${minuteRemain} minute${minuteRemain < 1 ? '' : 's'}.`;
+                    `Sponsored until:  
+                    ${dayRemain < 1 ? ' ' : `${dayRemain} day${dayRemain < 1 ? '' : 's'},`}
+                    ${hourRemain < 1 ? ' ' : `${hourRemain} hour${hourRemain < 1 ? '' : 's'},`}
+                    ${minuteRemain < 1 ? ' ' : `${minuteRemain} minute${minuteRemain < 1 ? '' : 's'}.`}`
+
             } else {
                 //quando scatta il timer fermo il loop e stampo in pagina
                 clearInterval(clock);
