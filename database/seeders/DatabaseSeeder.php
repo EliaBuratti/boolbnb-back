@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             MessageSeeder::class,
             ServiceSeeder::class,
             SponsorshipSeeder::class,
-            //ViewSeeder::class,
+            ViewSeeder::class,
         ]);
     }
 }
