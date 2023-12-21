@@ -79,6 +79,8 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
-        //
+        $message->forceDelete();
+
+        return to_route('host.messages.index')->with('message', 'Message deleted successfully');
     }
 }
