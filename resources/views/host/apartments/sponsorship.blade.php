@@ -13,20 +13,39 @@
                     <input type="radio" name="sponsorship" id="sponsorship-{{ $sponsorship->id }}"
                         value="{{ $sponsorship->id }}" {{ $sponsorship->id == 1 ? 'checked' : '' }}>
                     <h3 class="fw-bold">{{ $sponsorship->name }}</h3>
-                    <div class="fw-medium">Price: {{ $sponsorship->price }} $</div>
-                    @if($sponsorship->duration == '24:00:00')
-                        <div class="fw-medium"> Duration: 1 Day</div>
-                    @elseif($sponsorship->duration == '72:00:00')
-                        <div class="fw-medium"> Duration: 3 Days</div>
-                    @else
-                        <div class="fw-medium"> Duration: 6 Days</div>
-                    @endif
+                    <div class="fw-medium">Price:
+                        {{ $sponsorship->price }}$ - <span class="day-duration">{{ $sponsorship->duration }}</span>
+                    </div>
                 </label>
             @endforeach
         </div>
         @include('partials.payment_form')
-    </div>
+        <script>
+            window.onload = function() {
 
+                let durationField = document.querySelectorAll('.day-duration');
+                getDuration(durationField);
 
+            };
+
+            function getDuration(obj) {
+                obj.forEach(element => {
+                    const days = durationToDays(element.innerText);
+                    element.innerHTML = `${days} day${days <= 1 ? '' : 's'}`;
+                });
+            };
+
+            function durationToDays(durationStr) {
+                const parts = durationStr.split(":");
+                const hours = parseInt(parts[0]);
+                const minutes = parseInt(parts[1]);
+                const seconds = parseInt(parts[2]);
+
+                const totalHours = hours + minutes / 60 + seconds / 3600;
+                const days = totalHours / 24;
+
+                return Number.isInteger(days) ? days : days.toFixed(2);
+            }
+        </script>
     </div>
 @endsection

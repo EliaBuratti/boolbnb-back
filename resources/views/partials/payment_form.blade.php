@@ -16,8 +16,8 @@
         <input type="hidden" id="sponsorship" name="sponsorship" value="1" {{-- value="{{ $sponsorship->id }}" --}}>
         <input type="hidden" id="apartmentid" name="apartmentid" value="{{ $apartment[0]->id }}" {{-- value="{{ $apartment->id }}" --}}>
         <div id="dropin-container"></div>
-        <button id="submit-button" class="button button--small button--green">Purchase</button>
     </form>
+    <button id="submit-button" class="button button--small button--green disabled">Purchase</button>
 
 
     <script>
@@ -30,6 +30,7 @@
                     authorization: response.data.client_token,
                     selector: '#dropin-container'
                 }, function(err, instance) {
+
                     button.addEventListener('click', function() {
 
                         instance.requestPaymentMethod(function(err, payload) {
@@ -42,6 +43,7 @@
                             document.querySelector('#payment-form').submit();
                         });
                     });
+
                 });
 
             });

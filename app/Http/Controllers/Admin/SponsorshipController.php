@@ -93,7 +93,10 @@ class SponsorshipController extends Controller
      */
     public function destroy(Sponsorship $sponsorship)
     {
-        $sponsorship->forceDelete();
+        
+        $sponsorship->apartments()->detach();
+
+        $sponsorship->delete();
 
         return to_route('admin.sponsorships.index')->with('message', 'Sponsorship deleted');
     }
